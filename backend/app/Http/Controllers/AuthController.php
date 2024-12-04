@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -30,6 +31,16 @@ class AuthController extends Controller
         }
 
         return $this->respondWithToken($token);
+    }
+
+    public function signup(Request $request){
+        $validated = $request->validate([
+            "name"=>"required",
+            "email"=>"required|email|unique:users",
+            "password"=>"required|confirmed"
+        ]);
+        $userData = User::create($request->all);
+        return response()->json(["message"=>"User Add","userData"=>$userData],200);
     }
 
     /**
