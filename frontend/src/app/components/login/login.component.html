@@ -4,16 +4,16 @@
             Login Here
         </div>
         <div class="card-body">
-            <form (ngSumbit)="sumbitLogin()">
+            <form #loginForm="ngForm" (ngSubmit)="sumbitLogin()">
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
-                  <input type="email" class="form-control" id="email" name="email">
+                  <input type="email" class="form-control" id="email" name="email" [(ngModel)]="form.email" required>
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="password" name="password">
+                  <input type="password" class="form-control" id="password" name="password" [(ngModel)]="form.password" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Submit</button>
               </form>
         </div>
     </div>
