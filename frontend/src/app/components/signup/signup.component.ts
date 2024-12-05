@@ -1,42 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BackendService } from '../../services/backend.service';
-import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
-  standalone: true,
-  imports: [FormsModule,HttpClientModule,CommonModule],
+  standalone: true,  // Marca el componente como standalone
+  imports: [
+    FormsModule,
+    CommonModule,
+    HttpClientModule
+  ],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css'
+  styleUrls: ['./signup.component.css'],
 })
-export class SignupComponent implements OnInit{
+export class SignupComponent implements OnInit {
+  public error: any = [];
 
-  public error:any = [];
+  public form = {
+    name: null,
+    email: null,
+    password: null,
+    password_confirmation: null
+  };
 
-  public form={
-    name:null,
-    email:null,
-    password:null,
-    password_confirmation:null
-  }
+  constructor(private backendService: BackendService) {}
 
-  constructor(private backendService:BackendService){}
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    
-  }
-
-  sumbitSignup() {
+  submitSignup() {
     console.log(this.form);
     return this.backendService.signup(this.form).subscribe(
-      data=>console.log(data),
-      error=>this.handleError(error)
+      data => console.log(data),
+      error => this.handleError(error)
     );
   }
 
-  handleError(error:any){
-    this.error = error.error.errors
+  handleError(error: any) {
+    console.log(error);
+    this.error = error.error.errors;
   }
 }
