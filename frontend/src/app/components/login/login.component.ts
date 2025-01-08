@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BackendService } from '../../services/backend.service';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +14,8 @@ export class LoginComponent implements OnInit{
     email:null,
     password:null
   }
-
-  constructor(){}
+  public error = null;
+  constructor(private backend:BackendService){}
 
   ngOnInit(): void {
     
@@ -22,6 +23,13 @@ export class LoginComponent implements OnInit{
 
   sumbitLogin() {
     console.log(this.form);
+    return this.backend.login(this.form).subscribe(
+      (data) => console.log(data),
+      (error) => this.handleError(error)
+    );
+  }
+  handleError(error: any): void {
+    this.error = error.error.error;
   }
 
 }
