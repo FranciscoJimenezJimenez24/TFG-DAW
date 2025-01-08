@@ -38,7 +38,7 @@ class AuthController extends Controller
         $validated = $request->validate([
             "name" => "required",
             "email" => "required|email|unique:users",
-            "password" => "required|confirmed",
+            "password" => "required",
             "password_confirmation" => "required|same:password"
         ]);
         $userData = User::create($request->except('password_confirmation'));
