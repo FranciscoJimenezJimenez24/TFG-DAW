@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BackendService } from '../../services/backend.service';
 import { TokenService } from '../../services/token.service';
-import { log } from 'node:console';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit{
     password:null
   }
   public error = null;
-  constructor(private backend:BackendService, private token:TokenService){}
+  constructor(private backend:BackendService, private token:TokenService, private router:Router){}
 
   ngOnInit(): void {
     
@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit{
   }
   handleResponse(data: any) {
     this.token.handle(data.access_token);
+    this.router.navigateByUrl('#');
   }
 
 }
