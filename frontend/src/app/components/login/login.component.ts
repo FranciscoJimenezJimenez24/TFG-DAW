@@ -34,8 +34,7 @@ export class LoginComponent implements OnInit{
     this.error = error.error.error;
   }
   handleResponse(data: any) {
-    console.log(data.access_token);
-    
+    this.token.handle(data.access_token);
   }
 
 }
