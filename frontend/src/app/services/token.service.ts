@@ -5,6 +5,9 @@ import { log } from 'node:console';
   providedIn: 'root'
 })
 export class TokenService {
+  loggedIn() {
+    return this.isValid();
+  }
 
   constructor() { }
   handle(token:any){
