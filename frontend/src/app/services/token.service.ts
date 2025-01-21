@@ -1,42 +1,64 @@
 import { Injectable } from '@angular/core';
-import { log } from 'node:console';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TokenService {
-  loggedIn() {
+  constructor() {}
+
+  private isLocalStorageAvailable(): boolean {
+    return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+  }
+
+  loggedIn(): boolean {
     return this.isValid();
   }
 
-  constructor() { }
-  handle(token:any){
-    this.set(token);    
+  handle(token: any): void {
+    this.set(token);
   }
-  set(token:any){
-    return localStorage.setItem('token',token);
+
+  set(token: any): void {
+    if (this.isLocalStorageAvailable()) {
+      localStorage.setItem('token', token);
+    } else {
+      console.warn('localStorage no está disponible.');
+    }
   }
-  get(){
-    return localStorage.getItem('token');
+
+  get(): string | null {
+    if (this.isLocalStorageAvailable()) {
+      return localStorage.getItem('token');
+    }
+    console.warn('localStorage no está disponible.');
+    return null;
   }
-  remove(){
-    return localStorage.removeItem('token');
+
+  remove(): void {
+    if (this.isLocalStorageAvailable()) {
+      localStorage.removeItem('token');
+    } else {
+      console.warn('localStorage no está disponible.');
+    }
   }
-  isValid(){
+
+  isValid(): boolean {
     const token = this.get();
-    if(token){
+    if (token) {
       const payload = this.payload(token);
-      if(payload){
-        return payload.iss === 'http://127.0.0.1:8000/api/login' ? true : false;
+      if (payload) {
+        return payload.iss === 'http://127.0.0.1:8000/api/login';
       }
     }
     return false;
   }
-  payload(token:any){
+
+  payload(token: string): any {
     const payload = token.split('.')[1];
     return this.decode(payload);
   }
-  decode(payload:any){
+
+  decode(payload: string): any {
     return JSON.parse(atob(payload));
   }
 }

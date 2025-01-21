@@ -1,9 +1,11 @@
 <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand">Navbar</a>
-        <div>
-            <a class="navbar-brand" href="login" *nfIf="!loggedIn">Login</a>
-            <a class="navbar-brand" href="signup" *nfIf="!loggedIn">Signup</a>
-        </div>
+      <a class="navbar-brand">Navbar</a>
+      <div>
+        <a class="navbar-brand" href="login" *ngIf="!loggedIn">Login</a>
+        <a class="navbar-brand" href="signup" *ngIf="!loggedIn">Signup</a>
+        <a class="navbar-brand" href="logout" *ngIf="loggedIn">Logout</a>
+      </div>
     </div>
-</nav>
+  </nav>
+  
