@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BackendService } from '../../services/backend.service';
 import { TokenService } from '../../services/token.service';
+import { log } from 'node:console';
 
 @Component({
   selector: 'app-login',
@@ -25,12 +26,17 @@ export class LoginComponent implements OnInit{
   sumbitLogin() {
     console.log(this.form);
     return this.backend.login(this.form).subscribe(
-      (data) => console.log(data),
+      (data) => this.handleResponse(data),
       (error) => this.handleError(error)
     );
   }
   handleError(error: any): void {
     this.error = error.error.error;
   }
+  handleResponse(data: any) {
+    console.log(data.access_token);
+    
+  }
 
 }
+
