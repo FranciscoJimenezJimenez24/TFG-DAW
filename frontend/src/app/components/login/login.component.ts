@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BackendService } from '../../services/backend.service';
 import { TokenService } from '../../services/token.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit{
     password:null
   }
   public error = null;
-  constructor(private backend:BackendService, private token:TokenService, private router:Router){}
+  constructor(private backend:BackendService, private token:TokenService, private router:Router, private auth:AuthService){}
 
   ngOnInit(): void {
     
@@ -35,6 +36,7 @@ export class LoginComponent implements OnInit{
   }
   handleResponse(data: any) {
     this.token.handle(data.access_token);
+    this.auth.changeAuthStatus(true);
     this.router.navigateByUrl('#');
   }
 
