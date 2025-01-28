@@ -24,7 +24,6 @@ class JugadorSeeder extends Seeder
             $equipos = Equipo::where('liga_id', $liga->id)->get();
             foreach ($equipos as $equipo) {
                 $num_jugadores = rand(15, 30);
-                echo "Equipo: {$equipo->nombre}, Jugadores: {$num_jugadores}\n"; 
                 $minutos = [];
                 for ($a = 0; $a < 5; $a++) {
                     // Inicializar la lista de minutos con valores aleatorios
