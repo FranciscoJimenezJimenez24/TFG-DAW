@@ -16,14 +16,15 @@ class JugadorSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function up()
+    public function run()
     {
         $ligas = Liga::all();
         $temporadas = Temporada::all();
         foreach ($ligas as $liga) {
-            $equipos = Equipo::get()->where('liga_id', $liga->id);
+            $equipos = Equipo::where('liga_id', $liga->id)->get();
             foreach ($equipos as $equipo) {
                 $num_jugadores = rand(15, 30);
+                echo "Equipo: {$equipo->nombre}, Jugadores: {$num_jugadores}\n"; 
                 $minutos = [];
                 for ($a = 0; $a < 5; $a++) {
                     // Inicializar la lista de minutos con valores aleatorios
@@ -34,7 +35,7 @@ class JugadorSeeder extends Seeder
 
                     // Ajustar los minutos para que sumen exactamente total_minutos
                     $suma_actual = array_sum($minutosTemporada);
-                    while ($suma_actual != $total_minutos) {
+                    while ($suma_actual != 37620) {
                         for ($i = 0; $i < $num_jugadores; $i++) {
                             if ($suma_actual < 37620 && $minutosTemporada[$i] < 3420) {
                                 $minutosTemporada[$i]++;
@@ -52,15 +53,15 @@ class JugadorSeeder extends Seeder
                     $minutos[] = $minutosTemporada;
                 }
                 $posiciones = ['Portero', 'Defensa', 'Centrocampista', 'Delantero'];
-                for ($i < 0; $i < $num_jugadores; $i++) {
+                for ($i = 0; $i < $num_jugadores; $i++) {
+                    $posicion = $posiciones[rand(0, 3)];
                     $jugador = Jugador::create([
-                        'nombre' => 'Nombre del Jugador',
+                        'nombre' => fake()->name(),
                         'posicion' => $posicion,
                         'equipo_id' => $equipo->id,
                     ]);
-                    $posicion = $posiciones[rand(0, 3)];
                     $edad = rand(16, 37) - 1;
-                    for ($j = 0; $j < count($temporadas); $j++) {
+                    foreach ($temporadas as $j => $temporada) {
                         $minutos_jugados = $minutos[$j][$i];
                         $goles = $asistencias = $tarjetas_amarillas = $tarjetas_rojas = 0;
                         $factor_minutos = $minutos_jugados / 3420; // Factor proporcional basado en los minutos jugados
@@ -93,7 +94,7 @@ class JugadorSeeder extends Seeder
                         }
                         EstadisticasJugador::create([
                             'jugador_id' => $jugador->id,
-                            'temporada_id' => $temporadas[$i]->id,
+                            'temporada_id' => $temporada->id,
                             'edad' => $edad++,
                             'goles' => $goles,
                             'asistencias' => $asistencias,

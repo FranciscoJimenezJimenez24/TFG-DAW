@@ -31,7 +31,7 @@ class EquipoSeeder extends Seeder
             for ($i = 0; $i < 20; $i++) {
                 Equipo::create([
                     'nombre' => fake()->company() . " FC",
-                    'ciudad' => $liga->$arrayCiudadPorPais[$liga->pais][random_int(0, 9)],
+                    'ciudad' => $arrayCiudadPorPais[$liga->pais][random_int(0, 9)],
                     'pais' => $liga->pais,
                     'liga_id' => $liga->id,
                     'escudo' => fake()->imageUrl(100, 100, 'sports'),

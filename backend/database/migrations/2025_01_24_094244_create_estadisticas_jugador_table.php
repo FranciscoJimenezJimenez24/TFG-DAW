@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('estadisticas_jugador', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jugador_id')->constrained()->onDelete('cascade');
+            $table->foreignId('jugador_id')->constrained('jugadores')->onDelete('cascade');
             $table->foreignId('temporada_id')->constrained()->onDelete('cascade');
             $table->integer('edad');
             $table->integer('goles')->default(0);
