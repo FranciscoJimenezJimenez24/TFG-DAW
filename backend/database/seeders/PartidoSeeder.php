@@ -23,36 +23,36 @@ class PartidoSeeder extends Seeder
             // Obtener equipos por liga
             $equipos = Equipo::where('liga_id', $liga->id)->get();
 
-            // Calcular goles totales por equipo
-            $equiposData = [];
-            foreach ($equipos as $equipo) {
-                $golesTotales = DB::table('estadisticas_jugador')
-                    ->join('jugadores', 'estadisticas_jugador.jugador_id', '=', 'jugadores.id')
-                    ->where('jugadores.equipo_id', $equipo->id)
-                    ->sum('estadisticas_jugador.goles');
-
-                $equiposData[] = [
-                    'Equipo' => $equipo,
-                    'Goles_Totales' => $golesTotales
-                ];
-            }
-
-            // Crear partidos para cada temporada
             foreach ($temporadas as $temporada) {
+                // Calcular goles totales por equipo en la temporada actual
+                $equiposData = [];
+                foreach ($equipos as $equipo) {
+                    $golesTotales = DB::table('estadisticas_jugador')
+                        ->join('jugadores', 'estadisticas_jugador.jugador_id', '=', 'jugadores.id')
+                        ->where('jugadores.equipo_id', $equipo->id)
+                        ->where('estadisticas_jugador.temporada_id', $temporada->id)
+                        ->sum('estadisticas_jugador.goles');
+
+                    $equiposData[] = [
+                        'Equipo' => $equipo,
+                        'Goles_Totales' => $golesTotales
+                    ];
+                }
+
                 $partidos = [];
 
                 // Generar partidos ida y vuelta
                 for ($i = 0; $i < count($equiposData); $i++) {
                     for ($j = $i + 1; $j < count($equiposData); $j++) {
                         $partidos[] = [
-                            'local' => $equiposData[$i]['Equipo'],
-                            'visitante' => $equiposData[$j]['Equipo'],
+                            'local' => $equiposData[$i],
+                            'visitante' => $equiposData[$j],
                             'goles_local' => 0,
                             'goles_visitante' => 0
                         ];
                         $partidos[] = [
-                            'local' => $equiposData[$j]['Equipo'],
-                            'visitante' => $equiposData[$i]['Equipo'],
+                            'local' => $equiposData[$j],
+                            'visitante' => $equiposData[$i],
                             'goles_local' => 0,
                             'goles_visitante' => 0
                         ];
@@ -70,7 +70,7 @@ class PartidoSeeder extends Seeder
                 unset($partido);
 
                 // Ajustar goles para que coincidan con los totales calculados
-                foreach ($equiposData as $index => $equipoData) {
+                foreach ($equiposData as $equipoData) {
                     $this->ajustarGolesTotales($equipoData, $partidos);
                 }
 
@@ -90,23 +90,22 @@ class PartidoSeeder extends Seeder
 
                 // Crear registros en la tabla `partidos`
                 $indice_fecha = 0;
-
                 foreach ($partidos as $partido) {
                     if ($indice_fecha >= count($fechas_disponibles)) {
                         $indice_fecha = 0; // Reiniciar índice si se terminan las fechas
                     }
-
-                    Partido::create([
-                        'temporada_id' => $temporada->id,
-                        'liga_id' => $liga->id,
-                        'equipo_local_id' => $partido['local']['Equipo']->id,
-                        'equipo_visitante_id' => $partido['visitante']['Equipo']->id,
-                        'goles_local' => $partido['goles_local'],
-                        'goles_visitante' => $partido['goles_visitante'],
-                        'fecha' => $fechas_disponibles[$indice_fecha],
-                    ]);
-
-                    $indice_fecha++;
+                    if (isset($partido['local']['Equipo']) && isset($partido['visitante']['Equipo'])) {
+                        Partido::create([
+                            'temporada_id' => $temporada->id,
+                            'liga_id' => $liga->id,
+                            'equipo_local_id' => $partido['local']['Equipo']->id,
+                            'equipo_visitante_id' => $partido['visitante']['Equipo']->id,
+                            'goles_local' => $partido['goles_local'],
+                            'goles_visitante' => $partido['goles_visitante'],
+                            'fecha' => $fechas_disponibles[$indice_fecha],
+                        ]);
+                        $indice_fecha++;
+                    }
                 }
             }
         }
@@ -146,29 +145,33 @@ class PartidoSeeder extends Seeder
         $equipo = $equipoData['Equipo'];
         $golesTotales = $equipoData['Goles_Totales'];
         $golesAcumulados = $this->sumarGolesEquipo($partidos, $equipo->id);
-
         $diferencia = $golesTotales - $golesAcumulados;
 
         foreach ($partidos as &$partido) {
             if ($diferencia === 0)
                 break;
 
+
             // Ajustar goles como local
-            if ($partido['local']['Equipo']->id === $equipo->id && $diferencia > 0 && $partido['goles_local'] < 5) {
-                $partido['goles_local']++;
-                $diferencia--;
-            } elseif ($partido['local']['Equipo']->id === $equipo->id && $diferencia < 0 && $partido['goles_local'] > 0) {
-                $partido['goles_local']--;
-                $diferencia++;
+            if (isset($partido['local']['Equipo']) && $partido['local']['Equipo'] != null) {
+                if ($partido['local']['Equipo']->id === $equipo->id && $diferencia > 0 && $partido['goles_local'] < 5) {
+                    $partido['goles_local']++;
+                    $diferencia--;
+                } elseif ($partido['local']['Equipo']->id === $equipo->id && $diferencia < 0 && $partido['goles_local'] > 0) {
+                    $partido['goles_local']--;
+                    $diferencia++;
+                }
             }
 
             // Ajustar goles como visitante
-            if ($partido['visitante']['Equipo']->id === $equipo->id && $diferencia > 0 && $partido['goles_visitante'] < 5) {
-                $partido['goles_visitante']++;
-                $diferencia--;
-            } elseif ($partido['visitante']['Equipo']->id === $equipo->id && $diferencia < 0 && $partido['goles_visitante'] > 0) {
-                $partido['goles_visitante']--;
-                $diferencia++;
+            if (isset($partido['visitante']['Equipo']) && $partido['visitante']['Equipo'] != null) {
+                if ($partido['visitante']['Equipo']->id === $equipo->id && $diferencia > 0 && $partido['goles_visitante'] < 5) {
+                    $partido['goles_visitante']++;
+                    $diferencia--;
+                } elseif ($partido['visitante']['Equipo']->id === $equipo->id && $diferencia < 0 && $partido['goles_visitante'] > 0) {
+                    $partido['goles_visitante']--;
+                    $diferencia++;
+                }
             }
         }
         unset($partido);
@@ -180,12 +183,11 @@ class PartidoSeeder extends Seeder
     private function sumarGolesEquipo($partidos, $equipoId)
     {
         $totalGoles = 0;
-
         foreach ($partidos as $partido) {
-            if ($partido['local']['Equipo']->id === $equipoId) {
+            if (isset($partido['local']['Equipo']) && $partido['local']['Equipo']->id === $equipoId) {
                 $totalGoles += $partido['goles_local'];
             }
-            if ($partido['visitante']['Equipo']->id === $equipoId) {
+            if (isset($partido['visitante']['Equipo']) && $partido['visitante']['Equipo']->id === $equipoId) {
                 $totalGoles += $partido['goles_visitante'];
             }
         }
