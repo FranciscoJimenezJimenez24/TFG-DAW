@@ -11,4 +11,9 @@ class LigaController extends Controller
         $ligas = Liga::all();
         return response()->json($ligas, 200);
     }
+
+    public function getLiga($id){
+        $liga = Liga::find($id);
+        return response()->json($liga, 200);
+    }
 }

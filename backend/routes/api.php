@@ -11,7 +11,8 @@ Route::get('/user', function (Request $request) {
 
 Route::post('signup', [AuthController::class,'signup']);
 Route::post('login', [AuthController::class,'login']);
-Route::post('ligas', [LigaController::class,'getLigas']);
+Route::get('ligas', [LigaController::class,'getLigas']);
+Route::get('ligas/{id}', [LigaController::class,'getLiga']);
 
 Route::group(['middleware' => 'api',], function ($router) {
 

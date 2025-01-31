@@ -6,10 +6,12 @@ import { provideHttpClient } from '@angular/common/http';
 import { AfterLoginService } from './services/after-login.service';
 import { BeforeLoginService } from './services/before-login.service';
 import { LigasComponent } from './components/ligas/ligas.component';
+import { LigaPageComponent } from './components/ligas/liga-page/liga-page.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
+    { path: 'ligas/:id', component: LigaPageComponent },
     { path: 'ligas', component: LigasComponent  },
     { path: '', component: HomeComponent  },
     { path: '**', redirectTo: '' } // Redirigir rutas desconocidas
