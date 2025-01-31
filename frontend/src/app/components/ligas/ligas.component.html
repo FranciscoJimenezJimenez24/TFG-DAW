@@ -1,1 +1,5 @@
-<p>ligas works!</p>
+<div class="row">
+    <div *ngFor="let liga of listaLigas" class="col-12 col-md-6 col-lg-4">
+        <card-liga [routerLink]="['/ligas', liga.id]" [liga]="liga"></card-liga>
+    </div>
+</div>

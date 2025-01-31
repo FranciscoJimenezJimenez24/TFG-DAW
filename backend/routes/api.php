@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LigaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -10,6 +11,7 @@ Route::get('/user', function (Request $request) {
 
 Route::post('signup', [AuthController::class,'signup']);
 Route::post('login', [AuthController::class,'login']);
+Route::post('ligas', [LigaController::class,'getLigas']);
 
 Route::group(['middleware' => 'api',], function ($router) {
 
