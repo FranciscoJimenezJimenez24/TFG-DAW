@@ -4,6 +4,7 @@
       <div>
         <a class="navbar-brand" href="login" *ngIf="!loggedIn">Login</a>
         <a class="navbar-brand" href="signup" *ngIf="!loggedIn">Signup</a>
+        <a class="navbar-brand" href="ligas" *ngIf="loggedIn">Ligas</a>
         <a class="navbar-brand" href="logout" (click)="logout($event)" *ngIf="loggedIn">Logout</a>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BackendService } from '../../services/backend.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -25,14 +26,14 @@ export class SignupComponent implements OnInit {
     password_confirmation: null
   };
 
-  constructor(private backendService: BackendService) {}
+  constructor(private backendService: BackendService, private router: Router) {}
 
   ngOnInit(): void {}
 
   submitSignup() {
     console.log(this.form);
     return this.backendService.signup(this.form).subscribe(
-      data => console.log(data),
+      data => this.handleResponse(data),
       error => this.handleError(error)
     );
   }
@@ -40,5 +41,9 @@ export class SignupComponent implements OnInit {
   handleError(error: any) {
     console.log(error);
     this.error = error.error.errors;
+  }
+
+  handleResponse(data: any) {
+    this.router.navigateByUrl('/login');
   }
 }

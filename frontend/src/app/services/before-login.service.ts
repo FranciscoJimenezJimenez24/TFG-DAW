@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { TokenService } from './token.service';
-import { RouterStateSnapshot, Route, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Router, Route, UrlSegment, UrlTree } from '@angular/router';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BeforeLoginService {
-  // Usamos canMatch en lugar de CanActivate
-  canMatch(route: Route, state: RouterStateSnapshot): boolean | Observable<boolean | UrlTree> {
-    return !this.token.loggedIn();
-  }
+  constructor(private token: TokenService, private router: Router) {}
 
-  constructor(private token: TokenService) { }
+  canMatch(route: Route, segments: UrlSegment[]): boolean | Observable<boolean | UrlTree> {
+    if (this.token.loggedIn()) {
+      console.log('Usuario autenticado, redirigiendo...');
+      return of(this.router.parseUrl('/login')); // Redirigir a login si está logueado
+    }
+    return true; // Permitir acceso si NO está logueado
+  }
 }
