@@ -1,13 +1,23 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { ServerStorage } from '../classes/serverStorage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TokenService {
-  constructor() {}
+  private storage: Storage;
 
-  private isLocalStorageAvailable(): boolean {
-    return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {
+    try {
+      if (isPlatformBrowser(this.platformId)) {
+        this.storage = localStorage;
+      } else {
+        this.storage = new ServerStorage();
+      }
+    } catch (error) {
+      this.storage = new ServerStorage(); // Evita que la app se rompa
+    }
   }
 
   loggedIn(): boolean {
@@ -19,27 +29,16 @@ export class TokenService {
   }
 
   set(token: any): void {
-    if (this.isLocalStorageAvailable()) {
-      localStorage.setItem('token', token);
-    } else {
-      console.warn('localStorage no está disponible.');
-    }
+    this.storage.setItem('token', token);
   }
 
   get(): string | null {
-    if (this.isLocalStorageAvailable()) {
-      return localStorage.getItem('token');
-    }
-    console.warn('localStorage no está disponible.');
-    return null;
+    const token = this.storage.getItem('token');
+    return token;
   }
 
   remove(): void {
-    if (this.isLocalStorageAvailable()) {
-      localStorage.removeItem('token');
-    } else {
-      console.warn('localStorage no está disponible.');
-    }
+    this.storage.removeItem('token');
   }
 
   isValid(): boolean {

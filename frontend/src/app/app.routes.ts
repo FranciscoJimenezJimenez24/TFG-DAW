@@ -6,8 +6,8 @@ import { AfterLoginService } from './services/after-login.service';
 
 export const routes: Routes = [
     // { path: '', component: HomeComponent }, // Ruta del Home
-    { path: 'login', component: LoginComponent, canMatch: [AfterLoginService]},
-    { path: 'signup', component: SignupComponent, canMatch: [AfterLoginService]},
+    { path: 'login', component: LoginComponent, canMatch: [AfterLoginService] },
+    { path: 'signup', component: SignupComponent, canMatch: [AfterLoginService] }
 ];
 export const appConfig = {
     providers: [provideHttpClient()], // ✅ Proporciona el HttpClient aquí

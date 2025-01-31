@@ -7,11 +7,13 @@ import { TokenService } from './token.service';
   providedIn: 'root'
 })
 export class AfterLoginService {
-
-  // Si el usuario ya está logueado, bloqueamos el acceso.
   canMatch(route: Route, state: RouterStateSnapshot): boolean | Observable<boolean | UrlTree> {
-    return this.token.loggedIn() ? true : of(this.router.parseUrl('/login')); // Redirige a login si está logueado
+    if (this.token.loggedIn()) {
+      console.log('Usuario logueado, redirigiendo al home');
+      return of(this.router.parseUrl('/')); // ✅ Redirigir a home en vez de login
+    }
+    return true; // ✅ Permitir acceso si NO está logueado
   }
 
-  constructor(private token: TokenService, private router: Router) { }
+  constructor(private token: TokenService, private router: Router) {}
 }
