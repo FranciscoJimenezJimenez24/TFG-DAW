@@ -4,6 +4,8 @@ import { switchMap } from 'rxjs';
 import { LigasService } from '../../../services/ligas.service';
 import { Router } from '@angular/router';
 import { Liga } from '../../../interfaces/liga';
+import { EquiposService } from '../../../services/equipos.service';
+import { Equipo } from '../../../interfaces/equipo';
 
 @Component({
   selector: 'app-liga-page',
@@ -15,8 +17,9 @@ import { Liga } from '../../../interfaces/liga';
 export class LigaPageComponent implements OnInit {
 
   liga: Liga | null = null;
+  equipos: Equipo[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute,private ligasService: LigasService, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute,private ligasService: LigasService, private router: Router, private equiposService: EquiposService) { }
 
   ngOnInit():void{
     this.activatedRoute.params
@@ -29,5 +32,16 @@ export class LigaPageComponent implements OnInit {
         
         return;
       })
+    this.getEquiposLiga();
+  }
+
+  getEquiposLiga(){
+    if (!this.liga) return;
+    this.equiposService.getEquiposLigas(this.liga.id)
+      .subscribe(equipos=>{
+        console.log(equipos);
+        this.equipos=equipos;
+        
+      });
   }
 }

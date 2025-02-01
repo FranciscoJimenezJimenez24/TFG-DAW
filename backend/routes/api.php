@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\LigaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,7 @@ Route::post('signup', [AuthController::class,'signup']);
 Route::post('login', [AuthController::class,'login']);
 Route::get('ligas', [LigaController::class,'getLigas']);
 Route::get('ligas/{id}', [LigaController::class,'getLiga']);
+Route::get('equipos', [EquipoController::class,'getEquiposLiga']);
 
 Route::group(['middleware' => 'api',], function ($router) {
 
