@@ -1,1 +1,26 @@
-<p>liga-page works!</p>
+<div class="container">
+    <div class="row">
+      <select (change)="onTemporadaChange($event)" *ngIf="temporadas?.length">
+        <option *ngFor="let temporada of temporadas" [value]="temporada?.id">
+          {{ temporada?.nombre }}
+        </option>
+      </select>
+      <table>
+        <thead>
+          <tr>
+            <th>Posición</th>
+            <th>Equipos</th>
+            <th>Puntos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entry of puntos.entries(); let i = index">
+            <td>{{ i + 1 }}</td> 
+            <td>{{ entry[0].nombre }}</td>
+            <td>{{ entry[1] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

@@ -1,9 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Temporada } from '../interfaces/temporada';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TemporadasService {
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
+
+  getTemporadas():Observable<Temporada[]>{
+    return this.http.get<Temporada[]>('http://127.0.0.1:8000/api/temporadas');
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { LigasService } from '../../../services/ligas.service';
@@ -6,11 +6,16 @@ import { Router } from '@angular/router';
 import { Liga } from '../../../interfaces/liga';
 import { EquiposService } from '../../../services/equipos.service';
 import { Equipo } from '../../../interfaces/equipo';
+import { Temporada } from '../../../interfaces/temporada';
+import { TemporadasService } from '../../../services/temporadas.service';
+import { PartidosService } from '../../../services/partidos.service';
+import { Partido } from '../../../interfaces/partido';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-liga-page',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './liga-page.component.html',
   styleUrl: './liga-page.component.css'
 })
@@ -18,30 +23,98 @@ export class LigaPageComponent implements OnInit {
 
   liga: Liga | null = null;
   equipos: Equipo[] = [];
+  temporadas: Temporada[] = [];
+  partidos: Partido[] = [];
+  puntos: Map<Equipo, number> = new Map();
 
-  constructor(private activatedRoute: ActivatedRoute,private ligasService: LigasService, private router: Router, private equiposService: EquiposService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private ligasService: LigasService,
+    private router: Router,
+    private equiposService: EquiposService,
+    private temporadasService: TemporadasService,
+    private partidosService: PartidosService,
+    private zone: NgZone) { }
 
-  ngOnInit():void{
+  ngOnInit(): void {
     this.activatedRoute.params
       .pipe(
-        switchMap(({id})=>this.ligasService.getLiga(id))
+        switchMap(({ id }) => this.ligasService.getLiga(id))
       )
-      .subscribe(liga=>{
+      .subscribe(liga => {
         if (!liga) return this.router.navigate(['/ligas']);
-        this.liga=liga;
-        
+        this.liga = liga;
+
         return;
-      })
+      });
     this.getEquiposLiga();
+    this.getTemporadas();
   }
 
-  getEquiposLiga(){
+  getEquiposLiga() {
     if (!this.liga) return;
     this.equiposService.getEquiposLigas(this.liga.id)
-      .subscribe(equipos=>{
-        console.log(equipos);
-        this.equipos=equipos;
-        
+      .subscribe(equipos => {
+        this.equipos = equipos;
       });
   }
+
+  getTemporadas() {
+    if (!this.liga) return;
+    this.temporadasService.getTemporadas()
+      .subscribe(temporadas => {
+        this.temporadas = temporadas;
+      });
+  }
+
+  onTemporadaChange(event: Event): void {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    const idTemporada = Number(selectedValue);
+    if (!isNaN(idTemporada)) {
+      this.getPartidos(idTemporada);
+    }
+  }
+
+  getPartidos(idTemporada: number): void {
+    if (!this.liga) return;
+    this.partidosService.getPartidosLigasTemporadas(this.liga.id, idTemporada)
+      .subscribe(partidos => {
+        this.partidos = partidos;
+        this.getPuntos();
+      });
+    this.puntos = new Map();
+  }
+
+  getPuntos() {
+    if (!this.liga) return;
+    this.equipos.forEach(equipo => {
+      this.puntos.set(equipo, 0);
+    });
+
+    this.partidos.forEach(partido => {
+      const equipoLocal = this.equipos.find(equipo => equipo.id === partido.equipo_local_id);
+      const equipoVisitante = this.equipos.find(equipo => equipo.id === partido.equipo_visitante_id);
+
+      if (equipoLocal && equipoVisitante) {
+        if (partido.goles_local > partido.goles_visitante) {
+          this.puntos.set(equipoLocal, (this.puntos.get(equipoLocal) || 0) + 3);
+        } else if (partido.goles_visitante > partido.goles_local) {
+          this.puntos.set(equipoVisitante, (this.puntos.get(equipoVisitante) || 0) + 3);
+        } else {
+          this.puntos.set(equipoLocal, (this.puntos.get(equipoLocal) || 0) + 1);
+          this.puntos.set(equipoVisitante, (this.puntos.get(equipoVisitante) || 0) + 1);
+        }
+      }
+    });
+    const sortedPuntos = new Map(
+      [...this.puntos.entries()].sort((a, b) => b[1] - a[1])
+    );
+
+    // Usamos NgZone para actualizar los puntos fuera del ciclo de Angular
+    this.zone.runOutsideAngular(() => {
+      this.puntos = sortedPuntos;
+    });
+  }
+
 }
+
