@@ -1,26 +1,61 @@
 <div class="container">
     <div class="row">
-      <select (change)="onTemporadaChange($event)" *ngIf="temporadas?.length">
-        <option *ngFor="let temporada of temporadas" [value]="temporada?.id">
-          {{ temporada?.nombre }}
-        </option>
-      </select>
-      <table>
-        <thead>
-          <tr>
-            <th>Posición</th>
-            <th>Equipos</th>
-            <th>Puntos</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let entry of puntos.entries(); let i = index">
-            <td>{{ i + 1 }}</td> 
-            <td>{{ entry[0].nombre }}</td>
-            <td>{{ entry[1] }}</td>
-          </tr>
-        </tbody>
-      </table>
+        <select (change)="onTemporadaChange($event)" *ngIf="temporadas?.length">
+            <option *ngFor="let temporada of temporadas" [value]="temporada?.id">
+                {{ temporada?.nombre }}
+            </option>
+        </select>
+
+        <button (click)="toggleCalendar()">Mostrar Calendario</button>
+
+        <!-- Modal del Calendario -->
+        <div *ngIf="showCalendar" class="modal-overlay">
+            <div class="modal-content">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button (click)="prevMonth()">&#9665;</button>
+                        <h2>{{ months[currentMonth] }} {{ currentYear }}</h2>
+                        <button (click)="nextMonth()">&#9655;</button>
+                    </div>
+                    <div class="days">
+                        <div *ngFor="let day of weekdays" class="day weekday">{{ day }}</div>
+                        <div *ngFor="let empty of emptyDays" class="day"></div>
+
+                        <!-- Mostrar los días con partidos -->
+                        <div *ngFor="let day of daysInMonth" class="day">
+                            <div>{{ day }}</div>
+                            <div *ngIf="partidosPorDia.has(day)" class="partidos">
+                                <div *ngFor="let partido of partidosPorDia.get(day)">
+                                    <app-card-partido [partido]="partido"
+                                        [equipoLocal]="getEquipoById(partido.equipo_local_id)"
+                                        [equipoVisitante]="getEquipoById(partido.equipo_visitante_id)">
+                                    </app-card-partido>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <button class="close-button" (click)="toggleCalendar()">Cerrar</button>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Posición</th>
+                    <th>Equipos</th>
+                    <th>Puntos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let entry of puntos.entries(); let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ entry[0].nombre }}</td>
+                    <td>{{ entry[1] }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-  </div>
-  
+</div>

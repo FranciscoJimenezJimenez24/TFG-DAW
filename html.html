@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Responsive</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .calendar-container { max-width: 400px; margin: auto; }
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; }
+        .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; }
+        .day { padding: 10px; background: #f0f0f0; border-radius: 5px; }
+        .weekday { font-weight: bold; background: #ddd; }
+    </style>
+</head>
+<body>
+    <h1>Calendario Temporadas</h1>
+    <select id="season-select">
+        <option value="2020">Temporada 2020/2021</option>
+        <option value="2021">Temporada 2021/2022</option>
+        <option value="2022">Temporada 2022/2023</option>
+        <option value="2023">Temporada 2023/2024</option>
+        <option value="2024">Temporada 2024/2025</option>
+    </select>
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <button id="prev-month">&#9665;</button>
+            <h2 id="month-year"></h2>
+            <button id="next-month">&#9655;</button>
+        </div>
+        <div class="days" id="calendar-days"></div>
+    </div>
+    <script>
+        const seasonSelect = document.getElementById("season-select");
+        const monthYear = document.getElementById("month-year");
+        const calendarDays = document.getElementById("calendar-days");
+        const prevMonthBtn = document.getElementById("prev-month");
+        const nextMonthBtn = document.getElementById("next-month");
+
+        const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+        let currentYear = 2020;
+        let currentMonth = 7; // Agosto
+
+        function updateCalendar() {
+            monthYear.textContent = `${months[currentMonth]} ${currentYear}`;
+            calendarDays.innerHTML = "";
+
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].forEach(day => {
+                const div = document.createElement("div");
+                div.classList.add("day", "weekday");
+                div.textContent = day;
+                calendarDays.appendChild(div);
+            });
+
+            for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
+                const emptyDiv = document.createElement("div");
+                calendarDays.appendChild(emptyDiv);
+            }
+            
+            for (let day = 1; day <= lastDate; day++) {
+                const dayDiv = document.createElement("div");
+                dayDiv.classList.add("day");
+                dayDiv.textContent = day;
+                calendarDays.appendChild(dayDiv);
+            }
+        }
+
+        function updateSeason() {
+            currentYear = parseInt(seasonSelect.value);
+            currentMonth = 7; // Agosto
+            updateCalendar();
+        }
+
+        seasonSelect.addEventListener("change", updateSeason);
+        prevMonthBtn.addEventListener("click", () => {
+            if (currentMonth === 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else {
+                currentMonth--;
+            }
+            updateCalendar();
+        });
+        nextMonthBtn.addEventListener("click", () => {
+            if (currentMonth === 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else {
+                currentMonth++;
+            }
+            updateCalendar();
+        });
+
+        updateSeason();
+    </script>
+</body>
+</html>

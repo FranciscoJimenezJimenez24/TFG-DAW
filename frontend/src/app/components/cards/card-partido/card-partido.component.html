@@ -1,0 +1,19 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-5">
+                <img [src]="equipoLocal.escudo" alt="{{ equipoLocal.nombre }}" class="img-fluid"
+                    style="max-height: 50px;">
+                <h5>{{ equipoLocal.nombre }}</h5>
+            </div>
+            <div class="col-md-2 text-center">
+                <h3>{{ partido.goles_local }} - {{ partido.goles_visitante }}</h3>
+            </div>
+            <div class="col-md-5">
+                <img [src]="equipoVisitante.escudo" alt="{{ equipoVisitante.nombre }}" class="img-fluid"
+                    style="max-height: 50px;">
+                <h5>{{ equipoVisitante.nombre }}</h5>
+            </div>
+        </div>
+    </div>
+</div>
