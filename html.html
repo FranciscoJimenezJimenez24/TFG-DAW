@@ -1,101 +1,1130 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendario Responsive</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .calendar-container { max-width: 400px; margin: auto; }
-        .calendar-header { display: flex; justify-content: space-between; align-items: center; }
-        .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; }
-        .day { padding: 10px; background: #f0f0f0; border-radius: 5px; }
-        .weekday { font-weight: bold; background: #ddd; }
-    </style>
+
 </head>
+
 <body>
-    <h1>Calendario Temporadas</h1>
-    <select id="season-select">
-        <option value="2020">Temporada 2020/2021</option>
-        <option value="2021">Temporada 2021/2022</option>
-        <option value="2022">Temporada 2022/2023</option>
-        <option value="2023">Temporada 2023/2024</option>
-        <option value="2024">Temporada 2024/2025</option>
-    </select>
-    <div class="calendar-container">
-        <div class="calendar-header">
-            <button id="prev-month">&#9665;</button>
-            <h2 id="month-year"></h2>
-            <button id="next-month">&#9655;</button>
-        </div>
-        <div class="days" id="calendar-days"></div>
-    </div>
-    <script>
-        const seasonSelect = document.getElementById("season-select");
-        const monthYear = document.getElementById("month-year");
-        const calendarDays = document.getElementById("calendar-days");
-        const prevMonthBtn = document.getElementById("prev-month");
-        const nextMonthBtn = document.getElementById("next-month");
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <!-- Forma del escudo -->
+        <path d="M 20 20 Q 100 -20 180 20 L 180 120 Q 180 200 100 240 Q 20 200 20 120 Z" fill="#0044cc" stroke="#ffffff"
+            stroke-width="5" />
 
-        const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        <!-- Franja central -->
+        <rect x="50" y="20" width="100" height="200" fill="#ffffff" opacity="0.5" />
 
-        let currentYear = 2020;
-        let currentMonth = 7; // Agosto
+        <!-- Texto del equipo -->
+        <text x="100" y="60" font-family="Arial" font-size="20" font-weight="bold" fill="#ffffff"
+            text-anchor="middle">FC ChatGPT</text>
 
-        function updateCalendar() {
-            monthYear.textContent = `${months[currentMonth]} ${currentYear}`;
-            calendarDays.innerHTML = "";
+        <!-- Balón de fútbol -->
+        <circle cx="100" cy="150" r="25" fill="#ffffff" stroke="#000000" stroke-width="2" />
+        <polygon points="100,125 110,140 130,140 115,155 120,175 100,165 80,175 85,155 70,140 90,140" fill="#000000"
+            stroke="#000000" stroke-width="1" />
+    </svg>
 
-            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-            const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
-            
-            ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].forEach(day => {
-                const div = document.createElement("div");
-                div.classList.add("day", "weekday");
-                div.textContent = day;
-                calendarDays.appendChild(div);
-            });
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <!-- Forma del escudo -->
+        <path d="M 20 30 Q 100 -10 180 30 L 180 130 Q 180 210 100 240 Q 20 210 20 130 Z" fill="#cc0000" stroke="#ffffff"
+            stroke-width="5" />
 
-            for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
-                const emptyDiv = document.createElement("div");
-                calendarDays.appendChild(emptyDiv);
-            }
-            
-            for (let day = 1; day <= lastDate; day++) {
-                const dayDiv = document.createElement("div");
-                dayDiv.classList.add("day");
-                dayDiv.textContent = day;
-                calendarDays.appendChild(dayDiv);
-            }
-        }
+        <!-- Franja diagonal -->
+        <polygon points="30,30 170,30 170,70 30,70" fill="#ffffff" opacity="0.7" />
 
-        function updateSeason() {
-            currentYear = parseInt(seasonSelect.value);
-            currentMonth = 7; // Agosto
-            updateCalendar();
-        }
+        <!-- Texto del equipo -->
+        <text x="100" y="60" font-family="Arial" font-size="20" font-weight="bold" fill="#ffffff"
+            text-anchor="middle">Red Warriors</text>
 
-        seasonSelect.addEventListener("change", updateSeason);
-        prevMonthBtn.addEventListener("click", () => {
-            if (currentMonth === 0) {
-                currentMonth = 11;
-                currentYear--;
-            } else {
-                currentMonth--;
-            }
-            updateCalendar();
-        });
-        nextMonthBtn.addEventListener("click", () => {
-            if (currentMonth === 11) {
-                currentMonth = 0;
-                currentYear++;
-            } else {
-                currentMonth++;
-            }
-            updateCalendar();
-        });
+        <!-- Estrella central -->
+        <polygon points="100,150 110,170 130,170 115,185 120,205 100,195 80,205 85,185 70,170 90,170" fill="#ffff00"
+            stroke="#000000" stroke-width="2" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10 L10 50 V160 Q100 230 190 160 V50 Z" fill="blue" stroke="black" stroke-width="5" />
+        <path d="M100 10 L10 50 V160 Q100 230 190 160 V50 Z" fill="none" stroke="black" stroke-width="5" />
+        <line x1="45" y1="50" x2="45" y2="160" stroke="white" stroke-width="10" />
+        <line x1="100" y1="50" x2="100" y2="160" stroke="white" stroke-width="10" />
+        <line x1="155" y1="50" x2="155" y2="160" stroke="white" stroke-width="10" />
+        <text x="50" y="90" font-size="20" fill="white" font-family="Arial" font-weight="bold">FC ChatGPT</text>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10 L10 60 V180 Q100 240 190 180 V60 Z" fill="red" stroke="black" stroke-width="5" />
+        <circle cx="100" cy="120" r="40" fill="white" stroke="black" stroke-width="5" />
+        <polygon points="100,80 110,110 140,110 115,130 125,160 100,140 75,160 85,130 60,110 90,110" fill="yellow" />
+        <text x="50" y="200" font-size="20" fill="white" font-family="Arial" font-weight="bold">Estrellas FC</text>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10 L20 70 V180 Q100 240 180 180 V70 Z" fill="green" stroke="black" stroke-width="5" />
+        <circle cx="100" cy="100" r="30" fill="white" stroke="black" stroke-width="3" />
+        <circle cx="100" cy="100" r="10" fill="black" />
+        <polygon points="90,80 110,80 120,90 110,110 90,110 80,90" fill="black" />
+        <polygon points="100,70 115,85 100,120 85,85" fill="black" />
+        <text x="45" y="200" font-size="20" fill="white" font-family="Arial" font-weight="bold">Fútbol Club</text>
+    </svg>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <!-- Forma del escudo -->
+        <path d="M 20 30 Q 100 -10 180 30 L 180 140 Q 180 220 100 240 Q 20 220 20 140 Z" fill="#660066" stroke="#ffffff"
+            stroke-width="5" />
 
-        updateSeason();
-    </script>
+        <!-- Estrella superior -->
+        <polygon points="100,40 110,70 140,70 115,90 120,120 100,100 80,120 85,90 60,70 90,70" fill="#ffff00"
+            stroke="#000000" stroke-width="2" />
+
+        <!-- Texto del equipo -->
+        <text x="100" y="150" font-family="Arial" font-size="20" font-weight="bold" fill="#ffffff"
+            text-anchor="middle">Purple Kings</text>
+
+        <!-- Corona inferior -->
+        <polygon points="70,180 80,160 90,180 100,160 110,180 120,160 130,180 140,160 150,180 150,190 70,190"
+            fill="#ffff00" stroke="#000000" stroke-width="2" />
+    </svg>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <!-- Forma del escudo -->
+        <path d="M 20 30 Q 100 -10 180 30 L 180 140 Q 180 220 100 240 Q 20 220 20 140 Z" fill="#ff0000" stroke="#ffffff"
+            stroke-width="5" />
+
+        <!-- Franja vertical central -->
+        <rect x="90" y="30" width="20" height="210" fill="#ffffff" opacity="0.7" />
+
+        <!-- Texto del equipo -->
+        <text x="100" y="60" font-family="Arial" font-size="20" font-weight="bold" fill="#ffffff"
+            text-anchor="middle">Red Phoenix</text>
+
+        <!-- Fuego en la base -->
+        <polygon points="50,190 70,170 90,190 110,170 130,190 150,170 170,190 100,230" fill="#ffcc00" stroke="#000000"
+            stroke-width="2" />
+    </svg>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <!-- Forma del escudo -->
+        <path d="M 20 30 Q 100 -10 180 30 L 180 140 Q 180 220 100 240 Q 20 220 20 140 Z" fill="#222222" stroke="#ffffff"
+            stroke-width="5" />
+
+        <!-- Líneas diagonales -->
+        <line x1="30" y1="50" x2="170" y2="190" stroke="#ffffff" stroke-width="5" />
+        <line x1="30" y1="80" x2="170" y2="220" stroke="#ffffff" stroke-width="5" />
+
+        <!-- Texto del equipo -->
+        <text x="100" y="60" font-family="Arial" font-size="20" font-weight="bold" fill="#ffffff"
+            text-anchor="middle">Shadow FC</text>
+
+        <!-- Media luna superior -->
+        <circle cx="100" cy="90" r="30" fill="none" stroke="#ffff00" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 20 30 Q 100 -10 180 30 L 180 140 Q 180 220 100 240 Q 20 220 20 140 Z" fill="#28a745" stroke="#ffffff" stroke-width="5" />
+        <rect x="90" y="30" width="20" height="210" fill="#ffffff" opacity="0.7" />
+        <text x="100" y="60" font-family="Arial" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">Green Legion</text>
+        <circle cx="100" cy="180" r="30" fill="yellow" stroke="black" stroke-width="3" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 20 30 Q 100 -10 180 30 L 180 140 Q 180 220 100 240 Q 20 220 20 140 Z" fill="#ff6f61" stroke="#ffffff" stroke-width="5" />
+        <polygon points="20,50 180,50 180,70 20,70" fill="#ffcc00" />
+        <text x="100" y="100" font-family="Arial" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">Solar FC</text>
+        <circle cx="100" cy="160" r="35" fill="#ffcc00" stroke="black" stroke-width="2" />
+        <circle cx="100" cy="160" r="15" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 20 30 Q 100 -10 180 30 L 180 140 Q 180 220 100 240 Q 20 220 20 140 Z" fill="#0044cc" stroke="#ffffff" stroke-width="5" />
+        <polygon points="30,30 170,30 170,70 30,70" fill="#ffffff" opacity="0.5" />
+        <text x="100" y="60" font-family="Arial" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">Blue Storm</text>
+        <circle cx="100" cy="150" r="25" fill="white" stroke="#000000" stroke-width="2" />
+        <polygon points="100,125 110,140 130,140 115,155 120,175 100,165 80,175 85,155 70,140 90,140" fill="#000000" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 20 30 Q 100 -10 180 30 L 180 140 Q 180 220 100 240 Q 20 220 20 140 Z" fill="#ff0000" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="120" r="40" fill="white" stroke="black" stroke-width="5" />
+        <polygon points="100,80 110,110 140,110 115,130 125,160 100,140 75,160 85,130 60,110 90,110" fill="yellow" />
+        <text x="50" y="200" font-size="20" fill="white" font-family="Arial" font-weight="bold">Estrellas FC</text>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 20 20 Q 100 -20 180 20 L 180 120 Q 180 200 100 240 Q 20 200 20 120 Z" fill="#ff5733" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,40 110,80 130,80 115,100 120,140 100,120 80,140 85,100 70,80 90,80" fill="#ffff00" />
+        <text x="100" y="60" font-family="Arial" font-size="20" font-weight="bold" fill="#ffffff" text-anchor="middle">Sun Kings</text>
+        <circle cx="100" cy="180" r="35" fill="yellow" stroke="black" stroke-width="3" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 20 50 L 100 10 L 180 50 L 180 200 L 100 240 L 20 200 Z" fill="#28a745" stroke="#ffffff" stroke-width="5" />
+        <rect x="85" y="50" width="30" height="150" fill="#ffffff" opacity="0.7" />
+        <circle cx="100" cy="180" r="30" fill="yellow" stroke="black" stroke-width="3" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 A 90 90 0 0 1 190 100 A 90 90 0 0 1 100 190 A 90 90 0 0 1 10 100 A 90 90 0 0 1 100 10 Z" fill="#ff6f61" stroke="#ffffff" stroke-width="5" />
+        <polygon points="20,50 180,50 180,70 20,70" fill="#ffcc00" />
+        <circle cx="100" cy="160" r="35" fill="#ffcc00" stroke="black" stroke-width="2" />
+        <circle cx="100" cy="160" r="15" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 170 70 L 100 130 L 30 70 Z" fill="#0044cc" stroke="#ffffff" stroke-width="5" />
+        <polygon points="30,30 170,30 170,70 30,70" fill="#ffffff" opacity="0.5" />
+        <circle cx="100" cy="150" r="25" fill="white" stroke="#000000" stroke-width="2" />
+        <polygon points="100,125 110,140 130,140 115,155 120,175 100,165 80,175 85,155 70,140 90,140" fill="#000000" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 30 C 140 20, 180 80, 100 160 C 20 80, 60 20, 100 30 Z" fill="#ff0000" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,70 110,100 140,100 115,120 120,150 100,130 80,150 85,120 60,100 90,100" fill="yellow" />
+        <circle cx="100" cy="180" r="35" fill="yellow" stroke="black" stroke-width="3" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 20 20 Q 100 -20 180 20 L 180 120 Q 180 200 100 240 Q 20 200 20 120 Z" fill="#ff5733" stroke="#ffffff" stroke-width="5" />
+        <line x1="30" y1="50" x2="170" y2="190" stroke="#ffffff" stroke-width="5" />
+        <line x1="30" y1="80" x2="170" y2="220" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="90" r="30" fill="none" stroke="#ffff00" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 20 30 Q 100 -10 180 30 L 180 140 Q 180 220 100 240 Q 20 220 20 140 Z" fill="#2f2f2f" stroke="#ffffff" stroke-width="5" />
+        <polygon points="50,30 150,30 150,100 50,100" fill="#ffffff" opacity="0.7" />
+        <circle cx="100" cy="170" r="30" fill="yellow" stroke="black" stroke-width="3" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 20 50 L 100 10 L 180 50 L 180 200 L 100 240 L 20 200 Z" fill="#4e2a84" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,40 110,70 140,70 115,90 120,120 100,100 80,120 85,90 60,70 90,70" fill="#ffff00" />
+        <circle cx="100" cy="160" r="35" fill="yellow" stroke="black" stroke-width="2" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 20 30 Q 100 -10 180 30 L 180 140 Q 180 220 100 240 Q 20 220 20 140 Z" fill="#00bcd4" stroke="#ffffff" stroke-width="5" />
+        <polygon points="30,30 170,30 170,70 30,70" fill="#ffffff" opacity="0.5" />
+        <polygon points="50,150 100,200 150,150 100,100" fill="yellow" />
+        <circle cx="100" cy="120" r="30" fill="none" stroke="black" stroke-width="3" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 C 180 50, 180 200, 100 240 C 20 200, 20 50, 100 10 Z" fill="#ff6f61" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="120" r="40" fill="white" stroke="black" stroke-width="5" />
+        <circle cx="100" cy="120" r="20" fill="black" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 170 50 L 130 100 L 100 90 L 70 100 L 30 50 L 100 10 Z" fill="#ff6347" stroke="#ffffff" stroke-width="5" />
+        <line x1="30" y1="50" x2="170" y2="50" stroke="#ffffff" stroke-width="5" />
+        <line x1="30" y1="50" x2="100" y2="90" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="180" r="25" fill="yellow" stroke="black" stroke-width="3" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 170 50 L 170 200 L 100 240 L 30 200 L 30 50 Z" fill="#d32f2f" stroke="#ffffff" stroke-width="5" />
+        <rect x="50" y="50" width="100" height="150" fill="#ffffff" opacity="0.6" />
+        <circle cx="100" cy="120" r="35" fill="#ffcc00" stroke="black" stroke-width="3" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 170 50 L 170 150 L 100 190 L 30 150 L 30 50 Z" fill="#00796b" stroke="#ffffff" stroke-width="5" />
+        <rect x="70" y="70" width="60" height="110" fill="yellow" />
+        <circle cx="100" cy="170" r="25" fill="#ffeb3b" stroke="black" stroke-width="2" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 30 C 140 20, 180 80, 100 160 C 20 80, 60 20, 100 30 Z" fill="#f44336" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,60 110,100 140,100 115,120 120,150 100,130 80,150 85,120 60,100 90,100" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="90" fill="#512da8" stroke="#ffffff" stroke-width="5" />
+        <line x1="30" y1="50" x2="170" y2="200" stroke="#ffffff" stroke-width="10" />
+        <line x1="30" y1="200" x2="170" y2="50" stroke="#ffffff" stroke-width="10" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 190 50 L 190 150 L 100 240 L 10 150 L 10 50 Z" fill="#009688" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,80 110,110 130,110 115,125 120,150 100,140 80,150 85,125 70,110 90,110" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 170 40 L 170 160 L 100 190 L 30 160 L 30 40 Z" fill="#0288d1" stroke="#ffffff" stroke-width="5" />
+        <line x1="30" y1="40" x2="170" y2="160" stroke="#ffffff" stroke-width="5" />
+        <line x1="30" y1="160" x2="170" y2="40" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,20 120,80 180,80 130,120 150,180 100,140 50,180 70,120 20,80 80,80" fill="#f57c00" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="130" r="30" fill="white" stroke="black" stroke-width="3" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 170 50 L 170 200 L 100 240 L 30 200 L 30 50 Z" fill="#673ab7" stroke="#ffffff" stroke-width="5" />
+        <rect x="30" y="120" width="140" height="20" fill="#ffffff" opacity="0.7" />
+        <circle cx="100" cy="150" r="30" fill="yellow" stroke="black" stroke-width="3" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 170 50 L 130 100 L 100 90 L 70 100 L 30 50 L 100 10 Z" fill="#c2185b" stroke="#ffffff" stroke-width="5" />
+        <line x1="30" y1="50" x2="170" y2="50" stroke="#ffffff" stroke-width="5" />
+        <line x1="30" y1="50" x2="100" y2="90" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 C 180 30, 180 130, 100 190 C 20 130, 20 30, 100 10 Z" fill="#c2185b" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,40 110,70 140,70 115,90 120,120 100,100 80,120 85,90 60,70 90,70" fill="#ffeb3b" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="125" rx="90" ry="60" fill="#0288d1" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="125" r="40" fill="#ffffff" stroke="black" stroke-width="3" />
+        <circle cx="100" cy="125" r="10" fill="black" />
+        <line x1="100" y1="25" x2="100" y2="225" stroke="#ffffff" stroke-width="5" />
+        <line x1="25" y1="125" x2="175" y2="125" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 170 200 L 30 200 Z" fill="#8e24aa" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,50 110,90 140,90 115,110 120,150 100,130 80,150 85,110 60,90 90,90" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="90" fill="#388e3c" stroke="#ffffff" stroke-width="5" />
+        <rect x="30" y="50" width="140" height="30" fill="white" />
+        <rect x="30" y="100" width="140" height="30" fill="white" />
+        <rect x="30" y="150" width="140" height="30" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 170 50 L 170 200 L 100 240 L 30 200 L 30 50 Z" fill="#f44336" stroke="#ffffff" stroke-width="5" />
+        <rect x="30" y="100" width="140" height="40" fill="white" />
+        <rect x="30" y="150" width="140" height="40" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 C 140 50, 180 100, 100 150 C 20 100, 60 50, 100 10 Z" fill="#d32f2f" stroke="#ffffff" stroke-width="5" />
+        <path d="M 100 60 C 130 80, 160 120, 100 140 C 40 120, 70 80, 100 60 Z" fill="#d32f2f" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,90 110,130 140,130 115,150 120,180 100,160 80,180 85,150 60,130 90,130" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="50" fill="#ffeb3b" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="25" x2="100" y2="75" stroke="#ffeb3b" stroke-width="10" />
+        <line x1="100" y1="175" x2="100" y2="225" stroke="#ffeb3b" stroke-width="10" />
+        <line x1="25" y1="125" x2="75" y2="125" stroke="#ffeb3b" stroke-width="10" />
+        <line x1="175" y1="125" x2="125" y2="125" stroke="#ffeb3b" stroke-width="10" />
+        <line x1="50" y1="50" x2="75" y2="75" stroke="#ffeb3b" stroke-width="10" />
+        <line x1="150" y1="50" x2="125" y2="75" stroke="#ffeb3b" stroke-width="10" />
+        <line x1="50" y1="200" x2="75" y2="175" stroke="#ffeb3b" stroke-width="10" />
+        <line x1="150" y1="200" x2="125" y2="175" stroke="#ffeb3b" stroke-width="10" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 130 90 L 70 90 L 100 170 L 70 250 L 130 250 L 100 170 L 100 10 Z" fill="#ff5722" stroke="#ffffff" stroke-width="5" />
+        <line x1="30" y1="50" x2="170" y2="200" stroke="#ffffff" stroke-width="5" />
+        <line x1="30" y1="200" x2="170" y2="50" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 170 50 L 170 200 L 100 240 L 30 200 L 30 50 Z" fill="#607d8b" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,60 110,100 140,100 115,120 120,150 100,130 80,150 85,120 60,100 90,100" fill="#ffeb3b" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 170 50 L 170 200 L 100 240 L 30 200 L 30 50 Z" fill="#0097a7" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="125" r="40" fill="white" stroke="black" stroke-width="3" />
+        <polygon points="100,60 110,100 140,100 115,120 120,150 100,130 80,150 85,120 60,100 90,100" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 C 140 30, 180 100, 100 150 C 20 100, 60 30, 100 10 Z" fill="#f44336" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,110 110,140 140,140 115,160 120,190 100,170 80,190 85,160 60,140 90,140" fill="orange" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 150 50 L 130 200 L 100 240 L 70 200 L 50 50 Z" fill="#3f51b5" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="50" x2="100" y2="200" stroke="#ffffff" stroke-width="5" />
+        <line x1="50" y1="100" x2="150" y2="100" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 50 30 L 150 30 L 180 120 L 20 120 Z" fill="#2196f3" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,50 110,90 140,90 115,110 120,140 100,120 80,140 85,110 60,90 90,90" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="90" fill="#8bc34a" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="125" r="10" fill="black" />
+        <circle cx="60" cy="100" r="10" fill="black" />
+        <circle cx="140" cy="100" r="10" fill="black" />
+        <circle cx="60" cy="150" r="10" fill="black" />
+        <circle cx="140" cy="150" r="10" fill="black" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="50" fill="#ff9800" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="25" x2="100" y2="75" stroke="#ff9800" stroke-width="10" />
+        <line x1="100" y1="175" x2="100" y2="225" stroke="#ff9800" stroke-width="10" />
+        <line x1="25" y1="125" x2="75" y2="125" stroke="#ff9800" stroke-width="10" />
+        <line x1="175" y1="125" x2="125" y2="125" stroke="#ff9800" stroke-width="10" />
+        <line x1="50" y1="50" x2="75" y2="75" stroke="#ff9800" stroke-width="10" />
+        <line x1="150" y1="50" x2="125" y2="75" stroke="#ff9800" stroke-width="10" />
+        <line x1="50" y1="200" x2="75" y2="175" stroke="#ff9800" stroke-width="10" />
+        <line x1="150" y1="200" x2="125" y2="175" stroke="#ff9800" stroke-width="10" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 Q 180 50 180 150 L 100 240 L 20 150 Q 20 50 100 10 Z" fill="#00bcd4" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="125" r="30" fill="white" stroke="black" stroke-width="5" />
+        <polygon points="100,100 110,120 140,120 115,140 120,170 100,150 80,170 85,140 60,120 90,120" fill="black" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="50" fill="#f44336" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="25" x2="100" y2="75" stroke="#f44336" stroke-width="10" />
+        <line x1="100" y1="175" x2="100" y2="225" stroke="#f44336" stroke-width="10" />
+        <line x1="25" y1="125" x2="75" y2="125" stroke="#f44336" stroke-width="10" />
+        <line x1="175" y1="125" x2="125" y2="125" stroke="#f44336" stroke-width="10" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 180 125 L 100 240 L 20 125 Z" fill="#4caf50" stroke="#ffffff" stroke-width="5" />
+        <rect x="40" y="50" width="30" height="150" fill="white" />
+        <rect x="130" y="50" width="30" height="150" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 180 200 L 20 200 Z" fill="#9c27b0" stroke="#ffffff" stroke-width="5" />
+        <circle cx="50" cy="150" r="10" fill="white" />
+        <circle cx="100" cy="150" r="10" fill="white" />
+        <circle cx="150" cy="150" r="10" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 150 50 L 150 200 L 100 240 L 50 200 L 50 50 Z" fill="#ff5722" stroke="#ffffff" stroke-width="5" />
+        <circle cx="50" cy="125" r="10" fill="white" />
+        <circle cx="150" cy="125" r="10" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect x="25" y="25" width="150" height="200" fill="#8bc34a" stroke="#ffffff" stroke-width="5" />
+        <rect x="25" y="100" width="150" height="50" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 150 50 L 150 200 L 100 240 L 50 200 L 50 50 Z" fill="#f44336" stroke="#ffffff" stroke-width="5" />
+        <line x1="50" y1="80" x2="150" y2="80" stroke="#ffffff" stroke-width="5" />
+        <line x1="50" y1="140" x2="150" y2="140" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 Q 120 50 150 75 Q 180 100 150 150 Q 120 180 100 250 Q 80 180 50 150 Q 20 100 50 75 Q 80 50 100 10 Z" fill="#e91e63" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="10" x2="100" y2="250" stroke="#ffffff" stroke-width="5" />
+        <line x1="50" y1="75" x2="150" y2="75" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 120,60 170,60 130,90 150,150 100,120 50,150 70,90 30,60 80,60" fill="#ffeb3b" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="120" r="10" fill="black" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="125" rx="80" ry="120" fill="#8bc34a" stroke="#ffffff" stroke-width="5" />
+        <polygon points="20,40 180,40 160,200 40,200" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 Q 120 50 150 75 Q 180 100 150 150 Q 120 180 100 250 Q 80 180 50 150 Q 20 100 50 75 Q 80 50 100 10 Z" fill="#2196f3" stroke="#ffffff" stroke-width="5" />
+        <line x1="50" y1="75" x2="150" y2="150" stroke="#ffffff" stroke-width="5" />
+        <line x1="150" y1="75" x2="50" y2="150" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 180 125 L 100 240 L 20 125 Z" fill="#9c27b0" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="10" x2="100" y2="240" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="125" x2="180" y2="125" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="90" fill="#ff5722" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="25" x2="100" y2="225" stroke="#ffffff" stroke-width="5" />
+        <line x1="25" y1="125" x2="175" y2="125" stroke="#ffffff" stroke-width="5" />
+        <line x1="50" y1="50" x2="150" y2="200" stroke="#ffffff" stroke-width="5" />
+        <line x1="150" y1="50" x2="50" y2="200" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 150 50 L 150 200 L 100 240 L 50 200 L 50 50 Z" fill="#00bcd4" stroke="#ffffff" stroke-width="5" />
+        <rect x="50" y="50" width="100" height="150" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 180 200 L 20 200 Z" fill="#4caf50" stroke="#ffffff" stroke-width="5" />
+        <rect x="90" y="50" width="20" height="150" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect x="25" y="25" width="150" height="200" fill="#3f51b5" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,60 110,100 140,100 115,120 120,160 100,140 80,160 85,120 60,100 90,100" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 180,125 100,240 20,125" fill="#009688" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="10" x2="100" y2="240" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="125" x2="180" y2="125" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 170,40 170,160 100,190 30,160 30,40" fill="#ff9800" stroke="#ffffff" stroke-width="5" />
+        <line x1="45" y1="40" x2="45" y2="160" stroke="#ffffff" stroke-width="10" />
+        <line x1="100" y1="40" x2="100" y2="160" stroke="#ffffff" stroke-width="10" />
+        <line x1="155" y1="40" x2="155" y2="160" stroke="#ffffff" stroke-width="10" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 Q 120 50 150 75 Q 180 100 150 150 Q 120 180 100 250 Q 80 180 50 150 Q 20 100 50 75 Q 80 50 100 10 Z" fill="#607d8b" stroke="#ffffff" stroke-width="5" />
+        <line x1="50" y1="75" x2="150" y2="150" stroke="#ffffff" stroke-width="5" />
+        <line x1="150" y1="75" x2="50" y2="150" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 180,125 100,240 20,125" fill="#9c27b0" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="10" x2="100" y2="240" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="125" x2="180" y2="125" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 150 50 L 150 200 L 100 240 L 50 200 L 50 50 Z" fill="#9e9e9e" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="50" x2="100" y2="200" stroke="#ffffff" stroke-width="10" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="125" rx="80" ry="120" fill="#8bc34a" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,60 110,100 140,100 115,120 120,160 100,140 80,160 85,120 60,100 90,100" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 180 200 L 20 200 Z" fill="#ff5722" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="100" x2="180" y2="100" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 Q 120 50 150 75 Q 180 100 150 150 Q 120 180 100 250 Q 80 180 50 150 Q 20 100 50 75 Q 80 50 100 10 Z" fill="#ffeb3b" stroke="#ffffff" stroke-width="5" />
+        <rect x="90" y="10" width="20" height="230" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 180,125 100,240 20,125" fill="#3f51b5" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="125" r="30" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 120,60 170,60 130,90 150,150 100,120 50,150 70,90 30,60 80,60" fill="#ffc107" stroke="#ffffff" stroke-width="5" />
+        <rect x="90" y="10" width="20" height="230" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 150 100 L 100 190 L 50 100 Z" fill="#2196f3" stroke="#ffffff" stroke-width="5" />
+        <rect x="90" y="90" width="20" height="70" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 180,125 100,240 20,125" fill="#f44336" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="125" x2="180" y2="125" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="10" x2="100" y2="240" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="50" fill="#ffeb3b" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="10" x2="100" y2="60" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="190" x2="100" y2="240" stroke="#ffffff" stroke-width="5" />
+        <line x1="50" y1="125" x2="10" y2="125" stroke="#ffffff" stroke-width="5" />
+        <line x1="150" y1="125" x2="190" y2="125" stroke="#ffffff" stroke-width="5" />
+        <line x1="40" y1="40" x2="20" y2="20" stroke="#ffffff" stroke-width="5" />
+        <line x1="160" y1="40" x2="180" y2="20" stroke="#ffffff" stroke-width="5" />
+        <line x1="40" y1="210" x2="20" y2="230" stroke="#ffffff" stroke-width="5" />
+        <line x1="160" y1="210" x2="180" y2="230" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 180 200 L 20 200 Z" fill="#009688" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="125" r="30" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 150 50 L 150 200 L 100 240 L 50 200 L 50 50 Z" fill="#fbc02d" stroke="#ffffff" stroke-width="5" />
+        <rect x="50" y="50" width="100" height="25" fill="#ffffff" />
+        <rect x="50" y="100" width="100" height="25" fill="#ffffff" />
+        <rect x="50" y="150" width="100" height="25" fill="#ffffff" />
+        <rect x="50" y="200" width="100" height="25" fill="#ffffff" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="125" rx="80" ry="120" fill="#9e9e9e" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="30" x2="180" y2="220" stroke="#ffffff" stroke-width="5" />
+        <line x1="180" y1="30" x2="20" y2="220" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 120,50 170,50 130,80 150,150 100,120 50,150 70,80 30,50 80,50" fill="#ff9800" stroke="#ffffff" stroke-width="5" />
+        <rect x="90" y="10" width="20" height="230" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="80" fill="#3f51b5" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="45" x2="100" y2="205" stroke="#ffffff" stroke-width="5" />
+        <line x1="45" y1="100" x2="155" y2="100" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 120,50 170,50 130,80 150,150 100,120 50,150 70,80 30,50 80,50" fill="#ff5722" stroke="#ffffff" stroke-width="5" />
+        <polygon points="20,30 180,30 160,120 40,120" fill="#ffffff" opacity="0.7" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 180 200 L 20 200 Z" fill="#8bc34a" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="200" x2="180" y2="200" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="10" x2="100" y2="200" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 20 C 130 -10, 180 40, 100 100 C 20 40, 70 -10, 100 20 Z" fill="#e91e63" stroke="#ffffff" stroke-width="5" />
+        <rect x="50" y="60" width="100" height="30" fill="#ffffff" />
+        <rect x="50" y="100" width="100" height="30" fill="#ffffff" />
+        <rect x="50" y="140" width="100" height="30" fill="#ffffff" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 180 60 L 180 190 L 100 240 L 20 190 L 20 60 Z" fill="#607d8b" stroke="#ffffff" stroke-width="5" />
+        <rect x="90" y="60" width="20" height="130" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 150 40 L 150 190 L 100 240 L 50 190 L 50 40 Z" fill="#c2185b" stroke="#ffffff" stroke-width="5" />
+        <line x1="50" y1="40" x2="150" y2="190" stroke="#ffffff" stroke-width="5" />
+        <line x1="150" y1="40" x2="50" y2="190" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="80" fill="#8bc34a" stroke="#ffffff" stroke-width="5" />
+        <rect x="50" y="30" width="20" height="190" fill="white" />
+        <rect x="80" y="30" width="20" height="190" fill="white" />
+        <rect x="110" y="30" width="20" height="190" fill="white" />
+        <rect x="140" y="30" width="20" height="190" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="50" fill="#ffeb3b" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="10" x2="100" y2="50" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="200" x2="100" y2="240" stroke="#ffffff" stroke-width="5" />
+        <line x1="50" y1="125" x2="10" y2="125" stroke="#ffffff" stroke-width="5" />
+        <line x1="150" y1="125" x2="190" y2="125" stroke="#ffffff" stroke-width="5" />
+        <line x1="40" y1="40" x2="20" y2="20" stroke="#ffffff" stroke-width="5" />
+        <line x1="160" y1="40" x2="180" y2="20" stroke="#ffffff" stroke-width="5" />
+        <line x1="40" y1="210" x2="20" y2="230" stroke="#ffffff" stroke-width="5" />
+        <line x1="160" y1="210" x2="180" y2="230" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 10 L 150 100 L 100 190 L 50 100 Z" fill="#f44336" stroke="#ffffff" stroke-width="5" />
+        <rect x="90" y="10" width="20" height="180" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 180,125 100,240 20,125" fill="#3f51b5" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,70 110,100 130,100 115,115 120,140 100,130 80,140 85,115 70,100 90,100" fill="#ffeb3b" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="80" fill="#9c27b0" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="125" x2="180" y2="125" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="20" x2="100" y2="230" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="10" width="160" height="230" fill="#8bc34a" stroke="#ffffff" stroke-width="5" />
+        <rect x="20" y="60" width="160" height="30" fill="white" />
+        <rect x="20" y="120" width="160" height="30" fill="white" />
+        <rect x="20" y="180" width="160" height="30" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="125" rx="80" ry="120" fill="#ff9800" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="125" r="40" fill="white" />
+        <circle cx="100" cy="125" r="15" fill="black" />
+        <line x1="100" y1="10" x2="100" y2="240" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="125" x2="180" y2="125" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10 L150 40 L150 190 L100 240 L50 190 L50 40 Z" fill="#795548" stroke="#ffffff" stroke-width="5" />
+        <rect x="60" y="40" width="20" height="150" fill="white" />
+        <rect x="120" y="40" width="20" height="150" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 180,190 20,190" fill="#607d8b" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,160 110,190 130,190 115,210 120,230 100,220 80,230 85,210 70,190 90,190" fill="#ffeb3b" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="80" fill="#8bc34a" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="125" x2="180" y2="125" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="20" x2="100" y2="230" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 120,70 180,70 130,110 150,170 100,130 50,170 70,110 20,70 80,70" fill="#ff9800" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,90 110,120 130,120 115,135 120,160 100,140 80,160 85,135 70,120 90,120" fill="#ffffff" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="20" width="160" height="210" fill="#ff5722" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="20" x2="100" y2="230" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="125" x2="180" y2="125" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 100 20 C 130 -10, 180 40, 100 100 C 20 40, 70 -10, 100 20 Z" fill="#f44336" stroke="#ffffff" stroke-width="5" />
+        <polygon points="50,50 70,40 90,50 70,60" fill="#ffeb3b" />
+        <polygon points="150,50 130,40 110,50 130,60" fill="#ffeb3b" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="125" rx="80" ry="120" fill="#9c27b0" stroke="#ffffff" stroke-width="5" />
+        <rect x="50" y="50" width="100" height="30" fill="white" />
+        <rect x="50" y="100" width="100" height="30" fill="white" />
+        <rect x="50" y="150" width="100" height="30" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 20 C 140 10, 180 100, 100 180 C 20 100, 60 10, 100 20 Z" fill="#4caf50" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,90 110,120 130,120 115,135 120,160 100,140 80,160 85,135 70,120 90,120" fill="#ffeb3b" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 20 C 130 -10, 180 40, 100 100 C 20 40, 70 -10, 100 20 Z" fill="#ff5722" stroke="#ffffff" stroke-width="5" />
+        <rect x="50" y="60" width="100" height="30" fill="white" />
+        <rect x="50" y="100" width="100" height="30" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 180,190 20,190" fill="#3f51b5" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="10" x2="100" y2="190" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="190" x2="180" y2="190" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="80" fill="#2196f3" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,40 180,190 20,190" fill="white" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10 L150 40 L150 190 L100 240 L50 190 L50 40 Z" fill="#e91e63" stroke="#ffffff" stroke-width="5" />
+        <line x1="50" y1="40" x2="150" y2="190" stroke="#ffffff" stroke-width="5" />
+        <line x1="50" y1="190" x2="150" y2="40" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="125" rx="80" ry="120" fill="#009688" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="80" r="10" fill="white" />
+        <circle cx="120" cy="100" r="10" fill="white" />
+        <circle cx="80" cy="100" r="10" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 120,60 180,60 130,100 150,160 100,130 50,160 70,100 20,60 80,60" fill="#ffc107" stroke="#ffffff" stroke-width="5" />
+        <rect x="50" y="100" width="100" height="40" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 180,125 100,240 20,125" fill="#3f51b5" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="10" x2="100" y2="240" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="125" x2="180" y2="125" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 20 C 130 -10, 180 40, 100 100 C 20 40, 70 -10, 100 20 Z" fill="#f44336" stroke="#ffffff" stroke-width="5" />
+        <polygon points="50,150 70,140 90,150 70,160" fill="white" />
+        <polygon points="150,150 130,140 110,150 130,160" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="20" width="160" height="210" fill="#9c27b0" stroke="#ffffff" stroke-width="5" />
+        <line x1="100" y1="20" x2="100" y2="230" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="125" x2="180" y2="125" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 180,190 20,190" fill="#ffeb3b" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,80 110,100 130,100 115,110 120,130 100,120 80,130 85,110 70,100 90,100" fill="#f44336" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="125" rx="80" ry="120" fill="#ff5722" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="50" x2="180" y2="200" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="200" x2="180" y2="50" stroke="#ffffff" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 20 C 130 -10, 180 40, 100 100 C 20 40, 70 -10, 100 20 Z" fill="#e91e63" stroke="#ffd700" stroke-width="5" />
+        <path d="M50 150 C 70 140, 70 180, 100 180 C 130 180, 150 140, 150 150 C 150 180, 100 220, 50 150 Z" fill="#ffd700" stroke="#ffd700" stroke-width="5" />
+    </svg>
+
+
+    <!-- Escudo 7 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 150,40 150,190 100,240 50,190 50,40" fill="#009688" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="125" r="50" fill="#ffffff" stroke="#000000" stroke-width="5" />
+    </svg>
+
+    <!-- Escudo 8 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,20 180,60 140,120 160,200 100,160 40,200 60,120 20,60" fill="#8bc34a" stroke="#ffffff" stroke-width="5" />
+    </svg>
+
+    <!-- Escudo 9 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10 L180 50 V190 L100 230 L20 190 V50 Z" fill="#2196f3" stroke="#ffffff" stroke-width="5" />
+        <path d="M100 10 L100 230" fill="none" stroke="#ffffff" stroke-width="5" />
+    </svg>
+
+    <!-- Escudo 10 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 180,50 150,120 180,190 100,230 20,190 50,120 20,50" fill="#cddc39" stroke="#ffffff" stroke-width="5" />
+    </svg>
+
+    <!-- Escudo 11 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="125" rx="70" ry="100" fill="#607d8b" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,50 130,100 100,150 70,100" fill="#ffffff" stroke="#ffffff" stroke-width="5" />
+    </svg>
+
+    <!-- Escudo 12 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 20 L180 50 V200 L100 240 L20 200 V50 Z" fill="#f44336" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="120" r="40" fill="white" stroke="#000000" stroke-width="5" />
+    </svg>
+
+    <!-- Escudo 13 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10 L180 100 L150 190 L50 190 L20 100 Z" fill="#4caf50" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="120" r="20" fill="#ffffff" stroke="#000000" stroke-width="5" />
+    </svg>
+
+    <!-- Escudo 14 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10 L180 50 V200 L100 230 L20 200 V50 Z" fill="#ff5722" stroke="#ffffff" stroke-width="5" />
+        <line x1="50" y1="80" x2="150" y2="80" stroke="#ffffff" stroke-width="5" />
+    </svg>
+
+    <!-- Escudo 15 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 180,60 150,190 100,230 50,190 20,60" fill="#673ab7" stroke="#ffffff" stroke-width="5" />
+    </svg>
+
+    <!-- Escudo 16 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="80" fill="#ff9800" stroke="#ffffff" stroke-width="5" />
+        <line x1="20" y1="50" x2="180" y2="200" stroke="#ffffff" stroke-width="5" />
+    </svg>
+
+    <!-- Escudo 17 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 20 L180 80 V190 L100 240 L20 190 V80 Z" fill="#9c27b0" stroke="#ffffff" stroke-width="5" />
+        <circle cx="100" cy="125" r="50" fill="white" />
+    </svg>
+
+    <!-- Escudo 18 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,20 180,60 150,160 100,210 50,160 20,60" fill="#03a9f4" stroke="#ffffff" stroke-width="5" />
+    </svg>
+
+    <!-- Escudo 19 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10 L180 50 L150 190 L100 230 L50 190 L20 50 Z" fill="#8bc34a" stroke="#ffffff" stroke-width="5" />
+    </svg>
+
+    <!-- Escudo 20 -->
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="80" fill="#9c27b0" stroke="#ffffff" stroke-width="5" />
+        <polygon points="100,20 120,60 180,60 130,100 150,160 100,130 50,160 70,100 20,60 80,60" fill="white" />
+    </svg>   
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="180" height="230" fill="yellow" stroke="black" stroke-width="5" />
+        <polygon points="100,50 120,100 80,100" fill="black" />
+        <polygon points="100,150 120,200 80,200" fill="black" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,20 150,60 120,120 80,120 50,60" fill="gold" />
+        <rect x="30" y="120" width="140" height="100" fill="#2196f3" stroke="black" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="70" r="50" fill="white" />
+        <circle cx="150" cy="70" r="40" fill="white" />
+        <circle cx="50" cy="70" r="40" fill="white" />
+        <rect x="10" y="120" width="180" height="100" fill="skyblue" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="60" fill="white" stroke="black" stroke-width="5" />
+        <circle cx="100" cy="100" r="20" fill="black" />
+        <circle cx="60" cy="60" r="10" fill="black" />
+        <circle cx="140" cy="60" r="10" fill="black" />
+        <circle cx="60" cy="140" r="10" fill="black" />
+        <circle cx="140" cy="140" r="10" fill="black" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="70" r="50" fill="white" />
+        <circle cx="150" cy="70" r="40" fill="white" />
+        <circle cx="50" cy="70" r="40" fill="white" />
+        <polygon points="100,150 120,200 80,200" fill="yellow" />
+        <polygon points="100,50 120,100 80,100" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 120,40 130,70 100,80 70,70 80,40" fill="gray" stroke="black" stroke-width="5" />
+        <circle cx="100" cy="70" r="10" fill="white" />
+        <circle cx="80" cy="60" r="5" fill="black" />
+        <circle cx="120" cy="60" r="5" fill="black" />
+        <path d="M70,80 Q100,120 130,80" fill="none" stroke="black" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="50" fill="#ffcc99" stroke="black" stroke-width="5" />
+        <circle cx="85" cy="90" r="5" fill="black" />
+        <circle cx="115" cy="90" r="5" fill="black" />
+        <path d="M80,110 Q100,130 120,110" fill="none" stroke="black" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 120,60 180,60 130,100 150,160 100,130 50,160 70,100 20,60 80,60" fill="gold" stroke="black" stroke-width="5" />
+        <rect x="50" y="100" width="100" height="40" fill="red" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,20 130,40 100,60 70,40" fill="gold" />
+        <rect x="50" y="60" width="100" height="150" fill="#3f51b5" />
+        <polygon points="100,50 120,100 80,100" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="60" fill="white" stroke="black" stroke-width="5" />
+        <polygon points="100,50 120,100 80,100" fill="yellow" />
+        <polygon points="100,150 120,200 80,200" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="60" fill="green" stroke="black" stroke-width="5" />
+        <circle cx="100" cy="100" r="10" fill="yellow" />
+        <circle cx="60" cy="100" r="10" fill="yellow" />
+        <circle cx="140" cy="100" r="10" fill="yellow" />
+        <circle cx="100" cy="60" r="10" fill="yellow" />
+        <circle cx="100" cy="140" r="10" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="50" width="140" height="150" fill="#ff5722" stroke="black" stroke-width="5" />
+        <polygon points="30,50 100,10 170,50" fill="#ff9800" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="50" fill="yellow" />
+        <line x1="100" y1="10" x2="100" y2="50" stroke="yellow" stroke-width="5" />
+        <line x1="100" y1="150" x2="100" y2="190" stroke="yellow" stroke-width="5" />
+        <line x1="10" y1="100" x2="50" y2="100" stroke="yellow" stroke-width="5" />
+        <line x1="150" y1="100" x2="190" y2="100" stroke="yellow" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="180" height="200" fill="#2196f3" />
+        <polygon points="0,190 200,190 100,240" fill="blue" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,10 150,40 180,150 150,200 100,230 50,200 20,150 50,40" fill="green" />
+        <line x1="100" y1="10" x2="100" y2="230" stroke="black" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="50" fill="black" />
+        <circle cx="130" cy="80" r="40" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="60" fill="black" />
+        <circle cx="130" cy="80" r="40" fill="white" />
+        <polygon points="100,50 120,100 80,100" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="50" width="180" height="150" fill="#8bc34a" stroke="black" stroke-width="5" />
+        <line x1="40" y1="70" x2="160" y2="70" stroke="black" stroke-width="5" />
+        <line x1="50" y1="180" x2="150" y2="180" stroke="black" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="60" fill="gold" />
+        <polygon points="100,20 120,60 180,60 130,100 150,160 100,130 50,160 70,100 20,60 80,60" fill="green" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="60" fill="yellow" />
+        <polygon points="100,20 120,60 80,60" fill="black" />
+        <polygon points="100,150 120,200 80,200" fill="black" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="70" r="50" fill="green" />
+        <polygon points="60,150 50,170 70,170" fill="brown" />
+        <polygon points="140,150 130,170 150,170" fill="brown" />
+        <circle cx="100" cy="70" r="10" fill="gray" />
+        <circle cx="90" cy="60" r="5" fill="black" />
+        <circle cx="110" cy="60" r="5" fill="black" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="50" fill="black" />
+        <circle cx="130" cy="80" r="40" fill="white" />
+        <circle cx="50" cy="70" r="30" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="60" fill="blue" />
+        <polygon points="50,30 70,50 90,30" fill="yellow" />
+        <polygon points="80,20 100,30 60,30" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="50" width="140" height="150" fill="red" />
+        <polygon points="100,50 120,40 100,30 80,40" fill="green" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="70" r="50" fill="lightblue" />
+        <rect x="90" y="120" width="20" height="50" fill="brown" />
+        <circle cx="100" cy="100" r="30" fill="green" />
+        <polygon points="100,50 120,100 80,100" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,20 120,40 100,60 80,40" fill="gold" />
+        <rect x="50" y="60" width="100" height="150" fill="red" />
+        <polygon points="100,50 120,100 80,100" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,30 120,60 140,100 120,140 100,170 80,140 60,100 80,60" fill="black" />
+        <path d="M80,100 Q100,150 120,100" fill="none" stroke="yellow" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="60" fill="white" stroke="black" stroke-width="5" />
+        <polygon points="100,50 120,100 80,100" fill="yellow" />
+        <polygon points="100,150 120,200 80,200" fill="yellow" />
+        <rect x="50" y="10" width="100" height="40" fill="blue" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,30 120,60 100,90 80,60" fill="red" />
+        <polygon points="100,90 120,120 100,150 80,120" fill="red" />
+        <rect x="50" y="100" width="100" height="150" fill="blue" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100,30 C120,50 150,50 150,100 C150,150 120,150 100,130 C80,150 50,150 50,100 C50,50 80,50 100,30" fill="green" />
+        <rect x="50" y="100" width="100" height="150" fill="lightblue" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect x="60" y="70" width="80" height="150" fill="silver" />
+        <rect x="90" y="10" width="20" height="60" fill="silver" />
+        <circle cx="100" cy="100" r="50" fill="gold" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="60" fill="blue" />
+        <polygon points="100,20 120,60 80,60" fill="yellow" />
+        <polygon points="80,50 120,50 100,30" fill="yellow" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="60" fill="skyblue" />
+        <circle cx="100" cy="100" r="40" fill="yellow" />
+        <circle cx="50" cy="100" r="30" fill="white" />
+        <circle cx="150" cy="100" r="30" fill="white" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100,50 Q120,70 100,90 Q80,70 100,50" fill="blue" />
+        <rect x="80" y="90" width="40" height="100" fill="blue" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="60" fill="green" />
+        <polygon points="100,30 120,60 100,90 80,60" fill="gold" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect x="70" y="30" width="60" height="180" fill="brown" />
+        <circle cx="100" cy="40" r="20" fill="black" />
+        <path d="M80,90 Q100,120 120,90" fill="none" stroke="black" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="60" fill="brown" />
+        <circle cx="100" cy="100" r="20" fill="black" />
+        <circle cx="100" cy="100" r="40" fill="none" stroke="black" stroke-width="5" />
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="66.66" height="250" fill="blue"/>
+        <rect x="66.66" width="66.66" height="250" fill="white"/>
+        <rect x="133.32" width="66.66" height="250" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="66.66" height="250" fill="green"/>
+        <rect x="66.66" width="66.66" height="250" fill="white"/>
+        <rect x="133.32" width="66.66" height="250" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="83.33" fill="black"/>
+        <rect width="200" height="83.33" y="83.33" fill="red"/>
+        <rect width="200" height="83.33" y="166.66" fill="yellow"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="125" fill="red"/>
+        <rect width="200" height="125" y="125" fill="yellow"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="250" fill="white"/>
+        <circle cx="100" cy="125" r="60" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="66.66" height="250" fill="green"/>
+        <rect x="66.66" width="66.66" height="250" fill="white"/>
+        <rect x="133.32" width="66.66" height="250" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="250" fill="green"/>
+        <polygon points="100,40 160,125 100,210 40,125" fill="yellow"/>
+        <circle cx="100" cy="125" r="50" fill="blue"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="250" fill="blue"/>
+        <path d="M0,0 L200,250 M0,250 L200,0" stroke="white" stroke-width="10"/>
+        <path d="M0,0 L200,250 M0,250 L200,0" stroke="red" stroke-width="5"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="125" fill="skyblue"/>
+        <rect width="200" height="125" y="125" fill="white"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="83.33" fill="white"/>
+        <rect width="200" height="83.33" y="83.33" fill="blue"/>
+        <rect width="200" height="83.33" y="166.66" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="83.33" fill="orange"/>
+        <rect width="200" height="83.33" y="83.33" fill="white"/>
+        <rect width="200" height="83.33" y="166.66" fill="green"/>
+        <circle cx="100" cy="125" r="30" fill="blue"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 L100,125 L0,250 Z" fill="green"/>
+        <path d="M100,125 L200,0 L200,250 Z" fill="yellow"/>
+        <path d="M0,125 L200,125 L200,250 Z" fill="blue"/>
+        <path d="M0,0 L200,250 L0,250 Z" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="125" fill="red"/>
+        <rect width="200" height="125" y="125" fill="white"/>
+        <circle cx="100" cy="60" r="30" fill="blue"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="250" fill="blue"/>
+        <path d="M0,0 L200,250 M0,250 L200,0" stroke="white" stroke-width="15"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="250" fill="red"/>
+        <rect width="100" height="250" x="100" fill="white"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="83.33" fill="yellow"/>
+        <rect width="200" height="83.33" y="83.33" fill="blue"/>
+        <rect width="200" height="83.33" y="166.66" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="83.33" fill="red"/>
+        <rect width="200" height="83.33" y="83.33" fill="white"/>
+        <rect width="200" height="83.33" y="166.66" fill="blue"/>
+        <polygon points="50,125 70,145 90,125" fill="white"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="62.5" fill="black"/>
+        <rect width="200" height="62.5" y="62.5" fill="white"/>
+        <rect width="200" height="62.5" y="125" fill="red"/>
+        <rect width="200" height="62.5" y="187.5" fill="yellow"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,40 160,125 100,210 40,125" fill="green"/>
+        <polygon points="60,80 140,80 100,170" fill="yellow"/>
+        <circle cx="100" cy="125" r="50" fill="blue"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="90" fill="red"/>
+        <circle cx="100" cy="125" r="60" fill="yellow"/>
+        <path d="M100,45 L120,90 L80,90 Z" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="60" height="250" fill="blue"/>
+        <rect x="60" width="80" height="250" fill="white"/>
+        <rect x="140" width="60" height="250" fill="red"/>
+        <path d="M100,50 Q120,100 100,150 Q80,100 100,50 Z" fill="white"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 L200,0 L200,250 L0,250 Z" fill="green"/>
+        <path d="M0,0 L200,0 L200,83.33 L0,83.33 Z" fill="white"/>
+        <path d="M0,166.67 L200,166.67 L200,250 L0,250 Z" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="125" rx="90" ry="60" fill="skyblue"/>
+        <ellipse cx="100" cy="125" rx="60" ry="40" fill="white"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="90" fill="green"/>
+        <circle cx="100" cy="125" r="70" fill="white"/>
+        <path d="M100,55 L130,100 L70,100 Z" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 L200,0 L200,83.33 L0,83.33 Z" fill="black"/>
+        <path d="M0,83.33 L200,83.33 L200,166.66 L0,166.66 Z" fill="red"/>
+        <path d="M0,166.66 L200,166.66 L200,250 L0,250 Z" fill="yellow"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="250" fill="blue"/>
+        <polygon points="0,0 200,250 0,250" fill="white"/>
+        <polygon points="200,0 0,250 200,250" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="83.33" fill="white"/>
+        <rect width="200" height="83.33" y="83.33" fill="blue"/>
+        <rect width="200" height="83.33" y="166.66" fill="red"/>
+        <circle cx="100" cy="125" r="30" fill="white"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="125" r="90" fill="white"/>
+        <circle cx="100" cy="125" r="60" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="83.33" fill="yellow"/>
+        <rect width="200" height="83.33" y="83.33" fill="blue"/>
+        <rect width="200" height="83.33" y="166.66" fill="red"/>
+        <circle cx="100" cy="125" r="40" fill="white"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="125" fill="red"/>
+        <rect width="200" height="125" y="125" fill="white"/>
+        <polygon points="100,50 120,90 80,90" fill="blue"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="100,0 200,125 100,250 0,125" fill="green"/>
+        <polygon points="0,0 200,0 200,83.33 0,83.33" fill="yellow"/>
+        <polygon points="0,83.33 200,83.33 200,166.66 0,166.66" fill="blue"/>
+        <polygon points="0,166.66 200,166.66 200,250 0,250" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="250" fill="white"/>
+        <circle cx="100" cy="125" r="40" fill="blue"/>
+        <polygon points="100,50 120,90 80,90" fill="blue"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="250" fill="red"/>
+        <rect width="100" height="250" x="100" fill="white"/>
+        <circle cx="100" cy="125" r="40" fill="red"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="62.5" fill="black"/>
+        <rect width="200" height="62.5" y="62.5" fill="white"/>
+        <rect width="200" height="62.5" y="125" fill="red"/>
+        <rect width="200" height="62.5" y="187.5" fill="yellow"/>
+        <circle cx="100" cy="125" r="30" fill="white"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="125" fill="red"/>
+        <rect width="200" height="125" y="125" fill="white"/>
+        <polygon points="100,40 120,80 80,80" fill="blue"/>
+    </svg>
+    <svg width="200" height="250" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="250" fill="green"/>
+        <rect width="100" height="250" x="100" fill="red"/>
+        <circle cx="100" cy="125" r="40" fill="white"/>
+    </svg>
+      
 </body>
+
 </html>

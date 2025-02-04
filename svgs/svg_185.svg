@@ -1,0 +1,5 @@
+<svg height="250" viewbox="0 0 200 250" width="200" xmlns="http://www.w3.org/2000/svg">
+<path d="M0,0 L200,0 L200,250 L0,250 Z" fill="green"></path>
+<path d="M0,0 L200,0 L200,83.33 L0,83.33 Z" fill="white"></path>
+<path d="M0,166.67 L200,166.67 L200,250 L0,250 Z" fill="red"></path>
+</svg>

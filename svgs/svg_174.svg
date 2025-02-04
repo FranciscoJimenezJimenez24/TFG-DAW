@@ -1,0 +1,6 @@
+<svg height="250" viewbox="0 0 200 250" width="200" xmlns="http://www.w3.org/2000/svg">
+<rect fill="orange" height="83.33" width="200"></rect>
+<rect fill="white" height="83.33" width="200" y="83.33"></rect>
+<rect fill="green" height="83.33" width="200" y="166.66"></rect>
+<circle cx="100" cy="125" fill="blue" r="30"></circle>
+</svg>

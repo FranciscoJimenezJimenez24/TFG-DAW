@@ -1,0 +1,7 @@
+<svg height="250" viewbox="0 0 200 250" width="200" xmlns="http://www.w3.org/2000/svg">
+<path d="M 20 30 Q 100 -10 180 30 L 180 140 Q 180 220 100 240 Q 20 220 20 140 Z" fill="#ff6f61" stroke="#ffffff" stroke-width="5"></path>
+<polygon fill="#ffcc00" points="20,50 180,50 180,70 20,70"></polygon>
+<text fill="#ffffff" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" x="100" y="100">Solar FC</text>
+<circle cx="100" cy="160" fill="#ffcc00" r="35" stroke="black" stroke-width="2"></circle>
+<circle cx="100" cy="160" fill="white" r="15"></circle>
+</svg>

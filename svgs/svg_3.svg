@@ -1,0 +1,6 @@
+<svg height="250" viewbox="0 0 200 250" width="200" xmlns="http://www.w3.org/2000/svg">
+<path d="M100 10 L10 60 V180 Q100 240 190 180 V60 Z" fill="red" stroke="black" stroke-width="5"></path>
+<circle cx="100" cy="120" fill="white" r="40" stroke="black" stroke-width="5"></circle>
+<polygon fill="yellow" points="100,80 110,110 140,110 115,130 125,160 100,140 75,160 85,130 60,110 90,110"></polygon>
+<text fill="white" font-family="Arial" font-size="20" font-weight="bold" x="50" y="200">Estrellas FC</text>
+</svg>
