@@ -52,7 +52,7 @@
             <tbody>
                 <tr *ngFor="let entry of puntos.entries(); let i = index">
                     <td>{{ i + 1 }}</td>
-                    <td>{{ entry[0].nombre }}</td>
+                    <td><img src="{{ entry[0].escudo }}" width="25px" height="25px">{{ entry[0].nombre }}</td>
                     <td>{{ entry[1] }}</td>
                 </tr>
             </tbody>

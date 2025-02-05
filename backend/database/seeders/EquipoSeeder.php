@@ -228,6 +228,7 @@ class EquipoSeeder extends Seeder
             "https://res.cloudinary.com/diyzi4fll/raw/upload/v1738669929/af07uukv02vx4mi80hua.svg",
             "https://res.cloudinary.com/diyzi4fll/raw/upload/v1738669930/csig5fdbdjkztgov60jz.svg"
         ];
+        $urlIndex = 0;
         $ligas = Liga::all();
         foreach ($ligas as $liga) {
             for ($i = 0; $i < 20; $i++) {
@@ -236,8 +237,9 @@ class EquipoSeeder extends Seeder
                     'ciudad' => $arrayCiudadPorPais[$liga->pais][random_int(0, 9)],
                     'pais' => $liga->pais,
                     'liga_id' => $liga->id,
-                    'escudo' => $urls[$i % count($urls)],
+                    'escudo' => $urls[$urlIndex],
                 ]);
+                $urlIndex++;
             }
         }
     }

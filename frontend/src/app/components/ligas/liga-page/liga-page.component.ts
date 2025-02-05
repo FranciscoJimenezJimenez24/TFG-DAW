@@ -103,6 +103,8 @@ export class LigaPageComponent implements OnInit {
     this.partidosService.getPartidosLigasTemporadas(this.liga.id, idTemporada)
       .subscribe(partidos => {
         this.partidos = partidos;
+        console.log(this.partidos);
+        
         this.getPuntos();
       });
     this.puntos = new Map();
