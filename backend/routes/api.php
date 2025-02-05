@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EquipoController;
+use App\Http\Controllers\JugadorController;
 use App\Http\Controllers\LigaController;
 use App\Http\Controllers\PartidoController;
 use App\Http\Controllers\TemporadaController;
@@ -19,6 +20,7 @@ Route::get('ligas/{id}', [LigaController::class,'getLiga']);
 Route::get('equipos', [EquipoController::class,'getEquiposLiga']);
 Route::get('temporadas',[TemporadaController::class,'getTemporadas']);
 Route::get('partidos', [PartidoController::class, 'getPartidosLigasTemporadas']);
+Route::get('jugadores',[JugadorController::class,'getMaximosGoleadoresTemporadaLiga']);
 
 Route::group(['middleware' => 'api',], function ($router) {
 

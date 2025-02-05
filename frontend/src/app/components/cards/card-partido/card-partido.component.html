@@ -1,18 +1,16 @@
 <div class="card">
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-5">
-                <img [src]="equipoLocal.escudo" alt="{{ equipoLocal.nombre }}" class="img-fluid"
-                    style="max-height: 50px;">
-                <p>{{ equipoLocal.nombre }}</p>
+        <div class="row align-items-center no-gutters">
+            <div class="col-4 text-center">
+                <img [src]="equipoLocal.escudo" alt="{{ equipoLocal.nombre }}" class="img-fluid team-logo">
+                <p class="team-name">{{ equipoLocal.nombre }}</p>
             </div>
-            <div class="col-md-2 text-center">
-                <p>{{ partido.goles_local }} - {{ partido.goles_visitante }}</p>
+            <div class="col-4 text-center">
+                <p class="score">{{ partido.goles_local }} - {{ partido.goles_visitante }}</p>
             </div>
-            <div class="col-md-5">
-                <img [src]="equipoVisitante.escudo" alt="{{ equipoVisitante.nombre }}" class="img-fluid"
-                    style="max-height: 50px;">
-                <p>{{ equipoVisitante.nombre }}</p>
+            <div class="col-4 text-center">
+                <img [src]="equipoVisitante.escudo" alt="{{ equipoVisitante.nombre }}" class="img-fluid team-logo">
+                <p class="team-name">{{ equipoVisitante.nombre }}</p>
             </div>
         </div>
     </div>

@@ -63,20 +63,27 @@
 
 .days {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(7, 1fr); /* Celdas de igual tamaño */
+    gap: 10px;
     text-align: center;
     width: 100%;
+    max-width: 100%;
+    overflow-x: hidden; /* No scroll horizontal */
 }
 
 .day {
-    position: relative;
     padding: 20px;
     background: #f0f0f0;
     border-radius: 8px;
-    font-size: 20px;
-    min-height: 90px;
+    font-size: 16px;
+    min-height: 120px; /* Aumentamos un poco el tamaño */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
 }
+
 
 .partidos {
     max-height: 350px;
@@ -97,64 +104,25 @@
 
 /* Estilos Responsivos */
 @media (max-width: 1200px) {
-    .modal-content {
-        max-width: 900px;
-        padding: 30px;
-    }
-
-    .calendar-header {
-        font-size: 24px;
-    }
-
     .day {
         padding: 15px;
         font-size: 18px;
-        min-height: 60px;
-    }
-
-    .partido {
-        font-size: 16px;
+        min-height: 100px; /* Ajustar para que el card sea más grande */
     }
 }
 
 @media (max-width: 768px) {
-    .modal-content {
-        max-width: 1000px;
-        padding: 25px;
-    }
-
-    .calendar-header {
-        font-size: 22px;
-    }
-
     .day {
         padding: 12px;
         font-size: 16px;
-        min-height: 55px;
-    }
-
-    .partido {
-        font-size: 14px;
+        min-height: 90px;
     }
 }
 
 @media (max-width: 576px) {
-    .modal-content {
-        max-width: 90%;
-        padding: 20px;
-    }
-
-    .calendar-header {
-        font-size: 18px;
-    }
-
     .day {
         padding: 10px;
         font-size: 14px;
-        min-height: 50px;
-    }
-
-    .partido {
-        font-size: 12px;
+        min-height: 80px; /* Ajustamos más en pantallas pequeñas */
     }
 }

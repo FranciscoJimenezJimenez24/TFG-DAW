@@ -57,5 +57,16 @@
                 </tr>
             </tbody>
         </table>
+        <ul>
+            <li *ngFor="let goleador of maximosGoleadores; let i = index">
+                <span>{{ i + 1 }}. {{ goleador.jugador }} - {{ goleador.goles }} goles</span>
+            </li>
+        </ul>
+        <div *ngFor="let partido of partidos">
+            <app-card-partido [partido]="partido"
+                [equipoLocal]="getEquipoById(partido.equipo_local_id)"
+                [equipoVisitante]="getEquipoById(partido.equipo_visitante_id)">
+            </app-card-partido>
+        </div>
     </div>
 </div>

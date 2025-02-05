@@ -14,6 +14,8 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { CardPartidoComponent } from "../../cards/card-partido/card-partido.component";
+import { JugadoresService } from '../../../services/jugadores.service';
+import { Goleador } from '../../../interfaces/goleador';
 
 @Component({
   selector: 'app-liga-page',
@@ -29,6 +31,7 @@ export class LigaPageComponent implements OnInit {
   temporadas: Temporada[] = [];
   partidos: Partido[] = [];
   puntos: Map<Equipo, number> = new Map();
+  maximosGoleadores: Goleador[] = [];
 
   // Calendario
   showCalendar: boolean = false;
@@ -46,6 +49,7 @@ export class LigaPageComponent implements OnInit {
     private equiposService: EquiposService,
     private temporadasService: TemporadasService,
     private partidosService: PartidosService,
+    private jugadoresService: JugadoresService,
     private zone: NgZone) { }
 
   ngOnInit(): void {
@@ -93,6 +97,7 @@ export class LigaPageComponent implements OnInit {
         this.currentMonth = 7;
         this.updateCalendar();
         this.getPartidos(idTemporada);
+        this.getMaximosGoleadores(idTemporada);
       }
     }
   }
@@ -103,8 +108,6 @@ export class LigaPageComponent implements OnInit {
     this.partidosService.getPartidosLigasTemporadas(this.liga.id, idTemporada)
       .subscribe(partidos => {
         this.partidos = partidos;
-        console.log(this.partidos);
-        
         this.getPuntos();
       });
     this.puntos = new Map();
@@ -193,5 +196,13 @@ export class LigaPageComponent implements OnInit {
       this.currentMonth++;
     }
     this.updateCalendar();
+  }
+
+  getMaximosGoleadores(idTemporada: number) {
+    if (!this.liga) return;
+    this.jugadoresService.getMaximosGoleadoresTemporadaLiga(this.liga.id, idTemporada)
+      .subscribe(goleadores => {
+        this.maximosGoleadores = Array.isArray(goleadores) ? goleadores : [];
+      });
   }
 }

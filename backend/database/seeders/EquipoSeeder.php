@@ -230,11 +230,18 @@ class EquipoSeeder extends Seeder
         ];
         $urlIndex = 0;
         $ligas = Liga::all();
+        $arrayNombreAleatorios = ['FC', 'UD', 'UCD', 'Rayo', 'Sporting', 'Real', 'Club', 'Juventud', 'Unión', 'Defensa', 'Atlético', 'Deportivo', 'Central', 'Provincial', 'Municipal', 'Patronato', 'Nacional', 'Independiente', 'Estudiantes', 'Cultural'];
         foreach ($ligas as $liga) {
+            $nombresUsados = []; 
             for ($i = 0; $i < 20; $i++) {
+                do {
+                    $ciudad = $arrayCiudadPorPais[$liga->pais][random_int(0, 9)];
+                    $nombreEquipo = $arrayNombreAleatorios[array_rand($arrayNombreAleatorios)] . " " . $ciudad;
+                } while (in_array($nombreEquipo, $nombresUsados)); 
+                $nombresUsados[] = $nombreEquipo;
                 Equipo::create([
-                    'nombre' => fake()->company() . " FC",
-                    'ciudad' => $arrayCiudadPorPais[$liga->pais][random_int(0, 9)],
+                    'nombre' => $nombreEquipo,
+                    'ciudad' => $ciudad,
                     'pais' => $liga->pais,
                     'liga_id' => $liga->id,
                     'escudo' => $urls[$urlIndex],
