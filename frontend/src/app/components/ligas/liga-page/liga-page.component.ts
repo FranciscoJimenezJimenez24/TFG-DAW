@@ -17,6 +17,9 @@ import { CardPartidoComponent } from "../../cards/card-partido/card-partido.comp
 import { JugadoresService } from '../../../services/jugadores.service';
 import { Goleador } from '../../../interfaces/goleador';
 import { CardTinyPartidoComponent } from '../../cards/card-tiny-partido/card-tiny-partido.component';
+import { Asistidor } from '../../../interfaces/asistidor';
+import { TarjetasAmarillas } from '../../../interfaces/tarjetas-amarillas';
+import { TarjetasRojas } from '../../../interfaces/tarjetas-rojas';
 
 @Component({
   selector: 'app-liga-page',
@@ -33,6 +36,9 @@ export class LigaPageComponent implements OnInit {
   partidos: Partido[] = [];
   puntos: Map<Equipo, number> = new Map();
   maximosGoleadores: Goleador[] = [];
+  maximosAsistidores: Asistidor[] = [];
+  tarjetasAmarillas: TarjetasAmarillas[] = [];
+  tarjetasRojas: TarjetasRojas[] = [];
 
   // Calendario
   showCalendar: boolean = false;
@@ -99,6 +105,9 @@ export class LigaPageComponent implements OnInit {
         this.updateCalendar();
         this.getPartidos(idTemporada);
         this.getMaximosGoleadores(idTemporada);
+        this.getMaximosAsistidores(idTemporada);
+        this.getTarjetasAmarillas(idTemporada);
+        this.getTarjetasRojas(idTemporada);
       }
     }
   }
@@ -204,6 +213,30 @@ export class LigaPageComponent implements OnInit {
     this.jugadoresService.getMaximosGoleadoresTemporadaLiga(this.liga.id, idTemporada)
       .subscribe(goleadores => {
         this.maximosGoleadores = Array.isArray(goleadores) ? goleadores : [];
+      });
+  }
+
+  getMaximosAsistidores(idTemporada: number) {
+    if (!this.liga) return;
+    this.jugadoresService.getMaximosAsistidoresTemporadaLiga(this.liga.id, idTemporada)
+      .subscribe(asistidores => {
+        this.maximosAsistidores = Array.isArray(asistidores) ? asistidores : [];
+      });
+  }
+
+  getTarjetasAmarillas(idTemporada: number) {
+    if (!this.liga) return;
+    this.jugadoresService.getMaximosTarjetasAmarillasTemporadaLiga(this.liga.id, idTemporada)
+      .subscribe(tarjetasAmarillas => {
+        this.tarjetasAmarillas = Array.isArray(tarjetasAmarillas) ? tarjetasAmarillas : [];
+      });
+  }
+
+  getTarjetasRojas(idTemporada: number) {
+    if (!this.liga) return;
+    this.jugadoresService.getMaximosTarjetasRojasTemporadaLiga(this.liga.id, idTemporada)
+      .subscribe(tarjetasRojas => {
+        this.tarjetasRojas = Array.isArray(tarjetasRojas) ? tarjetasRojas : [];
       });
   }
 }

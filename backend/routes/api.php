@@ -13,14 +13,17 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('signup', [AuthController::class,'signup']);
-Route::post('login', [AuthController::class,'login']);
-Route::get('ligas', [LigaController::class,'getLigas']);
-Route::get('ligas/{id}', [LigaController::class,'getLiga']);
-Route::get('equipos', [EquipoController::class,'getEquiposLiga']);
-Route::get('temporadas',[TemporadaController::class,'getTemporadas']);
+Route::post('signup', [AuthController::class, 'signup']);
+Route::post('login', [AuthController::class, 'login']);
+Route::get('ligas', [LigaController::class, 'getLigas']);
+Route::get('ligas/{id}', [LigaController::class, 'getLiga']);
+Route::get('equipos', [EquipoController::class, 'getEquiposLiga']);
+Route::get('temporadas', [TemporadaController::class, 'getTemporadas']);
 Route::get('partidos', [PartidoController::class, 'getPartidosLigasTemporadas']);
-Route::get('jugadores',[JugadorController::class,'getMaximosGoleadoresTemporadaLiga']);
+Route::get('jugadores/goleadores', [JugadorController::class, 'getMaximosGoleadoresTemporadaLiga']);
+Route::get('jugadores/asistidores', [JugadorController::class, 'getMaximosAsistidoresTemporadaLiga']);
+Route::get('jugadores/tarjetas-amarillas', [JugadorController::class, 'getMaximosTarjetasAmarillasTemporadaLiga']);
+Route::get('jugadores/tarjetas-rojas', [JugadorController::class, 'getMaximosTarjetasRojasTemporadaLiga']);
 
 Route::group(['middleware' => 'api',], function ($router) {
 

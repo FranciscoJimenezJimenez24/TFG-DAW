@@ -57,11 +57,36 @@
                 </tr>
             </tbody>
         </table>
-        <ul>
-            <li *ngFor="let goleador of maximosGoleadores; let i = index">
-                <span>{{ i + 1 }}. {{ goleador.jugador }} - {{ goleador.goles }} goles</span>
-            </li>
-        </ul>
+        <div>
+            <div class="col-md-4">
+                <ul>
+                    <li *ngFor="let goleador of maximosGoleadores; let i = index">
+                        <span>{{ i + 1 }}. {{ goleador.jugador }} - {{ goleador.goles }} goles</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <ul>
+                    <li *ngFor="let asistidor of maximosAsistidores; let i = index">
+                        <span>{{ i + 1 }}. {{ asistidor.jugador }} - {{ asistidor.asistencias }} asistencias</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <ul>
+                    <li *ngFor="let tarjetaAmarilla of tarjetasAmarillas; let i = index">
+                        <span>{{ i + 1 }}. {{ tarjetaAmarilla.jugador }} - {{ tarjetaAmarilla.tarjetas_amarillas }}</span>
+                    </li>                        
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <ul>
+                    <li *ngFor="let tarjetaRoja of tarjetasRojas; let i = index">
+                        <span>{{ i + 1 }}. {{ tarjetaRoja.jugador }} - {{ tarjetaRoja.tarjetas_rojas }}</span>
+                    </li>                        
+                </ul>
+            </div>
+        </div>
         <div *ngFor="let partido of partidos">
             <app-card-tiny-partido [partido]="partido" [equipoLocal]="getEquipoById(partido.equipo_local_id)"
                 [equipoVisitante]="getEquipoById(partido.equipo_visitante_id)">
