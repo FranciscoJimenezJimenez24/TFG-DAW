@@ -26,10 +26,10 @@
                             <div>{{ day }}</div>
                             <div *ngIf="partidosPorDia.has(day)" class="partidos">
                                 <div *ngFor="let partido of partidosPorDia.get(day)">
-                                    <app-card-partido [partido]="partido"
+                                    <app-card-tiny-partido [partido]="partido"
                                         [equipoLocal]="getEquipoById(partido.equipo_local_id)"
                                         [equipoVisitante]="getEquipoById(partido.equipo_visitante_id)">
-                                    </app-card-partido>
+                                    </app-card-tiny-partido>
                                 </div>
                             </div>
                         </div>
@@ -63,10 +63,9 @@
             </li>
         </ul>
         <div *ngFor="let partido of partidos">
-            <app-card-partido [partido]="partido"
-                [equipoLocal]="getEquipoById(partido.equipo_local_id)"
+            <app-card-tiny-partido [partido]="partido" [equipoLocal]="getEquipoById(partido.equipo_local_id)"
                 [equipoVisitante]="getEquipoById(partido.equipo_visitante_id)">
-            </app-card-partido>
+            </app-card-tiny-partido>
         </div>
     </div>
 </div>

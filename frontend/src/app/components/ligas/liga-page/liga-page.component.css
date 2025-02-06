@@ -18,7 +18,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 95%;
-    max-width: 1200px;
+    max-width: 1400px;
     height: 90%;
     position: relative;
     display: flex;
@@ -28,7 +28,6 @@
     overflow: hidden;
 }
 
-/* Ajustar el botón "Cerrar" al final y centrarlo */
 .close-button {
     background: none;
     border: none;
@@ -41,8 +40,8 @@
 /* Estilos del calendario */
 .calendar-container {
     width: 100%;
-    max-width: 1000px;
-    margin: 0;
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -63,66 +62,110 @@
 
 .days {
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* Celdas de igual tamaño */
+    grid-template-columns: repeat(7, 1fr);
     gap: 10px;
     text-align: center;
     width: 100%;
-    max-width: 100%;
-    overflow-x: hidden; /* No scroll horizontal */
+    max-width: 1200px;
+    overflow-x: hidden;
+    padding: 15px;
 }
 
 .day {
-    padding: 20px;
+    padding: 12px;
     background: #f0f0f0;
     border-radius: 8px;
     font-size: 16px;
-    min-height: 120px; /* Aumentamos un poco el tamaño */
+    height: 150px;
+    width: 150px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    width: 100%;
-}
-
-
-.partidos {
-    max-height: 350px;
-    overflow-y: auto;
-}
-
-.partido {
-    margin: 15px 0;
-    font-size: 18px;
+    overflow: hidden;
 }
 
 .weekday {
     font-weight: bold;
     background: #ddd;
-    padding: 15px 0;
-    font-size: 22px;
+    padding: 12px 0;
+    font-size: 18px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
 }
 
-/* Estilos Responsivos */
+.partidos {
+    max-height: 100px;
+    overflow-y: auto;
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.partido {
+    font-size: 14px;
+    margin: 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: center;
+}
+
+/* 🔹 RESPONSIVE */
 @media (max-width: 1200px) {
-    .day {
-        padding: 15px;
-        font-size: 18px;
-        min-height: 100px; /* Ajustar para que el card sea más grande */
+
+    .day,
+    .weekday {
+        height: 130px;
+        width: 130px;
+    }
+
+    .calendar-container {
+        max-width: 1000px;
+    }
+}
+
+@media (max-width: 992px) {
+
+    .day,
+    .weekday {
+        height: 120px;
+        width: 120px;
+    }
+
+    .calendar-container {
+        max-width: 900px;
     }
 }
 
 @media (max-width: 768px) {
-    .day {
-        padding: 12px;
-        font-size: 16px;
-        min-height: 90px;
+
+    .day,
+    .weekday {
+        height: 110px;
+        width: 110px;
+    }
+
+    .calendar-container {
+        max-width: 700px;
     }
 }
 
 @media (max-width: 576px) {
-    .day {
-        padding: 10px;
-        font-size: 14px;
-        min-height: 80px; /* Ajustamos más en pantallas pequeñas */
+
+    .day,
+    .weekday {
+        height: 100px;
+        width: 100px;
+    }
+
+    .calendar-container {
+        max-width: 100%;
     }
 }

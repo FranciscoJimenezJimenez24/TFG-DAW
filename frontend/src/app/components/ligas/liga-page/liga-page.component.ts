@@ -16,11 +16,12 @@ import { FormsModule } from '@angular/forms';
 import { CardPartidoComponent } from "../../cards/card-partido/card-partido.component";
 import { JugadoresService } from '../../../services/jugadores.service';
 import { Goleador } from '../../../interfaces/goleador';
+import { CardTinyPartidoComponent } from '../../cards/card-tiny-partido/card-tiny-partido.component';
 
 @Component({
   selector: 'app-liga-page',
   standalone: true,
-  imports: [CommonModule, CardPartidoComponent],
+  imports: [CommonModule, CardTinyPartidoComponent],
   templateUrl: './liga-page.component.html',
   styleUrl: './liga-page.component.css'
 })
