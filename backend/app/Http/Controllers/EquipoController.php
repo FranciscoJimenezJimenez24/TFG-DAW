@@ -12,4 +12,9 @@ class EquipoController extends Controller
         $equipos = Equipo::where('liga_id', $idLiga)->get();
         return response()->json($equipos, 200);
     }
+
+    public function getEquipo($idEquipo){
+        $equipo = Equipo::find($idEquipo);
+        return response()->json($equipo, 200);
+    }
 }

@@ -1,0 +1,47 @@
+<div class="container mt-4">
+    <!-- Información del jugador -->
+    <div class="card text-center shadow-sm mb-4" style="max-width: 400px; margin: auto;">
+        <div class="card-body">
+            <h3 class="card-title">{{ jugador?.nombre }}</h3>
+            <p class="card-text text-muted">Posición: {{ jugador?.posicion }}</p>
+            <p *ngIf="equipoJugador" class="card-text">
+                <strong>Equipo:</strong> <img style="width: 25px; height: 25px;" src="{{equipoJugador!.escudo }}" alt=""> {{ equipoJugador!.nombre }}
+            </p>
+        </div>
+    </div>
+
+    <!-- Tabla de estadísticas -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white text-center">
+            <h5 class="m-0">Estadísticas de {{ jugador?.nombre }}</h5>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped table-hover text-center m-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Temporada</th>
+                        <th>Edad</th>
+                        <th>Goles</th>
+                        <th>Asistencias</th>
+                        <th>Minutos Jugados</th>
+                        <th>Tarjetas Amarillas</th>
+                        <th>Tarjetas Rojas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let estadistica of estadisticas; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ getTemporadaNombre(estadistica.temporada_id) }}</td>
+                        <td>{{ estadistica.edad }}</td>
+                        <td>{{ estadistica.goles }}</td>
+                        <td>{{ estadistica.asistencias }}</td>
+                        <td>{{ estadistica.minutos_jugados }}</td>
+                        <td>{{ estadistica.tarjetas_amarillas }}</td>
+                        <td>{{ estadistica.tarjetas_rojas }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EstadisticasJugador;
 use App\Models\Jugador;
 use Illuminate\Http\Request;
 
@@ -72,4 +73,24 @@ class JugadorController extends Controller
             ->get();
         return response()->json($tarjetasRojas, 200);
     }
+
+    public function getJugadoresEquipo($idEquipo){
+        $jugadores = Jugador::where('equipo_id',$idEquipo)
+            ->orderBy('posicion')
+            ->get()
+            ;
+        return response()->json($jugadores, 200);
+    }
+
+    public function getJugador($idJugador){
+        $jugador = Jugador::find($idJugador);
+        return response()->json($jugador, 200);
+    }
+
+    public function getEstadisticasJugador($idJugador){
+        $jugador = EstadisticasJugador::where('jugador_id',$idJugador)->get();
+        return response()->json($jugador, 200);
+    }
+
+    
 }

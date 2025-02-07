@@ -1,1 +1,9 @@
-<p>equipos works!</p>
+<div *ngFor="let liga of ligas" class="mb-4">
+    <h2 class="text-primary fw-bold">{{ liga.nombre }}</h2>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+        <div class="col" *ngFor="let equipo of equiposLiga[liga.id]">
+            <app-card-equipo [routerLink]="['/equipos', equipo.id]" [equipo]="equipo"></app-card-equipo>
+        </div>
+    </div>
+</div>

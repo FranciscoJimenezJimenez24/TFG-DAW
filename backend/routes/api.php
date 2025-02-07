@@ -18,12 +18,16 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('ligas', [LigaController::class, 'getLigas']);
 Route::get('ligas/{id}', [LigaController::class, 'getLiga']);
 Route::get('equipos', [EquipoController::class, 'getEquiposLiga']);
+Route::get('equipos/{id}', [EquipoController::class, 'getEquipo']);
 Route::get('temporadas', [TemporadaController::class, 'getTemporadas']);
 Route::get('partidos', [PartidoController::class, 'getPartidosLigasTemporadas']);
 Route::get('jugadores/goleadores', [JugadorController::class, 'getMaximosGoleadoresTemporadaLiga']);
 Route::get('jugadores/asistidores', [JugadorController::class, 'getMaximosAsistidoresTemporadaLiga']);
 Route::get('jugadores/tarjetas-amarillas', [JugadorController::class, 'getMaximosTarjetasAmarillasTemporadaLiga']);
 Route::get('jugadores/tarjetas-rojas', [JugadorController::class, 'getMaximosTarjetasRojasTemporadaLiga']);
+Route::get('jugadores/equipos/{id}', [JugadorController::class, 'getJugadoresEquipo']);
+Route::get('jugadores/{id}', [JugadorController::class, 'getJugador']);
+Route::get('/jugadores/{id}/estadisticas',[JugadorController::class,'getEstadisticasJugador']);
 
 Route::group(['middleware' => 'api',], function ($router) {
 
