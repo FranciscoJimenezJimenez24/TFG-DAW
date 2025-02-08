@@ -4,5 +4,6 @@ export interface Equipo {
     ciudad: string;
     pais: string;
     escudo: string;
+    formacion:string;
     liga_id: number;
 }

@@ -160,7 +160,7 @@ export class LigaPageComponent implements OnInit {
   }
 
   getEquipoById(equipoId: number): Equipo {
-    return this.equipos.find(equipo => equipo.id === equipoId) || { id: 0, nombre: 'Desconocido', escudo: 'default.jpg', ciudad: '', pais: '', liga_id: 0 };
+    return this.equipos.find(equipo => equipo.id === equipoId) || { id: 0, nombre: 'Desconocido', escudo: 'default.jpg', ciudad: '', pais: '', formacion: '', liga_id: 0 };
   }
 
   partidosPorDia: Map<number, Partido[]> = new Map();  // Esta es la estructura para almacenar los partidos por día

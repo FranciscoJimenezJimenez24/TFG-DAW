@@ -2,7 +2,6 @@ export interface EstadisticasJugador {
     id: number;
     jugador_id:number;
     temporada_id:number;
-    edad:number;
     goles:number;
     asistencias:number;
     minutos_jugados:number;

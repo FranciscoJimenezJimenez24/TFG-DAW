@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('jugador_id')->constrained('jugadores')->onDelete('cascade');
             $table->foreignId('temporada_id')->constrained()->onDelete('cascade');
-            $table->integer('edad');
             $table->integer('goles')->default(0);
             $table->integer('asistencias')->default(0);
             $table->integer('minutos_jugados')->default(0);

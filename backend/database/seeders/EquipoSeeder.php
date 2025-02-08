@@ -231,6 +231,14 @@ class EquipoSeeder extends Seeder
         $urlIndex = 0;
         $ligas = Liga::all();
         $arrayNombreAleatorios = ['FC', 'UD', 'UCD', 'Rayo', 'Sporting', 'Real', 'Club', 'Juventud', 'Unión', 'Defensa', 'Atlético', 'Deportivo', 'Central', 'Provincial', 'Municipal', 'Patronato', 'Nacional', 'Independiente', 'Estudiantes', 'Cultural'];
+        $formaciones = [
+            '4-3-3',
+            '4-5-1',
+            '4-4-2',
+            '3-5-2',
+            '3-4-3',
+            '5-3-2'
+        ];
         foreach ($ligas as $liga) {
             $nombresUsados = []; 
             for ($i = 0; $i < 20; $i++) {
@@ -245,6 +253,7 @@ class EquipoSeeder extends Seeder
                     'pais' => $liga->pais,
                     'liga_id' => $liga->id,
                     'escudo' => $urls[$urlIndex],
+                    'formacion' => $formaciones[array_rand($formaciones)]
                 ]);
                 $urlIndex++;
             }

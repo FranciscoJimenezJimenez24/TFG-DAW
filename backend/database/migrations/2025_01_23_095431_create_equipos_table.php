@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('ciudad');
             $table->string('pais');
             $table->string('escudo');
+            $table->string('formacion');
             $table->foreignId('liga_id')->constrained();
             $table->timestamps();
         });
