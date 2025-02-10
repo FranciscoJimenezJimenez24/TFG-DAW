@@ -1,0 +1,7 @@
+<div class="container">
+    <app-add-noticia (noticiaAdded)="onNoticiaAdded($event)"></app-add-noticia>
+
+    <div *ngFor="let noticia of noticias" class="mt-4">
+        <app-card-noticia [noticia]="noticia"></app-card-noticia>
+    </div>
+</div>

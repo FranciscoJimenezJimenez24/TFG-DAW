@@ -39,11 +39,19 @@ class AuthController extends Controller
             "name" => "required",
             "email" => "required|email|unique:users",
             "password" => "required",
-            "password_confirmation" => "required|same:password"
+            "rol" => "nullable|in:user,admin,journalist", // Validación para rol
+            "password_confirmation" => "required|same:password", // Validación de confirmación de contraseña
         ]);
-        $userData = User::create($request->except('password_confirmation'));
+
+        // Asignar 'user' como rol por defecto si no se proporciona
+        $rol = $request->rol ?: 'user';
+
+        // Crear el usuario con el rol asignado
+        $userData = User::create(array_merge($request->except('password_confirmation'), ['rol' => $rol, 'password' => bcrypt($request->password)]));
+
         return response()->json(["message" => "User Add", "userData" => $userData], 200);
     }
+
 
     /**
      * Get the authenticated User.

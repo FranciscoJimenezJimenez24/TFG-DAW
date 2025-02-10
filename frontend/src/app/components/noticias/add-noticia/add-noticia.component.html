@@ -1,0 +1,35 @@
+<div class="container mt-4">
+    <form [formGroup]="noticiaForm" (ngSubmit)="agregarNoticia()">
+      <div class="mb-3">
+        <label class="form-label">Título</label>
+        <input type="text" class="form-control" formControlName="titulo">
+        <small class="text-danger" *ngIf="noticiaForm.get('titulo')?.invalid && noticiaForm.get('titulo')?.touched">
+          El título es obligatorio (mín. 5 caracteres).
+        </small>
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Contenido</label>
+        <textarea class="form-control" formControlName="contenido"></textarea>
+        <small class="text-danger" *ngIf="noticiaForm.get('contenido')?.invalid && noticiaForm.get('contenido')?.touched">
+          El contenido es obligatorio (mín. 20 caracteres).
+        </small>
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Autor</label>
+        <input type="text" class="form-control" formControlName="autor">
+        <small class="text-danger" *ngIf="noticiaForm.get('autor')?.invalid && noticiaForm.get('autor')?.touched">
+          El autor es obligatorio.
+        </small>
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Fecha</label>
+        <input type="date" class="form-control" formControlName="fecha">
+      </div>
+  
+      <button type="submit" class="btn btn-success" [disabled]="noticiaForm.invalid">Agregar Noticia</button>
+    </form>
+  </div>
+  

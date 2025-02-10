@@ -46,57 +46,65 @@ class JugadorSeeder extends Seeder
                     foreach ($minutosPorPosicion as $minutos_jugados) {
                         $jugador = Jugador::create([
                             'nombre' => fake()->name(),
-                            'posicion' => ucfirst(substr($posicion,0,-1)),
+                            'posicion' => ucfirst(substr($posicion, 0, -1)),
                             'fecha_nacimiento' => fake()->date(),
                             'pais_nacimiento' => fake()->country(),
                             'equipo_id' => $equipo->id,
-
                         ]);
 
-                        // Seleccionar edad aleatoria
+                        // Guardar el jugador para asignar minutos en cada temporada
+                        $jugadores[] = $jugador;
+                    }
+                }
 
-                        foreach ($temporadas as $j => $temporada) {
-                            $goles = $asistencias = $tarjetas_amarillas = $tarjetas_rojas = 0;
-                            $factor_minutos = $minutos_jugados / 3420; // Factor proporcional basado en los minutos jugados
+                // Redistribuir minutos por temporada
+                foreach ($temporadas as $temporada) {
+                    $minutosTotales = 37620;
+                    $minutosPorJugador = $this->repartirMinutosDesbalanceado(count($jugadores), $minutosTotales);
 
-                            // Asignación de estadísticas basada en la posición
-                            switch ($posicion) {
-                                case 'Portero':
-                                    $goles = 0;
-                                    $asistencias = rand(0, round(1 * $factor_minutos));
-                                    $tarjetas_amarillas = rand(0, round(2 * $factor_minutos));
-                                    $tarjetas_rojas = rand(0, round(1 * $factor_minutos));
-                                    break;
-                                case 'Defensa':
-                                    $goles = rand(0, round(5 * $factor_minutos));
-                                    $asistencias = rand(0, round(5 * $factor_minutos));
-                                    $tarjetas_amarillas = rand(0, round(15 * $factor_minutos));
-                                    $tarjetas_rojas = rand(0, round(3 * $factor_minutos));
-                                    break;
-                                case 'Centrocampista':
-                                    $goles = rand(0, round(10 * $factor_minutos));
-                                    $asistencias = rand(0, round(15 * $factor_minutos));
-                                    $tarjetas_amarillas = rand(0, round(10 * $factor_minutos));
-                                    $tarjetas_rojas = rand(0, round(2 * $factor_minutos));
-                                    break;
-                                case 'Delantero':
-                                    $goles = rand(0, round(30 * $factor_minutos));
-                                    $asistencias = rand(0, round(10 * $factor_minutos));
-                                    $tarjetas_amarillas = rand(0, round(5 * $factor_minutos));
-                                    $tarjetas_rojas = rand(0, round(1 * $factor_minutos));
-                                    break;
-                            }
+                    foreach ($jugadores as $index => $jugador) {
+                        $minutos_jugados = $minutosPorJugador[$index];
 
-                            EstadisticasJugador::create([
-                                'jugador_id' => $jugador->id,
-                                'temporada_id' => $temporada->id,
-                                'goles' => $goles,
-                                'asistencias' => $asistencias,
-                                'minutos_jugados' => $minutos_jugados,
-                                'tarjetas_amarillas' => $tarjetas_amarillas,
-                                'tarjetas_rojas' => $tarjetas_rojas,
-                            ]);
+                        // Asignación de estadísticas basada en la posición
+                        $goles = $asistencias = $tarjetas_amarillas = $tarjetas_rojas = 0;
+                        $factor_minutos = $minutos_jugados / 3420; // Factor proporcional basado en los minutos jugados
+
+                        switch ($jugador->posicion) {
+                            case 'Portero':
+                                $goles = 0;
+                                $asistencias = rand(0, round(1 * $factor_minutos));
+                                $tarjetas_amarillas = rand(0, round(2 * $factor_minutos));
+                                $tarjetas_rojas = rand(0, round(1 * $factor_minutos));
+                                break;
+                            case 'Defensa':
+                                $goles = rand(0, round(5 * $factor_minutos));
+                                $asistencias = rand(0, round(5 * $factor_minutos));
+                                $tarjetas_amarillas = rand(0, round(15 * $factor_minutos));
+                                $tarjetas_rojas = rand(0, round(3 * $factor_minutos));
+                                break;
+                            case 'Centrocampista':
+                                $goles = rand(0, round(10 * $factor_minutos));
+                                $asistencias = rand(0, round(15 * $factor_minutos));
+                                $tarjetas_amarillas = rand(0, round(10 * $factor_minutos));
+                                $tarjetas_rojas = rand(0, round(2 * $factor_minutos));
+                                break;
+                            case 'Delantero':
+                                $goles = rand(0, round(30 * $factor_minutos));
+                                $asistencias = rand(0, round(10 * $factor_minutos));
+                                $tarjetas_amarillas = rand(0, round(5 * $factor_minutos));
+                                $tarjetas_rojas = rand(0, round(1 * $factor_minutos));
+                                break;
                         }
+
+                        EstadisticasJugador::create([
+                            'jugador_id' => $jugador->id,
+                            'temporada_id' => $temporada->id,
+                            'goles' => $goles,
+                            'asistencias' => $asistencias,
+                            'minutos_jugados' => $minutos_jugados,
+                            'tarjetas_amarillas' => $tarjetas_amarillas,
+                            'tarjetas_rojas' => $tarjetas_rojas,
+                        ]);
                     }
                 }
             }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\JugadorController;
 use App\Http\Controllers\LigaController;
+use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\PartidoController;
 use App\Http\Controllers\TemporadaController;
 use Illuminate\Http\Request;
@@ -28,6 +29,8 @@ Route::get('jugadores/tarjetas-rojas', [JugadorController::class, 'getMaximosTar
 Route::get('jugadores/equipos/{id}', [JugadorController::class, 'getJugadoresEquipo']);
 Route::get('jugadores/{id}', [JugadorController::class, 'getJugador']);
 Route::get('/jugadores/{id}/estadisticas',[JugadorController::class,'getEstadisticasJugador']);
+Route::get('noticias',[NoticiaController::class,'getNoticias']);
+Route::post('noticias', [NoticiaController::class, 'addNoticia']);
 
 Route::group(['middleware' => 'api',], function ($router) {
 

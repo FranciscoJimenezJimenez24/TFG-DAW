@@ -1,0 +1,14 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ noticia.titulo }}</h5>
+          <p class="card-text">{{ noticia.contenido | slice:0:100 }}...</p>
+          <p class="text-muted mb-2"><small>Por {{ noticia.autor }} - {{ noticia.fecha }}</small></p>
+          <button class="btn btn-primary">Leer más</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
