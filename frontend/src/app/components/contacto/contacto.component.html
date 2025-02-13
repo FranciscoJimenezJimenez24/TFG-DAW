@@ -1,0 +1,24 @@
+<div class="container mt-5">
+    <h2>Formulario de Contacto</h2>
+    <form #contactForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" [(ngModel)]="contact.nombre" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text" id="apellido" name="apellido" class="form-control" [(ngModel)]="contact.apellido"
+                required />
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-control" [(ngModel)]="contact.email" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="!contactForm.valid">
+            Enviar
+        </button>
+    </form>
+</div>

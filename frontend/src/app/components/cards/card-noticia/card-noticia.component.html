@@ -1,14 +1,12 @@
-<div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-md-6 mb-4">
-      <div class="card h-100 shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">{{ noticia.titulo }}</h5>
-          <p class="card-text">{{ noticia.contenido | slice:0:100 }}...</p>
-          <p class="text-muted mb-2"><small>Por {{ noticia.autor }} - {{ noticia.fecha }}</small></p>
-          <button class="btn btn-primary">Leer más</button>
-        </div>
-      </div>
+<div class="card noticia-card" (mouseenter)="mostrarOpciones = true" (mouseleave)="mostrarOpciones = false">
+  <div class="card-body">
+    <h5 class="card-title">{{ noticia.titulo }}</h5>
+    <p class="card-text">{{ noticia.contenido | slice:0:100 }}...</p>
+    <p class="text-muted">Por: {{ noticia.autor }} | {{ noticia.fecha }}</p>
+
+    <div *ngIf="mostrarOpciones && esAutor" class="opciones">
+      <button class="btn btn-warning btn-sm me-2" (click)="editar.emit(noticia)">Editar</button>
+      <button class="btn btn-danger btn-sm" (click)="eliminar.emit(noticia)">Eliminar</button>
     </div>
   </div>
 </div>

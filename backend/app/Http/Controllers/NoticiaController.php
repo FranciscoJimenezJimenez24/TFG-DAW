@@ -16,8 +16,8 @@ class NoticiaController extends Controller
     public function addNoticia(Request $request)
     {
         $request->validate([
-            'titulo' => 'required|string|min:5',
-            'contenido' => 'required|string|min:20',
+            'titulo' => 'required|string',
+            'contenido' => 'required|string',
             'autor' => 'required|string',
             'fecha' => 'required|date'
         ]);
@@ -31,4 +31,31 @@ class NoticiaController extends Controller
 
         return response()->json($noticia, 201);
     }
+
+    public function updateNoticia(Request $request)
+    {
+        $id = $request->id;
+        $noticia = Noticia::findOrFail($id);
+
+        $request->validate([
+            'titulo' => 'required|string',
+            'contenido' => 'required|string',
+            'autor' => 'required|string',
+            'fecha' => 'required|date'
+        ]);
+
+        $noticia->update($request->all());
+
+        return response()->json($noticia, 200);
+    }
+
+    public function deleteNoticia($id)
+    {
+        $noticia = Noticia::findOrFail($id);
+        $noticia->delete();
+
+        return response()->json(null, 204);
+    }
+
+
 }

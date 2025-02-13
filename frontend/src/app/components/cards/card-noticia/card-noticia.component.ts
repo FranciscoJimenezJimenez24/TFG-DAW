@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Noticia } from '../../../interfaces/noticia';
 import { CommonModule } from '@angular/common';
 
@@ -11,4 +11,13 @@ import { CommonModule } from '@angular/common';
 })
 export class CardNoticiaComponent {
   @Input() noticia!: Noticia;
+  @Output() editar = new EventEmitter<Noticia>();
+  @Output() eliminar = new EventEmitter<Noticia>();
+
+  mostrarOpciones = false;
+  usuarioActual = localStorage.getItem("nombre"); 
+
+  get esAutor(): boolean {
+    return this.noticia.autor === this.usuarioActual;
+  }
 }

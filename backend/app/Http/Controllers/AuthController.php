@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -14,7 +15,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'signup']]);
+        // $this->middleware('auth:api', ['except' => ['login', 'signup']]);
     }
 
     /**
@@ -24,14 +25,22 @@ class AuthController extends Controller
      */
     public function login()
     {
+        // Recibe las credenciales (email y password)
         $credentials = request(['email', 'password']);
 
+        // Intentar autenticar con las credenciales directamente
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Failed ! Email or password not matches'], 401);
+            return response()->json([
+                'error' => 'Failed ! Email or password not matches',
+                'credentials' => $credentials
+            ], 401);
         }
 
+        // Si la autenticación es exitosa, devuelve el token
         return $this->respondWithToken($token);
     }
+
+
 
     public function signup(Request $request)
     {
@@ -39,14 +48,12 @@ class AuthController extends Controller
             "name" => "required",
             "email" => "required|email|unique:users",
             "password" => "required",
-            "rol" => "nullable|in:user,admin,journalist", // Validación para rol
-            "password_confirmation" => "required|same:password", // Validación de confirmación de contraseña
+            "rol" => "nullable|in:user,admin,journalist",
+            "password_confirmation" => "required|same:password",
         ]);
 
-        // Asignar 'user' como rol por defecto si no se proporciona
         $rol = $request->rol ?: 'user';
 
-        // Crear el usuario con el rol asignado
         $userData = User::create(array_merge($request->except('password_confirmation'), ['rol' => $rol, 'password' => bcrypt($request->password)]));
 
         return response()->json(["message" => "User Add", "userData" => $userData], 200);

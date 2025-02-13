@@ -75,7 +75,8 @@ class Kernel extends BaseHttpKernel implements HttpKernelContract
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'CORS' => \App\Http\Middleware\CORS::class
+        'CORS' => \App\Http\Middleware\CORS::class,
+        'role' => \App\Http\Middleware\CheckRole::class,
     ];
 
     /**

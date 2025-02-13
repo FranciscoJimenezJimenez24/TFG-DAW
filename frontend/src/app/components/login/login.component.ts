@@ -4,6 +4,7 @@ import { BackendService } from '../../services/backend.service';
 import { TokenService } from '../../services/token.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { UsuariosService } from '../../services/usuarios.service';
 
 @Component({
   selector: 'app-login',
@@ -18,27 +19,43 @@ export class LoginComponent implements OnInit{
     password:null
   }
   public error = null;
-  constructor(private backend:BackendService, private token:TokenService, private router:Router, private auth:AuthService){}
+  constructor(
+    private backend:BackendService, 
+    private token:TokenService, 
+    private router:Router, 
+    private auth:AuthService,
+    private usuariosService:UsuariosService
+  ) { }
 
   ngOnInit(): void {
     
   }
 
   sumbitLogin() {
-    console.log(this.form);
     return this.backend.login(this.form).subscribe(
-      (data) => this.handleResponse(data),
+      (data) => {
+        this.handleResponse(data)
+        this.getUsuarios()
+      },
       (error) => this.handleError(error)
     );
   }
   handleError(error: any): void {
     this.error = error.error.error;
   }
-  handleResponse(data: any) {
+  handleResponse(data: any) {    
     this.token.handle(data.access_token);
     this.auth.changeAuthStatus(true);
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/ligas');
   }
-
+  getUsuarios() {
+   this.usuariosService.getUsuario()
+    .subscribe(usuario=>{
+      localStorage.setItem("nombre",usuario.name);
+      localStorage.setItem("email",usuario.email);
+      localStorage.setItem("idUsuario",usuario.id+"");
+      localStorage.setItem("rol",usuario.rol);
+    });
+  }
 }
 

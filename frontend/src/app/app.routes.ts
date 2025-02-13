@@ -11,6 +11,8 @@ import { EquiposComponent } from './components/equipos/equipos.component';
 import { EquipoPageComponent } from './components/equipos/equipo-page/equipo-page.component';
 import { JugadoresComponent } from './components/jugadores/jugadores.component';
 import { JugadorPageComponent } from './components/jugadores/jugador-page/jugador-page.component';
+import { NoticiasComponent } from './components/noticias/noticias.component';
+import { ContactoComponent } from './components/contacto/contacto.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -21,6 +23,8 @@ export const routes: Routes = [
     { path: 'equipos', component: EquiposComponent },
     { path: 'jugadores/:id', component: JugadorPageComponent },
     { path: 'jugadores', component: JugadoresComponent },
+    { path: 'noticias', component: NoticiasComponent },
+    { path: 'contacto', component: ContactoComponent },
     { path: '', component: HomeComponent  },
     // { path: '**', redirectTo: '' } // Redirigir rutas desconocidas
 ];

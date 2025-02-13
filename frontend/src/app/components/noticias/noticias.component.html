@@ -1,7 +1,23 @@
 <div class="container">
-    <app-add-noticia (noticiaAdded)="onNoticiaAdded($event)"></app-add-noticia>
+    <button *ngIf="rolUsuario === 'journalist'" class="btn btn-primary mb-3" (click)="toggleFormulario()">
+        {{ mostrarFormulario ? 'Cancelar' : 'Añadir Noticia' }}
+    </button>
+
+    <app-add-noticia *ngIf="mostrarFormulario" (noticiaAdded)="onNoticiaAdded($event)"></app-add-noticia>
 
     <div *ngFor="let noticia of noticias" class="mt-4">
-        <app-card-noticia [noticia]="noticia"></app-card-noticia>
+        <app-card-noticia [noticia]="noticia" (editar)="seleccionarNoticiaParaEditar($event)"
+            (eliminar)="seleccionarNoticiaParaEliminar($event)">
+        </app-card-noticia>
     </div>
+
+    <app-edit-noticia *ngIf="noticiaSeleccionada" [noticia]="noticiaSeleccionada"
+        (noticiaEditada)="onNoticiaEditada($event)">
+    </app-edit-noticia>
+
+    <app-delete-noticia *ngIf="noticiaAEliminar" [noticia]="noticiaAEliminar"
+        (noticiaEliminada)="onNoticiaEliminada($event)">
+    </app-delete-noticia>
+
+    <button class="btn btn-secondary mt-4" (click)="gotoContacts()">Quieres trabajar con nosotros</button>
 </div>

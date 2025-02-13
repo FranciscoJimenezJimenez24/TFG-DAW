@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AddNoticiaComponent {
   noticiaForm: FormGroup;
+  nombreAutor = localStorage.getItem("nombre");
 
   @Output() noticiaAdded = new EventEmitter<Noticia>(); // Emite la nueva noticia
 

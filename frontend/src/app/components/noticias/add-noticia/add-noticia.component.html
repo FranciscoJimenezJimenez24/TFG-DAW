@@ -18,7 +18,7 @@
   
       <div class="mb-3">
         <label class="form-label">Autor</label>
-        <input type="text" class="form-control" formControlName="autor">
+        <input type="text" class="form-control" formControlName="autor" value="{{ nombreAutor }}">
         <small class="text-danger" *ngIf="noticiaForm.get('autor')?.invalid && noticiaForm.get('autor')?.touched">
           El autor es obligatorio.
         </small>

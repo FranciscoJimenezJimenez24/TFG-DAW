@@ -19,4 +19,12 @@ export class NoticiasService {
   addNoticia(noticia:Noticia):Observable<Noticia>{
     return this.http.post<Noticia>('http://127.0.0.1:8000/api/noticias',noticia);
   }
+
+  updateNoticia(noticia:Noticia):Observable<Noticia>{
+    return this.http.put<Noticia>('http://127.0.0.1:8000/api/noticias',noticia);
+  }
+
+  deleteNoticia(idNoticia:number):Observable<void>{
+    return this.http.delete<void>(`http://127.0.0.1:8000/api/noticias/${idNoticia}`)
+  }
 }

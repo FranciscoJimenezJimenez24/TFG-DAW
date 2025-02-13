@@ -6,16 +6,23 @@ use App\Http\Controllers\LigaController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\PartidoController;
 use App\Http\Controllers\TemporadaController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+
+Route::middleware(['auth:api', 'role:admin'])->get('/admin/dashboard', function () {
+    return response()->json(['message' => 'Welcome to the admin dashboard']);
+});
 
 Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:sanctum');
+})->middleware('auth:api');  // Cambié 'auth:sanctum' a 'auth:api'
 
 Route::post('signup', [AuthController::class, 'signup']);
 Route::post('login', [AuthController::class, 'login']);
+
+// Rutas públicas
 Route::get('ligas', [LigaController::class, 'getLigas']);
 Route::get('ligas/{id}', [LigaController::class, 'getLiga']);
 Route::get('equipos', [EquipoController::class, 'getEquiposLiga']);
@@ -28,14 +35,17 @@ Route::get('jugadores/tarjetas-amarillas', [JugadorController::class, 'getMaximo
 Route::get('jugadores/tarjetas-rojas', [JugadorController::class, 'getMaximosTarjetasRojasTemporadaLiga']);
 Route::get('jugadores/equipos/{id}', [JugadorController::class, 'getJugadoresEquipo']);
 Route::get('jugadores/{id}', [JugadorController::class, 'getJugador']);
-Route::get('/jugadores/{id}/estadisticas',[JugadorController::class,'getEstadisticasJugador']);
-Route::get('noticias',[NoticiaController::class,'getNoticias']);
+Route::get('/jugadores/{id}/estadisticas', [JugadorController::class, 'getEstadisticasJugador']);
+Route::get('noticias', [NoticiaController::class, 'getNoticias']);
 Route::post('noticias', [NoticiaController::class, 'addNoticia']);
+Route::put('/noticias', [NoticiaController::class, 'updateNoticia']);
+Route::delete('/noticias/{id}', [NoticiaController::class, 'deleteNoticia']);
+Route::get('usuarios/{email}',[UsuarioController::class,'getUsuarioByEmail']);
 
-Route::group(['middleware' => 'api',], function ($router) {
 
-    // Route::post('logout', 'AuthController@logout');
-    // Route::post('refresh', 'AuthController@refresh');
-    // Route::post('me', 'AuthController@me');
-
+// Rutas protegidas por autenticación
+Route::middleware(['auth:api'])->group(function () {
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::get('me', [AuthController::class, 'me']);
 });

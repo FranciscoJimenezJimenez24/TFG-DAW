@@ -1,0 +1,8 @@
+<div class="card p-3">
+    <h5>Editar Noticia</h5>
+    <form [formGroup]="noticiaForm" (ngSubmit)="editar()">
+        <input class="form-control mb-2" formControlName="titulo" placeholder="Título">
+        <textarea class="form-control mb-2" formControlName="contenido" placeholder="Contenido"></textarea>
+        <button class="btn btn-success" type="submit">Guardar</button>
+    </form>
+</div>
