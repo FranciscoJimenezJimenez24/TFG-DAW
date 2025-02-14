@@ -42,7 +42,7 @@ Route::put('/noticias', [NoticiaController::class, 'updateNoticia']);
 Route::delete('/noticias/{id}', [NoticiaController::class, 'deleteNoticia']);
 Route::get('usuarios',[UsuarioController::class,'getUsuarios']);
 Route::get('usuarios/{email}',[UsuarioController::class,'getUsuarioByEmail']);
-Route::post('usuarios',[UsuarioController::class,'addUsuarios']);
+Route::post('usuarios',[UsuarioController::class,'addUsuario']);
 Route::put('/usuarios',[UsuarioController::class,'updateUsuario']);
 Route::delete('/usuarios/{id}',[UsuarioController::class,'deleteUsuario']);
 

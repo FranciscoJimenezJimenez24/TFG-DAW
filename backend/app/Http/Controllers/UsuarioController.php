@@ -47,16 +47,21 @@ class UsuarioController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string',
-            'password' => 'required|string',
             'rol' => 'required|string'
         ]);
 
-        $usuario->update($request->all());
+        if ($request->filled('password')) {
+            $usuario->password = bcrypt($request->password);
+        }
+
+        $usuario->update($request->except('password'));
+        $usuario->save();
 
         return response()->json($usuario, 200);
     }
 
-    public function deleteUsuario($idUsuario){
+    public function deleteUsuario($idUsuario)
+    {
         $usuario = User::findOrFail($idUsuario);
         $usuario->delete();
         return response()->json(null, 204);

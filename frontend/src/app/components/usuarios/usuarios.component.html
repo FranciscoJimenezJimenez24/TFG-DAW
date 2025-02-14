@@ -24,4 +24,18 @@
     </tbody>
 </table>
 
+<!-- Componente de edición de usuario -->
+<app-edit-usuarios 
+  #editUsuario
+  [usuario]="usuarioSeleccionado"
+  (usuarioActualizado)="onUsuarioActualizado($event)">
+</app-edit-usuarios>
+
+<!-- Componente de agregar usuario -->
 <app-add-usuarios (usuarioAgregado)="addUsuario($event)"></app-add-usuarios>
+
+<app-delete-usuarios
+  #eliminarUsuario
+  [usuario]="usuarioSeleccionado"
+  (usuarioEliminado)="onUsuarioEliminado($event)">
+</app-delete-usuarios>
