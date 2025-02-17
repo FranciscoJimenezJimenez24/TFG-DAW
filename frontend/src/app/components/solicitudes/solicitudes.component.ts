@@ -16,7 +16,7 @@ export class SolicitudesComponent {
   solicitudes: Solicitud[] = [];
   rolUsuario: string | null = localStorage.getItem("rol");
 
-  constructor(private solicitudesService: SolicitudesService, private usuariosService:UsuariosService) { }
+  constructor(private solicitudesService: SolicitudesService, private usuariosService: UsuariosService) { }
 
   ngOnInit(): void {
     if (this.rolUsuario === 'admin') {
@@ -24,20 +24,31 @@ export class SolicitudesComponent {
     }
   }
 
-  aprobar(solicitud:Solicitud) {
+  aprobar(solicitud: Solicitud) {
     this.usuariosService.getUsuarioByEmail(solicitud.email)
-      .subscribe(usuario =>{
+      .subscribe(usuario => {
         const updateUser: Usuario = {
-          id: usuario.id, name: solicitud.nombre + " " + solicitud.apellido, email: usuario.email, password: usuario.password,rol: "journalist",
+          id: usuario.id, name: solicitud.nombre + " " + solicitud.apellido, email: usuario.email, password: usuario.password, rol: "journalist",
         };
-        this.usuariosService.updateUsuario(updateUser);
+        this.usuariosService.updateUsuario(updateUser)
+          .subscribe(
+            () => {
+              this.solicitudesService.deleteSolicitud(solicitud.id)
+                .subscribe(() =>
+                  this.solicitudes = this.solicitudes.filter(s => s.id !== solicitud.id)
+                );
+            }
+
+          );
       });
-    this.solicitudesService.deleteSolicitud(solicitud.id);
     this.ngOnInit();
   }
 
   rechazar(id: number) {
-    this.solicitudesService.deleteSolicitud(id);
+    this.solicitudesService.deleteSolicitud(id)
+      .subscribe(() =>
+        this.solicitudes = this.solicitudes.filter(s => s.id !== id)
+      );
     this.ngOnInit();
   }
 }

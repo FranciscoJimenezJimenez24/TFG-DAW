@@ -19,5 +19,5 @@
         (noticiaEliminada)="onNoticiaEliminada($event)">
     </app-delete-noticia>
 
-    <button class="btn btn-secondary mt-4" (click)="gotoContacts()">Quieres trabajar con nosotros</button>
+    <button class="btn btn-secondary mt-4" (click)="gotoContacts()" *ngIf="rolUsuario === 'user'">Quieres trabajar con nosotros</button>
 </div>

@@ -5,6 +5,7 @@ use App\Http\Controllers\JugadorController;
 use App\Http\Controllers\LigaController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\PartidoController;
+use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\TemporadaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsuarioController;
@@ -45,6 +46,9 @@ Route::get('usuarios/{email}',[UsuarioController::class,'getUsuarioByEmail']);
 Route::post('usuarios',[UsuarioController::class,'addUsuario']);
 Route::put('/usuarios',[UsuarioController::class,'updateUsuario']);
 Route::delete('/usuarios/{id}',[UsuarioController::class,'deleteUsuario']);
+Route::get('solicitudes',[SolicitudController::class,'getSolicitudes']);
+Route::post('solicitudes',[SolicitudController::class,'addSolicitud']);
+Route::delete('solicitudes/{id}',[SolicitudController::class,'deleteSolicitud']);
 
 // Rutas protegidas por autenticación
 Route::middleware(['auth:api'])->group(function () {

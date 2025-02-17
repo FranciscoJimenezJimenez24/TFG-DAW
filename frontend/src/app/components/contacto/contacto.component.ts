@@ -19,21 +19,28 @@ export class ContactoComponent implements OnInit {
     email: localStorage.getItem("email") || ''
   };
 
-  constructor(private solicitudesService: SolicitudesService, private router:Router) { }
+  constructor(private solicitudesService: SolicitudesService, private router: Router) { }
 
   ngOnInit(): void { }
 
   onSubmit() {
     if (this.contact.email) {
       const solicitud: Solicitud = {
-        id: 0, 
+        id: 0,
         nombre: this.contact.nombre,
         apellido: this.contact.apellido,
         email: this.contact.email,
       };
 
-      this.solicitudesService.agregarSolicitud(solicitud);
-      this.router.navigate(['/noticias']);
+      this.solicitudesService.agregarSolicitud(solicitud).subscribe({
+        next: (response) => {
+          console.log("Solicitud agregada:", response);
+          this.router.navigate(['/noticias']);
+        },
+        error: (error) => {
+          console.error("Error al agregar solicitud:", error);
+        }
+      });
     }
   }
 

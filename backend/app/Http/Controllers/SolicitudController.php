@@ -7,7 +7,14 @@ use Illuminate\Http\Request;
 
 class SolicitudController extends Controller
 {
-    public function addSolicitud(Request $request){
+
+    public function getSolicitudes()
+    {
+        $solicitudes = Solicitud::all();
+        return response()->json($solicitudes, 200);
+    }
+    public function addSolicitud(Request $request)
+    {
         $request->validate([
             'nombre' => 'required|string',
             'apellido' => 'required|string',

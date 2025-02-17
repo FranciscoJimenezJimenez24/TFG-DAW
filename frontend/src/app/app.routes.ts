@@ -14,6 +14,7 @@ import { JugadorPageComponent } from './components/jugadores/jugador-page/jugado
 import { NoticiasComponent } from './components/noticias/noticias.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -27,6 +28,7 @@ export const routes: Routes = [
     { path: 'noticias', component: NoticiasComponent },
     { path: 'contacto', component: ContactoComponent },
     { path: 'usuarios', component: UsuariosComponent },
+    { path: 'solicitudes', component: SolicitudesComponent },
     { path: '', component: HomeComponent  },
     // { path: '**', redirectTo: '' } // Redirigir rutas desconocidas
 ];
