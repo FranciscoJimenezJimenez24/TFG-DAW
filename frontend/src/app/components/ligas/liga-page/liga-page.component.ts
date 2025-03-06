@@ -13,15 +13,15 @@ import { Partido } from '../../../interfaces/partido';
 import { CommonModule } from '@angular/common';
 import { JugadoresService } from '../../../services/jugadores.service';
 import { Goleador } from '../../../interfaces/goleador';
-import { CardTinyPartidoComponent } from '../../cards/card-tiny-partido/card-tiny-partido.component';
 import { Asistidor } from '../../../interfaces/asistidor';
 import { TarjetasAmarillas } from '../../../interfaces/tarjetas-amarillas';
 import { TarjetasRojas } from '../../../interfaces/tarjetas-rojas';
+import { CardPartidoComponent } from '../../cards/card-partido/card-partido.component';
 
 @Component({
   selector: 'app-liga-page',
   standalone: true,
-  imports: [CommonModule, CardTinyPartidoComponent],
+  imports: [CommonModule, CardPartidoComponent],
   templateUrl: './liga-page.component.html',
   styleUrl: './liga-page.component.css'
 })
@@ -101,11 +101,30 @@ export class LigaPageComponent implements OnInit {
     if (!this.liga) return;
     this.partidosService.getPartidosLigasTemporadas(this.liga.id, idTemporada)
       .subscribe(partidos => {
-        this.partidos = partidos;
+        // Ordenamos por fecha
+        this.partidos = partidos.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
         this.getPuntos();
       });
     this.puntos = new Map();
   }
+
+  getPartidosAgrupados() {
+    const grouped: { fecha: string, partidos: Partido[] }[] = [];
+
+    this.partidos.forEach(partido => {
+      const fecha = new Date(partido.fecha).toISOString().split('T')[0]; // Normalizamos la fecha (YYYY-MM-DD)
+      const jornada = grouped.find(g => g.fecha === fecha);
+
+      if (jornada) {
+        jornada.partidos.push(partido);
+      } else {
+        grouped.push({ fecha, partidos: [partido] });
+      }
+    });
+
+    return grouped;
+  }
+
 
   getPuntos() {
     if (!this.liga) return;

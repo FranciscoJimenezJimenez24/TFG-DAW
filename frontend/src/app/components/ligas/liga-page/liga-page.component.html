@@ -74,7 +74,8 @@
                 <div class="card-body p-2">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" *ngFor="let tarjetaAmarilla of tarjetasAmarillas; let i = index">
-                            <span>{{ i + 1 }}. {{ tarjetaAmarilla.jugador }} - {{ tarjetaAmarilla.tarjetas_amarillas }}</span>
+                            <span>{{ i + 1 }}. {{ tarjetaAmarilla.jugador }} - {{ tarjetaAmarilla.tarjetas_amarillas
+                                }}</span>
                         </li>
                     </ul>
                 </div>
@@ -99,12 +100,15 @@
     <!-- Últimos partidos -->
     <div class="mt-4">
         <h5 class="text-center">Últimos Partidos</h5>
-        <div class="d-flex flex-wrap justify-content-center gap-2">
-            <app-card-tiny-partido *ngFor="let partido of partidos" 
-                [partido]="partido" 
-                [equipoLocal]="getEquipoById(partido.equipo_local_id)" 
-                [equipoVisitante]="getEquipoById(partido.equipo_visitante_id)">
-            </app-card-tiny-partido>
+        <div *ngFor="let group of getPartidosAgrupados(); let jornadaIndex = index">
+            <h6 class="text-primary">Jornada {{ jornadaIndex + 1 }} - {{ group.fecha | date: 'dd/MM/yyyy' }}</h6>
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+                <app-card-partido *ngFor="let partido of group.partidos" [partido]="partido"
+                    [equipoLocal]="getEquipoById(partido.equipo_local_id)"
+                    [equipoVisitante]="getEquipoById(partido.equipo_visitante_id)">
+                </app-card-partido>
+            </div>
         </div>
     </div>
+
 </div>
