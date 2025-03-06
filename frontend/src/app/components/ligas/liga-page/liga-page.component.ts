@@ -11,9 +11,6 @@ import { TemporadasService } from '../../../services/temporadas.service';
 import { PartidosService } from '../../../services/partidos.service';
 import { Partido } from '../../../interfaces/partido';
 import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
-import { CardPartidoComponent } from "../../cards/card-partido/card-partido.component";
 import { JugadoresService } from '../../../services/jugadores.service';
 import { Goleador } from '../../../interfaces/goleador';
 import { CardTinyPartidoComponent } from '../../cards/card-tiny-partido/card-tiny-partido.component';
@@ -40,15 +37,6 @@ export class LigaPageComponent implements OnInit {
   tarjetasAmarillas: TarjetasAmarillas[] = [];
   tarjetasRojas: TarjetasRojas[] = [];
 
-  // Calendario
-  showCalendar: boolean = false;
-  currentYear: number = new Date().getFullYear();
-  currentMonth: number = new Date().getMonth();
-  months: string[] = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-  weekdays: string[] = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
-  emptyDays: number[] = [];
-  daysInMonth: number[] = [];
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private ligasService: LigasService,
@@ -72,7 +60,6 @@ export class LigaPageComponent implements OnInit {
       });
     this.getEquiposLiga();
     this.getTemporadas();
-    this.updateCalendar();
   }
 
   getEquiposLiga() {
@@ -100,9 +87,6 @@ export class LigaPageComponent implements OnInit {
     if (!isNaN(idTemporada)) {
       const selectedTemporada = this.temporadas.find(temporada => temporada.id === idTemporada);
       if (selectedTemporada) {
-        this.currentYear = selectedTemporada.añoInicio;
-        this.currentMonth = 7;
-        this.updateCalendar();
         this.getPartidos(idTemporada);
         this.getMaximosGoleadores(idTemporada);
         this.getMaximosAsistidores(idTemporada);
@@ -154,58 +138,8 @@ export class LigaPageComponent implements OnInit {
     });
   }
 
-  // Calendario
-  toggleCalendar(): void {
-    this.showCalendar = !this.showCalendar;
-  }
-
   getEquipoById(equipoId: number): Equipo {
     return this.equipos.find(equipo => equipo.id === equipoId) || { id: 0, nombre: 'Desconocido', escudo: 'default.jpg', ciudad: '', pais: '', formacion: '', liga_id: 0 };
-  }
-
-  partidosPorDia: Map<number, Partido[]> = new Map();  // Esta es la estructura para almacenar los partidos por día
-
-  updateCalendar(): void {
-    const firstDay = new Date(this.currentYear, this.currentMonth, 1).getDay();
-    const lastDate = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
-
-    this.emptyDays = Array(firstDay === 0 ? 6 : firstDay - 1).fill(0);
-    this.daysInMonth = Array(lastDate).fill(0).map((_, i) => i + 1);
-
-    // Inicializa el mapa de partidos por día
-    this.partidosPorDia.clear();
-
-    // Filtra los partidos que caen en el mes actual
-    this.partidos.forEach(partido => {
-      const partidoDate = new Date(partido.fecha);
-      if (partidoDate.getFullYear() === this.currentYear && partidoDate.getMonth() === this.currentMonth) {
-        const dia = partidoDate.getDate();
-        if (!this.partidosPorDia.has(dia)) {
-          this.partidosPorDia.set(dia, []);
-        }
-        this.partidosPorDia.get(dia)?.push(partido);
-      }
-    });
-  }
-
-  prevMonth(): void {
-    if (this.currentMonth === 0) {
-      this.currentMonth = 11;
-      this.currentYear--;
-    } else {
-      this.currentMonth--;
-    }
-    this.updateCalendar();
-  }
-
-  nextMonth(): void {
-    if (this.currentMonth === 11) {
-      this.currentMonth = 0;
-      this.currentYear++;
-    } else {
-      this.currentMonth++;
-    }
-    this.updateCalendar();
   }
 
   getMaximosGoleadores(idTemporada: number) {
