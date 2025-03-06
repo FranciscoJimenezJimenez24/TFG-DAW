@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ciudad;
 use App\Models\Equipo;
 use App\Models\Liga;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -240,21 +241,27 @@ class EquipoSeeder extends Seeder
             '5-3-2'
         ];
         foreach ($ligas as $liga) {
-            $nombresUsados = []; 
+            $pais = $liga->pais;
+            $ciudades = Ciudad::where('pais_id', $pais->id)->pluck('nombre')->toArray();
+            $nombresUsados = [];
+
             for ($i = 0; $i < 20; $i++) {
                 do {
-                    $ciudad = $arrayCiudadPorPais[$liga->pais][random_int(0, 9)];
+                    $ciudad = $ciudades[array_rand($ciudades)];
                     $nombreEquipo = $arrayNombreAleatorios[array_rand($arrayNombreAleatorios)] . " " . $ciudad;
-                } while (in_array($nombreEquipo, $nombresUsados)); 
+                } while (in_array($nombreEquipo, $nombresUsados));
+
                 $nombresUsados[] = $nombreEquipo;
+
                 Equipo::create([
                     'nombre' => $nombreEquipo,
                     'ciudad' => $ciudad,
-                    'pais' => $liga->pais,
+                    'pais' => $pais->nombre,
                     'liga_id' => $liga->id,
-                    'escudo' => $urls[$urlIndex],
+                    'escudo' => $urls[$urlIndex] ?? null,
                     'formacion' => $formaciones[array_rand($formaciones)]
                 ]);
+
                 $urlIndex++;
             }
         }

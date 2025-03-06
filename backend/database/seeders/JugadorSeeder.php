@@ -6,6 +6,7 @@ use App\Models\Equipo;
 use App\Models\EstadisticasJugador;
 use App\Models\Jugador;
 use App\Models\Liga;
+use App\Models\Pais;
 use App\Models\Temporada;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +19,7 @@ class JugadorSeeder extends Seeder
     {
         $ligas = Liga::all();
         $temporadas = Temporada::all();
+        $paises = Pais::all();
         foreach ($ligas as $liga) {
             $equipos = Equipo::where('liga_id', $liga->id)->get();
             foreach ($equipos as $equipo) {
@@ -48,7 +50,7 @@ class JugadorSeeder extends Seeder
                             'nombre' => fake()->name(),
                             'posicion' => ucfirst(substr($posicion, 0, -1)),
                             'fecha_nacimiento' => fake()->date(),
-                            'pais_nacimiento' => fake()->country(),
+                            'pais_nacimiento' => $paises->random()->nombre,
                             'equipo_id' => $equipo->id,
                         ]);
 

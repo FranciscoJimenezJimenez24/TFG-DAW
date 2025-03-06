@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Liga;
+use App\Models\Pais;
 use Illuminate\Database\Seeder;
 
 class LigaSeeder extends Seeder
@@ -12,13 +13,12 @@ class LigaSeeder extends Seeder
      */
     public function run(): void
     {
-        $paises = ['España', 'Inglaterra', 'Alemania', 'Italia', 'Francia', 'Argentina', 'Brasil', 'Portugal', 'Países Bajos', 'México'];
-
+        $paises = Pais::all();
         foreach ($paises as $pais) {
             Liga::create([
-                'nombre' => "Liga $pais",
-                'pais' => $pais,
-                'bandera' => "https://flagcdn.com/w320/" . strtolower(substr($pais, 0, 2)) . ".png"
+                'nombre' => "Liga $pais->nombre",
+                'pais' => $pais->nombre,
+                'bandera' => $pais->nombre
             ]);
         }
     }
