@@ -17,8 +17,8 @@ class LigaSeeder extends Seeder
         foreach ($paises as $pais) {
             Liga::create([
                 'nombre' => "Liga $pais->nombre",
-                'pais' => $pais->nombre,
-                'bandera' => $pais->nombre
+                'pais_id' => $pais->id,
+                'bandera' => $pais->bandera
             ]);
         }
     }

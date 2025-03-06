@@ -241,8 +241,8 @@ class EquipoSeeder extends Seeder
             '5-3-2'
         ];
         foreach ($ligas as $liga) {
-            $pais = $liga->pais;
-            $ciudades = Ciudad::where('pais_id', $pais->id)->pluck('nombre')->toArray();
+            $pais = $liga->pais_id;
+            $ciudades = Ciudad::where('pais_id', $pais)->pluck('nombre')->toArray();
             $nombresUsados = [];
 
             for ($i = 0; $i < 20; $i++) {
@@ -256,7 +256,7 @@ class EquipoSeeder extends Seeder
                 Equipo::create([
                     'nombre' => $nombreEquipo,
                     'ciudad' => $ciudad,
-                    'pais' => $pais->nombre,
+                    'pais' => $pais,
                     'liga_id' => $liga->id,
                     'escudo' => $urls[$urlIndex] ?? null,
                     'formacion' => $formaciones[array_rand($formaciones)]

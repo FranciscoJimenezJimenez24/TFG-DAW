@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('ligas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('pais');
+            $table->foreignId('pais_id')->constrained('paises')->onDelete('cascade');
             $table->string('bandera');
             $table->timestamps();
         });
