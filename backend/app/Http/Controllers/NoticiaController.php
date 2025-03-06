@@ -17,16 +17,16 @@ class NoticiaController extends Controller
     {
         $request->validate([
             'titulo' => 'required|string',
-            'contenido' => 'required|string',
+            'descripcion' => 'required|string',
             'autor' => 'required|string',
-            'fecha' => 'required|date'
+            'fecha_publicacion' => 'required|date'
         ]);
 
         $noticia = Noticia::create([
             'titulo' => $request->titulo,
-            'contenido' => $request->contenido,
+            'descripcion' => $request->descripcion,
             'autor' => $request->autor,
-            'fecha' => $request->fecha
+            'fecha_publicacion' => $request->fecha_publicacion
         ]);
 
         return response()->json($noticia, 201);
@@ -39,9 +39,9 @@ class NoticiaController extends Controller
 
         $request->validate([
             'titulo' => 'required|string',
-            'contenido' => 'required|string',
+            'descripcion' => 'required|string',
             'autor' => 'required|string',
-            'fecha' => 'required|date'
+            'fecha_publicacion' => 'required|date'
         ]);
 
         $noticia->update($request->all());

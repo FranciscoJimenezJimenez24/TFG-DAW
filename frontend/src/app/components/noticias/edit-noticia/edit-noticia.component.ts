@@ -1,37 +1,43 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { NoticiasService } from '../../../services/noticias.service';
 import { Noticia } from '../../../interfaces/noticia';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-edit-noticia',
   standalone: true,
   templateUrl: './edit-noticia.component.html',
   styleUrl: './edit-noticia.component.css',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,FormsModule],
 })
-export class EditNoticiaComponent implements OnInit {
-  @Input() noticia!: Noticia;
-  @Output() noticiaEditada = new EventEmitter<Noticia>();
-  noticiaForm: FormGroup;
+export class EditNoticiaComponent {
+  nombreUsuario: string | null = localStorage.getItem("nombre")
+  @Input() noticia: Noticia = { id: 0, titulo: '', descripcion: '', autor: this.nombreUsuario ?? '', fecha_publicacion: new Date().toISOString().split('T')[0] };
+  @Output() noticiaActualizada = new EventEmitter<Noticia>();
 
-  constructor(private fb: FormBuilder) {
-    this.noticiaForm = this.fb.group({
-      titulo: ['', [Validators.required, Validators.minLength(5)]],
-      contenido: ['', [Validators.required, Validators.minLength(20)]]
-    });
+  abrirModal() {
+    setTimeout(() => {  
+      const modalElement = document.getElementById('editNoticiaModal');
+      if (modalElement) {
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+      }
+    }, 100);
   }
 
-  ngOnInit() {
-    this.noticiaForm.patchValue(this.noticia);
+  actualizarNoticia() {
+    this.noticiaActualizada.emit(this.noticia);
+    this.cerrarModal();
   }
 
-  editar() {
-    if (this.noticiaForm.valid) {
-      const noticiaEditada = { ...this.noticia, ...this.noticiaForm.value };
-      this.noticiaEditada.emit(noticiaEditada);
+  cerrarModal() {
+    const modalElement = document.getElementById('editNoticiaModal');
+    if (modalElement) {
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      modal?.hide();
     }
   }
 }

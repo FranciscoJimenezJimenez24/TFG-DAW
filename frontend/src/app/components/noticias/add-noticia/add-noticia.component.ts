@@ -12,16 +12,16 @@ declare var bootstrap: any;
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
 })
 export class AddNoticiaComponent {
-  rolUsuario: string | null = localStorage.getItem("name")
-  noticia: Noticia = { id: 0, titulo: '', contenido: '', autor: this.rolUsuario ?? '', fecha: new Date().toISOString().split('T')[0] };
+  nombreUsuario: string | null = localStorage.getItem("nombre")
+  noticia: Noticia = { id: 0, titulo: '', descripcion: '', autor: this.nombreUsuario ?? '', fecha_publicacion: new Date().toISOString().split('T')[0] };
 
   @Output() noticiaAgregada = new EventEmitter<Noticia>();
 
-  guardarNoticia() {
+  guardarNoticia() {    
     this.noticiaAgregada.emit(this.noticia);
     this.cerrarModal();
   }
-
+  
   cerrarModal() {
     const modalElement = document.getElementById('addNoticiaModal');
     if (modalElement) {

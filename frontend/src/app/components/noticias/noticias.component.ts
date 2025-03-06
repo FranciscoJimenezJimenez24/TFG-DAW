@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NoticiasService } from '../../services/noticias.service';
 import { Noticia } from '../../interfaces/noticia';
 import { CommonModule } from '@angular/common';
@@ -17,10 +17,14 @@ import { EditNoticiaComponent } from './edit-noticia/edit-noticia.component';
 })
 export class NoticiasComponent implements OnInit {
   noticias: Noticia[] = [];
-  noticiaSeleccionada: Noticia | null = null;
   noticiaAEliminar: Noticia | null = null;
   mostrarFormulario = false;
   rolUsuario: string | null = localStorage.getItem("rol"); // Obtiene el rol desde localStorage
+
+  @ViewChild(EditNoticiaComponent) editNoticiaComponent!: EditNoticiaComponent;
+  @ViewChild(DeleteNoticiaComponent) deleteNoticiaComponent!: DeleteNoticiaComponent;
+
+  noticiaSeleccionada: Noticia = { id: 0, titulo: '', descripcion: '', autor: '', fecha_publicacion: '' };
 
   constructor(private noticiasService: NoticiasService, private router: Router) { }
 
@@ -33,28 +37,33 @@ export class NoticiasComponent implements OnInit {
   }
 
   onNoticiaAdded(nuevaNoticia: Noticia) {
-    this.noticias.push(nuevaNoticia);
-    this.mostrarFormulario = false;
+    this.noticiasService.addNoticia(nuevaNoticia).subscribe(noticia => this.noticias.push(noticia));
   }
 
-  onNoticiaEditada(noticiaEditada: Noticia) {
-    this.noticias = this.noticias.map(n => n.id === noticiaEditada.id ? noticiaEditada : n);
-    this.noticiaSeleccionada = null;
+  updateNoticia(noticia: Noticia) {
+    this.noticiaSeleccionada = { ...noticia };
+    setTimeout(() => {
+      this.editNoticiaComponent.abrirModal();
+    }, 100);
   }
 
-  onNoticiaEliminada(id: number) {
-    if (id) {
-      this.noticias = this.noticias.filter(n => n.id !== id);
-    }
-    this.noticiaAEliminar = null;
+  onNoticiaActualizado(noticia: Noticia) {
+    this.noticiasService.updateNoticia(noticia).subscribe(() => {
+      this.getNoticias();
+    });
   }
 
-  seleccionarNoticiaParaEditar(noticia: Noticia) {
-    this.noticiaSeleccionada = noticia;
+  deleteNoticia(noticia: Noticia) {
+    this.noticiaSeleccionada = { ...noticia };
+    setTimeout(() => {
+      this.deleteNoticiaComponent.abrirModal();
+    }, 100);
   }
 
-  seleccionarNoticiaParaEliminar(noticia: Noticia) {
-    this.noticiaAEliminar = noticia;
+  onNoticiaEliminado(id: number) {
+    this.noticiasService.deleteNoticia(id).subscribe(() => {
+      this.getNoticias();
+    });
   }
 
   toggleFormulario() {

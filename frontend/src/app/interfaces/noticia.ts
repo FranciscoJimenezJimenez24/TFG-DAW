@@ -1,7 +1,7 @@
 export interface Noticia {
     id: number;
     titulo: string;
-    contenido: string;
+    descripcion: string;
     autor: string;
-    fecha: string;
+    fecha_publicacion: string;
 }

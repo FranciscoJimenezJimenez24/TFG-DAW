@@ -28,7 +28,7 @@ if not os.path.exists("svgs"):
 for i, svg in enumerate(svg_tags):
     file_path = f"svgs/svg_{i}.svg"
 
-    # Guardar el contenido SVG en un archivo
+    # Guardar el descripcion SVG en un archivo
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(str(svg))
 

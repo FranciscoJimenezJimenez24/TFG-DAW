@@ -1,8 +1,8 @@
 <div class="card noticia-card" (mouseenter)="mostrarOpciones = true" (mouseleave)="mostrarOpciones = false">
   <div class="card-body">
     <h5 class="card-title">{{ noticia.titulo }}</h5>
-    <p class="card-text">{{ noticia.contenido | slice:0:100 }}...</p>
-    <p class="text-muted">Por: {{ noticia.autor }} | {{ noticia.fecha }}</p>
+    <p class="card-text">{{ noticia.descripcion | slice:0:100 }}...</p>
+    <p class="text-muted">Por: {{ noticia.autor }} | {{ noticia.fecha_publicacion }}</p>
 
     <div *ngIf="mostrarOpciones && esAutor" class="opciones">
       <button class="btn btn-warning btn-sm me-2" (click)="editar.emit(noticia)">Editar</button>

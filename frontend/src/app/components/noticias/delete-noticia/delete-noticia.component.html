@@ -1,5 +1,21 @@
-<div class="card p-3 text-center">
-    <h5>¿Seguro que quieres eliminar esta noticia?</h5>
-    <button class="btn btn-danger me-2" (click)="confirmarEliminar()">Sí, eliminar</button>
-    <button class="btn btn-secondary" (click)="noticiaEliminada.emit(undefined)">Cancelar</button>
+<div class="modal fade" id="deleteNoticiaModal" tabindex="-1" aria-labelledby="deleteNoticiaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteNoticiaModalLabel">Eliminar Noticia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que quieres eliminar está noticia?</p>
+                <p>Para confirmar, escribe <strong>eliminar</strong> en el siguiente campo:</p>
+                <input type="text" class="form-control" [(ngModel)]="confirmacionTexto" (input)="validarConfirmacion()"
+                    placeholder="Escribe 'eliminar' aquí">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" [disabled]="!confirmacionValida"
+                    (click)="confirmarEliminar()">Eliminar</button>
+            </div>
+        </div>
+    </div>
 </div>
