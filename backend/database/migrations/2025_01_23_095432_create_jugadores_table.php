@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('nombre');
             $table->string('posicion');
             $table->string('fecha_nacimiento');
-            $table->string('pais_nacimiento');
+            $table->foreignId('pais_id')->constrained('paises')->onDelete('cascade');
             $table->foreignId('equipo_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

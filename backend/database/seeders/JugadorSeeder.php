@@ -50,7 +50,7 @@ class JugadorSeeder extends Seeder
                             'nombre' => fake()->name(),
                             'posicion' => ucfirst(substr($posicion, 0, -1)),
                             'fecha_nacimiento' => fake()->date(),
-                            'pais_nacimiento' => $paises->random()->nombre,
+                            'pais_id' => $paises->random()->id,
                             'equipo_id' => $equipo->id,
                         ]);
 

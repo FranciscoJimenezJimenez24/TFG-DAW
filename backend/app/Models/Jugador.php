@@ -15,5 +15,7 @@ class Jugador extends Model
         'nombre',
         'posicion',
         'equipo_id',
+        'pais_id',
+        'fecha_nacimiento',
     ];
 }
