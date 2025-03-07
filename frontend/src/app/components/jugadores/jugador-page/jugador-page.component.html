@@ -21,7 +21,6 @@
                     <tr>
                         <th>#</th>
                         <th>Temporada</th>
-                        <th>Edad</th>
                         <th>Goles</th>
                         <th>Asistencias</th>
                         <th>Minutos Jugados</th>
@@ -33,7 +32,6 @@
                     <tr *ngFor="let estadistica of estadisticas; let i = index">
                         <td>{{ i + 1 }}</td>
                         <td>{{ getTemporadaNombre(estadistica.temporada_id) }}</td>
-                        <td>{{ jugador?.fecha_nacimiento }}</td>
                         <td>{{ estadistica.goles }}</td>
                         <td>{{ estadistica.asistencias }}</td>
                         <td>{{ estadistica.minutos_jugados }}</td>

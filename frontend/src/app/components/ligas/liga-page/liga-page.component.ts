@@ -158,7 +158,7 @@ export class LigaPageComponent implements OnInit {
   }
 
   getEquipoById(equipoId: number): Equipo {
-    return this.equipos.find(equipo => equipo.id === equipoId) || { id: 0, nombre: 'Desconocido', escudo: 'default.jpg', ciudad: '', pais: '', formacion: '', liga_id: 0 };
+    return this.equipos.find(equipo => equipo.id === equipoId) || { id: 0, nombre: 'Desconocido', escudo: 'default.jpg', ciudad: '', pais: 0, formacion: '', liga_id: 0 };
   }
 
   getMaximosGoleadores(idTemporada: number) {

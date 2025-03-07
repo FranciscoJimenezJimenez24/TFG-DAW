@@ -3,5 +3,6 @@ export interface Jugador {
     nombre: string;
     posicion: string;
     equipo_id:number;
+    pais_id:number;
     fecha_nacimiento:string;
 }

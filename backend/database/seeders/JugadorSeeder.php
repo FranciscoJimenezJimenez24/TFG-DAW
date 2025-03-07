@@ -20,6 +20,7 @@ class JugadorSeeder extends Seeder
         $ligas = Liga::all();
         $temporadas = Temporada::all();
         $paises = Pais::all();
+
         foreach ($ligas as $liga) {
             $equipos = Equipo::where('liga_id', $liga->id)->get();
             foreach ($equipos as $equipo) {
@@ -29,47 +30,38 @@ class JugadorSeeder extends Seeder
                 // Genera el equipo con minutos distribuidos
                 $equipoGenerado = $this->generarEquipo($formacionSeleccionada);
 
-                // Se calcula el número total de jugadores
-                $num_jugadores = count($equipoGenerado['porteros']) + count($equipoGenerado['defensas']) +
-                    count($equipoGenerado['centrocampistas']) + count($equipoGenerado['delanteros']);
-
-                // Repartir los minutos para cada grupo de jugadores
+                // Crear jugadores
                 $jugadores = [];
                 $posiciones = ['porteros', 'defensas', 'centrocampistas', 'delanteros'];
                 foreach ($posiciones as $posicion) {
-                    // Utiliza la clave correcta en minúsculas para acceder al array
-                    $clavePosicion = strtolower($posicion);  // 'portero', 'defensa', 'centrocampista', 'delantero'
-                    // Verifica si la clave de la posición existe
+                    $clavePosicion = strtolower($posicion);
                     if (isset($equipoGenerado[$clavePosicion])) {
-                        $minutosPorPosicion = $equipoGenerado[$clavePosicion];
-                    } else {
-                        continue;  // Si no existe, pasa a la siguiente posición
-                    }
-                    foreach ($minutosPorPosicion as $minutos_jugados) {
-                        $jugador = Jugador::create([
-                            'nombre' => fake()->name(),
-                            'posicion' => ucfirst(substr($posicion, 0, -1)),
-                            'fecha_nacimiento' => fake()->date(),
-                            'pais_id' => $paises->random()->id,
-                            'equipo_id' => $equipo->id,
-                        ]);
-
-                        // Guardar el jugador para asignar minutos en cada temporada
-                        $jugadores[] = $jugador;
+                        foreach ($equipoGenerado[$clavePosicion] as $minutos_jugados) {
+                            $jugador = Jugador::create([
+                                'nombre' => fake()->name(),
+                                'posicion' => ucfirst(substr($posicion, 0, -1)),
+                                'fecha_nacimiento' => fake()->date(),
+                                'pais_id' => $paises->random()->id,
+                                'equipo_id' => $equipo->id,
+                            ]);
+                            $jugadores[] = $jugador;
+                        }
                     }
                 }
 
-                // Redistribuir minutos por temporada
+                // Asignar minutos y estadísticas por temporada
                 foreach ($temporadas as $temporada) {
-                    $minutosTotales = 37620;
-                    $minutosPorJugador = $this->repartirMinutosDesbalanceado(count($jugadores), $minutosTotales);
+                    // Generar minutos por posición para esta temporada
+                    $minutosPorPosicion = $this->generarMinutosPorTemporada($equipoGenerado);
 
-                    foreach ($jugadores as $index => $jugador) {
-                        $minutos_jugados = $minutosPorJugador[$index];
+                    // Asignar minutos a los jugadores
+                    foreach ($jugadores as $jugador) {
+                        $posicion = strtolower($jugador->posicion) . 's'; // Convertir a clave del array
+                        $minutos_jugados = array_shift($minutosPorPosicion[$posicion]);
 
                         // Asignación de estadísticas basada en la posición
                         $goles = $asistencias = $tarjetas_amarillas = $tarjetas_rojas = 0;
-                        $factor_minutos = $minutos_jugados / 3420; // Factor proporcional basado en los minutos jugados
+                        $factor_minutos = $minutos_jugados / 3420;
 
                         switch ($jugador->posicion) {
                             case 'Portero':
@@ -116,28 +108,32 @@ class JugadorSeeder extends Seeder
     // Función para generar el equipo con minutos distribuidos
     private function generarEquipo($formacion)
     {
-        $numJugadores = rand(15, 30);
-
         // Extraer los valores de la formación
         list($numDefensas, $numCentros, $numDelanteros) = str_split($formacion);
 
-        // Minutos totales
-        $totalMinutos = 11 * 3420;
+        // Minutos totales por línea
         $minutosPorLinea = [
-            'portero' => 3420,
-            'defensa' => $numDefensas * 3420,
-            'centrocampista' => $numCentros * 3420,
-            'delantero' => $numDelanteros * 3420
+            'porteros' => 3420,
+            'defensas' => $numDefensas * 3420,
+            'centrocampistas' => $numCentros * 3420,
+            'delanteros' => $numDelanteros * 3420
         ];
 
         // Repartir porteros (1 a 3 porteros)
         $numPorteros = rand(1, 3);
-        $porteros = $this->repartirMinutosDesbalanceado($numPorteros, $minutosPorLinea['portero']);
+        $porteros = array_fill(0, $numPorteros, 0); // Inicializar array de porteros
 
-        // Repartir minutos en las otras posiciones
-        $defensas = $this->repartirMinutosDesbalanceado(rand($numDefensas, $numJugadores - ($numCentros + $numDelanteros + $numPorteros)), $minutosPorLinea['defensa']);
-        $centrocampistas = $this->repartirMinutosDesbalanceado(rand($numCentros, $numJugadores - (count($defensas) + $numDelanteros + $numPorteros)), $minutosPorLinea['centrocampista']);
-        $delanteros = $this->repartirMinutosDesbalanceado(rand($numDelanteros, $numJugadores - (count($defensas) + count($centrocampistas) + $numPorteros)), $minutosPorLinea['delantero']);
+        // Repartir defensas
+        $numDefensasTotal = rand($numDefensas, $numDefensas + 3); // Ajustar según necesidades
+        $defensas = array_fill(0, $numDefensasTotal, 0); // Inicializar array de defensas
+
+        // Repartir centrocampistas
+        $numCentrocampistasTotal = rand($numCentros, $numCentros + 3); // Ajustar según necesidades
+        $centrocampistas = array_fill(0, $numCentrocampistasTotal, 0); // Inicializar array de centrocampistas
+
+        // Repartir delanteros
+        $numDelanterosTotal = rand($numDelanteros, $numDelanteros + 2); // Ajustar según necesidades
+        $delanteros = array_fill(0, $numDelanterosTotal, 0); // Inicializar array de delanteros
 
         return [
             'formacion' => $formacion,
@@ -148,12 +144,51 @@ class JugadorSeeder extends Seeder
         ];
     }
 
-    // Función para repartir los minutos desbalanceados
-    private function repartirMinutosDesbalanceado($cantidad, $totalMinutos)
+    // Función para generar minutos por temporada
+    private function generarMinutosPorTemporada($equipoGenerado)
+    {
+        $minutosPorPosicion = [];
+
+        // Extraer la formación del equipo
+        $formacion = $equipoGenerado['formacion'];
+        list($numDefensas, $numCentros, $numDelanteros) = str_split($formacion);
+
+        foreach ($equipoGenerado as $posicion => $jugadores) {
+            // Excluir la clave "formacion"
+            if ($posicion === 'formacion') {
+                continue;
+            }
+
+            // Calcular el total de minutos según la formación
+            $totalMinutos = 0;
+            switch ($posicion) {
+                case 'porteros':
+                    $totalMinutos = 3420; // Siempre 3420 para porteros
+                    break;
+                case 'defensas':
+                    $totalMinutos = $numDefensas * 3420; // Minutos según la formación
+                    break;
+                case 'centrocampistas':
+                    $totalMinutos = $numCentros * 3420; // Minutos según la formación
+                    break;
+                case 'delanteros':
+                    $totalMinutos = $numDelanteros * 3420; // Minutos según la formación
+                    break;
+            }
+
+            // Repartir minutos de forma aleatoria pero asegurando la suma total
+            $minutosPorPosicion[$posicion] = $this->repartirMinutosAleatorios(count($jugadores), $totalMinutos);
+        }
+
+        return $minutosPorPosicion;
+    }
+
+    // Función para repartir minutos de forma aleatoria
+    private function repartirMinutosAleatorios($cantidad, $totalMinutos)
     {
         $minutos = array_fill(0, $cantidad, 0);
 
-        // Distribuir minutos de forma aleatoria con variabilidad
+        // Distribuir minutos de forma aleatoria
         for ($i = 0; $i < $cantidad; $i++) {
             $minutos[$i] = rand(0, min(3420, $totalMinutos - ($cantidad - $i - 1)));
             $totalMinutos -= $minutos[$i];
