@@ -20,11 +20,9 @@ class PartidoSeeder extends Seeder
         $temporadas = Temporada::all();
 
         foreach ($ligas as $liga) {
-            // Obtener equipos por liga
             $equipos = Equipo::where('liga_id', $liga->id)->get();
 
             foreach ($temporadas as $temporada) {
-                // Calcular goles totales por equipo en la temporada actual
                 $equiposData = [];
                 foreach ($equipos as $equipo) {
                     $golesTotales = DB::table('estadisticas_jugador')
@@ -40,8 +38,6 @@ class PartidoSeeder extends Seeder
                 }
 
                 $partidos = [];
-
-                // Generar partidos ida y vuelta
                 for ($i = 0; $i < count($equiposData); $i++) {
                     for ($j = $i + 1; $j < count($equiposData); $j++) {
                         $partidos[] = [
@@ -59,52 +55,55 @@ class PartidoSeeder extends Seeder
                     }
                 }
 
-                // Asignar goles de manera probabilística
+                shuffle($partidos);
+
                 foreach ($partidos as &$partido) {
                     $equipoLocal = $partido['local'];
                     $equipoVisitante = $partido['visitante'];
-
                     $partido['goles_local'] = $this->generarGoles($equipoLocal['Goles_Totales']);
                     $partido['goles_visitante'] = $this->generarGoles($equipoVisitante['Goles_Totales']);
                 }
                 unset($partido);
 
-                // Ajustar goles para que coincidan con los totales calculados
-                foreach ($equiposData as $equipoData) {
-                    $this->ajustarGolesTotales($equipoData, $partidos);
-                }
-
                 $fecha_inicio = new DateTime(substr($temporada->nombre, -9, 4) . "-08-08");
-                $fecha_fin = new DateTime(substr($temporada->nombre, -4) . "-05-31");
-
                 $fechas_disponibles = [];
-                $fecha_actual = clone $fecha_inicio;
-
-                while ($fecha_actual <= $fecha_fin) {
-                    $fechas_disponibles[] = $fecha_actual->format('Y-m-d');
-                    $dias_salto = rand(3, 14);
-                    $fecha_actual->modify("+$dias_salto days");
+                for ($i = 0; $i < 38; $i++) {
+                    $fechas_disponibles[] = clone $fecha_inicio;
+                    $fecha_inicio->modify("+7 days");
                 }
 
-                shuffle($fechas_disponibles); // Barajar las fechas para asignarlas aleatoriamente
-
-                // Crear registros en la tabla `partidos`
-                $indice_fecha = 0;
-                foreach ($partidos as $partido) {
-                    if ($indice_fecha >= count($fechas_disponibles)) {
-                        $indice_fecha = 0; // Reiniciar índice si se terminan las fechas
+                $jornadas = [];
+                $equiposUsados = [];
+                foreach ($fechas_disponibles as $fecha) {
+                    $jornada = [];
+                    $equiposUsados = [];
+                    foreach ($partidos as $key => $partido) {
+                        if (!in_array($partido['local']['Equipo']->id, $equiposUsados) && !in_array($partido['visitante']['Equipo']->id, $equiposUsados)) {
+                            $jornada[] = $partido;
+                            $equiposUsados[] = $partido['local']['Equipo']->id;
+                            $equiposUsados[] = $partido['visitante']['Equipo']->id;
+                            unset($partidos[$key]);
+                        }
+                        if (count($jornada) == 10) {
+                            break;
+                        }
                     }
-                    if (isset($partido['local']['Equipo']) && isset($partido['visitante']['Equipo'])) {
-                        Partido::create([
-                            'temporada_id' => $temporada->id,
-                            'liga_id' => $liga->id,
-                            'equipo_local_id' => $partido['local']['Equipo']->id,
-                            'equipo_visitante_id' => $partido['visitante']['Equipo']->id,
-                            'goles_local' => $partido['goles_local'],
-                            'goles_visitante' => $partido['goles_visitante'],
-                            'fecha' => $fechas_disponibles[$indice_fecha],
-                        ]);
-                        $indice_fecha++;
+                    $jornadas[] = $jornada;
+                }
+
+                foreach ($jornadas as $i => $jornada) {
+                    foreach ($jornada as $partido) {
+                        if (isset($partido['local']['Equipo']) && isset($partido['visitante']['Equipo'])) {
+                            Partido::create([
+                                'temporada_id' => $temporada->id,
+                                'liga_id' => $liga->id,
+                                'equipo_local_id' => $partido['local']['Equipo']->id,
+                                'equipo_visitante_id' => $partido['visitante']['Equipo']->id,
+                                'goles_local' => $partido['goles_local'],
+                                'goles_visitante' => $partido['goles_visitante'],
+                                'fecha' => $fechas_disponibles[$i]->format('Y-m-d'),
+                            ]);
+                        }
                     }
                 }
             }
