@@ -31,6 +31,7 @@ Route::get('equipos', [EquipoController::class, 'getEquiposLiga']);
 Route::get('equipos/{id}', [EquipoController::class, 'getEquipo']);
 Route::get('temporadas', [TemporadaController::class, 'getTemporadas']);
 Route::get('partidos', [PartidoController::class, 'getPartidosLigasTemporadas']);
+Route::get('partidos/equipo/{id}', [PartidoController::class, 'getPartidosEquipo']);
 Route::get('jugadores/goleadores', [JugadorController::class, 'getMaximosGoleadoresTemporadaLiga']);
 Route::get('jugadores/asistidores', [JugadorController::class, 'getMaximosAsistidoresTemporadaLiga']);
 Route::get('jugadores/tarjetas-amarillas', [JugadorController::class, 'getMaximosTarjetasAmarillasTemporadaLiga']);

@@ -13,4 +13,9 @@ export class PartidosService {
   getPartidosLigasTemporadas(idLiga:number,idTemporada:number):Observable<Partido[]>{
     return this.http.get<Partido[]>(`http://127.0.0.1:8000/api/partidos?liga_id=${idLiga}&temporada_id=${idTemporada}`);
   }
+
+  getPartidosEquipo(idEquipo:number):Observable<Partido[]>{
+    return this.http.get<Partido[]>(`http://127.0.0.1:8000/api/partidos/equipo/${idEquipo}`);
+  }
+
 }

@@ -17,4 +17,12 @@ class PartidoController extends Controller
             ->get();
         return response()->json($partidos, 200);
     }
+
+    public function getPartidosEquipo($idEquipo)
+    {
+        $partidos = Partido::where('equipo_local_id', $idEquipo)
+            ->orWhere('equipo_visitante_id', $idEquipo)
+            ->get();
+        return response()->json($partidos, 200);
+    }
 }

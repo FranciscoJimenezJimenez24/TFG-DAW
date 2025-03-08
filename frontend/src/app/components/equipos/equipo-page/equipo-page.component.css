@@ -1,0 +1,35 @@
+/* Ajustar el calendario para diferentes tamaños de pantalla */
+.table th,
+.table td {
+    width: 14.28%;
+    vertical-align: top;
+    text-align: center;
+}
+
+.table td {
+    height: 100px;
+    padding: 5px;
+}
+
+@media (max-width: 768px) {
+    .table td {
+        height: 80px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .table td {
+        height: 60px;
+        font-size: 10px;
+    }
+
+    .table img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.not-current-month {
+    color: #ccc;
+}
