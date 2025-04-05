@@ -56,10 +56,10 @@ export class LigaPageComponent implements OnInit {
         if (!liga) return this.router.navigate(['/ligas']);
         this.liga = liga;
 
+        this.getEquiposLiga();
+        this.getTemporadas();
         return;
-      });
-    this.getEquiposLiga();
-    this.getTemporadas();
+      });    
   }
 
   getEquiposLiga() {
@@ -78,6 +78,17 @@ export class LigaPageComponent implements OnInit {
           const yearStart = parseInt(temporada.nombre.split("/")[0].split(" ")[1]);
           return { ...temporada, añoInicio: yearStart };
         });
+        // Si hay temporadas, seleccionamos la primera por defecto
+        if (this.temporadas.length > 0) {
+          const primeraTemporada = this.temporadas[0];
+          // Creamos un evento falso para llamar a onTemporadaChange()
+          const fakeEvent = {
+            target: {
+              value: primeraTemporada.id.toString()
+            }
+          } as unknown as Event;
+          this.onTemporadaChange(fakeEvent);
+        }
       });
   }
 
@@ -103,9 +114,8 @@ export class LigaPageComponent implements OnInit {
       .subscribe(partidos => {
         // Ordenamos por fecha
         this.partidos = partidos.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
-        this.getPuntos();
+        this.getPuntos();        
       });
-    this.puntos = new Map();
   }
 
   getPartidosAgrupados() {
@@ -130,8 +140,7 @@ export class LigaPageComponent implements OnInit {
     if (!this.liga) return;
     this.equipos.forEach(equipo => {
       this.puntos.set(equipo, 0);
-    });
-
+    });    
     this.partidos.forEach(partido => {
       const equipoLocal = this.equipos.find(equipo => equipo.id === partido.equipo_local_id);
       const equipoVisitante = this.equipos.find(equipo => equipo.id === partido.equipo_visitante_id);

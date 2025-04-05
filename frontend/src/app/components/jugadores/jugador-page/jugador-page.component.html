@@ -4,6 +4,7 @@
         <div class="card-body">
             <h3 class="card-title">{{ jugador?.nombre }}</h3>
             <p class="card-text text-muted">Posición: {{ jugador?.posicion }}</p>
+            <p class="card-text text-muted">Fecha nacimiento: {{ jugador?.fecha_nacimiento }}</p>
             <p *ngIf="equipoJugador" class="card-text">
                 <strong>Equipo:</strong> <img style="width: 25px; height: 25px;" src="{{equipoJugador!.escudo }}" alt=""> {{ equipoJugador!.nombre }}
             </p>

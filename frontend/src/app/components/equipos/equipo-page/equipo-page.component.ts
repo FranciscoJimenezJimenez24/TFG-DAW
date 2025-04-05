@@ -50,11 +50,11 @@ export class EquipoPageComponent implements OnInit {
         this.equipo = equipo;
         this.getPartidosEquipo();
         this.generateCalendar();
+        this.getJugadoresEquipo();
+        this.getPaisEquipo();
+        this.getEquiposLiga();
         return;
       });
-    this.getJugadoresEquipo();
-    this.getPaisEquipo();
-    this.getEquiposLiga();
   }
 
   getJugadoresEquipo() {

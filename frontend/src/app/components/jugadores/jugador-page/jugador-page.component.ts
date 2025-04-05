@@ -38,6 +38,7 @@ export class JugadorPageComponent implements OnInit {
       .subscribe(jugador => {
         if (!jugador) return this.router.navigate(['/jugadores']);
         this.jugador = jugador;
+        
         this.temporadasService.getTemporadas()
           .subscribe(temporadas=>{
             this.temporadas = temporadas;
@@ -54,7 +55,6 @@ export class JugadorPageComponent implements OnInit {
   getEstadisticasJugador(){
     this.jugadoresService.getEstadisticasJugador(this.jugador!.id)
       .subscribe(estadisticas=>{
-        console.log('Estadísticas:', estadisticas);
         this.estadisticas = estadisticas;
       })
   }
