@@ -1,17 +1,22 @@
-<div class="card">
-    <div class="card-body">
-        <div class="row align-items-center no-gutters">
-            <div class="col-4 text-center">
-                <img [src]="equipoLocal.escudo" alt="{{ equipoLocal.nombre }}" class="img-fluid team-logo">
-                <p class="team-name">{{ equipoLocal.nombre }}</p>
-            </div>
-            <div class="col-4 text-center">
-                <p class="score">{{ partido.goles_local }} - {{ partido.goles_visitante }}</p>
-            </div>
-            <div class="col-4 text-center">
-                <img [src]="equipoVisitante.escudo" alt="{{ equipoVisitante.nombre }}" class="img-fluid team-logo">
-                <p class="team-name">{{ equipoVisitante.nombre }}</p>
-            </div>
-        </div>
+<div class="partido-card">
+    <div class="fecha">
+      {{ partido.fecha | date: 'dd/MM/yyyy HH:mm' }}
     </div>
-</div>
+  
+    <div class="equipos">
+      <div class="equipo equipo-local">
+        <img [src]="equipoLocal.escudo" [alt]="equipoLocal.nombre" class="logo" />
+        <div class="nombre">{{ equipoLocal.nombre }}</div>
+      </div>
+  
+      <div class="resultado">
+        {{ partido.goles_local }} - {{ partido.goles_visitante }}
+      </div>
+  
+      <div class="equipo equipo-visitante">
+        <img [src]="equipoVisitante.escudo" [alt]="equipoVisitante.nombre" class="logo" />
+        <div class="nombre">{{ equipoVisitante.nombre }}</div>
+      </div>
+    </div>
+  </div>
+  

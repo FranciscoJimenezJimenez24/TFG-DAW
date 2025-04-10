@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="text-center mb-4">
+        <select class="form-select w-auto mx-auto" *ngIf="temporadas?.length" [(ngModel)]="selectedTemporadaId"
+            (change)="onTemporadaChange($event)">
+            <option *ngFor="let temporada of temporadas" [value]="temporada?.id">
+                {{ temporada?.nombre }}
+            </option>
+        </select>
+    </div>
+
+    <div *ngFor="let liga of listaLigas" class="col-12 col-md-6 col-lg-4 mb-4">
+        <h1 class="text-center">{{ liga.nombre }}</h1>
+        <div class="row">
+            <div *ngFor="let partido of getPartidosPaginados(liga.id)" class="col-12 col-md-6 col-lg-12 mb-3">
+                <app-card-partido
+                    *ngIf="equiposCache[partido.equipo_local_id] && equiposCache[partido.equipo_visitante_id]"
+                    [routerLink]="['/partidos', partido.id]" [partido]="partido"
+                    [equipoLocal]="equiposCache[partido.equipo_local_id]"
+                    [equipoVisitante]="equiposCache[partido.equipo_visitante_id]"></app-card-partido>
+
+            </div>
+        </div>
+
+        <div class="text-center mt-2">
+            <button (click)="prevPage(liga.id)" class="btn btn-sm btn-outline-primary me-2"
+                [disabled]="(ligaPaginas[liga.id] || 0) === 0">
+                ← Anterior
+            </button>
+            <button (click)="nextPage(liga.id)" class="btn btn-sm btn-outline-primary" [disabled]="
+            ((ligaPaginas[liga.id] || 0) + 1) * 5 >= (partidosLigas[liga.id]?.length || 0)
+          ">
+                Siguiente →
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,63 +1,50 @@
-.card {
-    margin: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    transition: box-shadow 0.3s ease;
-    max-width: 100%;
-    min-height: 120px;
+.partido-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    padding: 16px;
+    margin: 12px 0;
+    transition: transform 0.2s;
 }
 
-.card-body {
-    padding: 10px;
+.partido-card:hover {
+    transform: translateY(-3px);
 }
 
-.card-header {
-    background-color: #f8f9fa;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    font-weight: bold;
-    font-size: 1rem;
-    color: #333;
+.fecha {
+    font-size: 0.85rem;
+    color: #888;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
-.card-footer {
-    padding: 10px;
-}
-
-.row.no-gutters {
-    margin-right: 0;
-    margin-left: 0;
-}
-
-.img-fluid {
-    max-width: 100%;
-    height: auto;
-}
-
-.team-logo {
-    max-height: 40px;
-    margin-bottom: 5px;
-}
-
-.team-name {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #333;
-}
-
-.score {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #007bff;
-    margin: 5px 0;
-}
-
-.text-center {
+.equipos {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     text-align: center;
 }
 
-.col-4 {
-    padding: 5px;
+.equipo {
+    flex: 1;
+}
+
+.logo {
+    height: 48px;
+    object-fit: contain;
+    margin-bottom: 5px;
+}
+
+.nombre {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+    padding: 0 5px;
+}
+
+.resultado {
+    flex: 0.8;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #007bff;
 }
