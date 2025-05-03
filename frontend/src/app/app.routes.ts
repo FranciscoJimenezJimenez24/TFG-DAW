@@ -16,6 +16,7 @@ import { ContactoComponent } from './components/contacto/contacto.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
 import { PartidosComponent } from './components/partidos/partidos.component';
+import { PartidoPageComponent } from './components/partidos/partido-page/partido-page.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -26,6 +27,7 @@ export const routes: Routes = [
     { path: 'equipos', component: EquiposComponent },
     { path: 'jugadores/:id', component: JugadorPageComponent },
     { path: 'jugadores', component: JugadoresComponent },
+    { path: 'partidos/:id', component: PartidoPageComponent },
     { path: 'partidos', component: PartidosComponent },
     { path: 'noticias', component: NoticiasComponent },
     { path: 'contacto', component: ContactoComponent },

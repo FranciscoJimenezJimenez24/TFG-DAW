@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class PartidoController extends Controller
 {
+    public function getPartidos()
+    {
+        $partidos = Partido::all();
+        return response()->json($partidos, 200);
+    }
+    public function getPartido($id)
+    {
+        $partido = Partido::find($id);
+        return response()->json($partido, 200);
+    }
+
     public function getPartidosLigasTemporadas(Request $request)
     {
         $idLiga = $request->query('liga_id');
