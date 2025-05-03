@@ -83,4 +83,8 @@ export class PartidoPageComponent implements OnInit {
   goEquipo(id: number) {
     this.router.navigate(['/equipos', id]);
   }
+
+  goLiga(id: number) {
+    this.router.navigate(['/ligas', id]);
+  }
 }
