@@ -13,11 +13,23 @@ class PaisSeeder extends Seeder
      */
     public function run(): void
     {
-        $paises = ['España', 'Inglaterra', 'Alemania', 'Italia', 'Francia', 'Argentina', 'Brasil', 'Portugal', 'Países Bajos', 'México'];
-        foreach ($paises as $pais) {
+        $paises = [
+            'España' => 'es',
+            'Inglaterra' => 'gb-eng',
+            'Alemania' => 'de',
+            'Italia' => 'it',
+            'Francia' => 'fr',
+            'Argentina' => 'ar',
+            'Brasil' => 'br',
+            'Portugal' => 'pt',
+            'Países Bajos' => 'nl',
+            'México' => 'mx',
+        ];
+        
+        foreach ($paises as $nombre => $codigo) {
             Pais::create([
-                'nombre' => $pais,
-                'bandera' => "https://flagcdn.com/w320/" . strtolower(substr($pais, 0, 2)) . ".png"
+                'nombre' => $nombre,
+                'bandera' => "https://flagcdn.com/w320/$codigo.png"
             ]);
         }
     }

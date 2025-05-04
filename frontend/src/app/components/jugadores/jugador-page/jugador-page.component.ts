@@ -9,6 +9,8 @@ import { EquiposService } from '../../../services/equipos.service';
 import { Temporada } from '../../../interfaces/temporada';
 import { TemporadasService } from '../../../services/temporadas.service';
 import { CommonModule } from '@angular/common';
+import { Puntuacion } from '../../../interfaces/puntuacion';
+import { PuntuacionesService } from '../../../services/puntuaciones.service';
 
 @Component({
   selector: 'app-jugador-page',
@@ -23,12 +25,15 @@ export class JugadorPageComponent implements OnInit {
   estadisticas: EstadisticasJugador[] = [];
   equipoJugador: Equipo | null = null;
   temporadas: Temporada[] = [];
+  puntuaciones: Puntuacion[] = [];
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private jugadoresService: JugadoresService,
     private equiposService: EquiposService,
-    private temporadasService: TemporadasService
+    private temporadasService: TemporadasService,
+    private puntuacionesService: PuntuacionesService
   ) { }
   ngOnInit(): void {
     this.activatedRoute.params
@@ -50,6 +55,7 @@ export class JugadorPageComponent implements OnInit {
         return;
       });
     this.getEstadisticasJugador();
+    this.getPuntuaciones(this.jugador!.id);
   }
 
   getEstadisticasJugador(){
@@ -63,6 +69,11 @@ export class JugadorPageComponent implements OnInit {
     const temporada = this.temporadas.find(t => t.id === id);
     return temporada ? temporada.nombre : 'Desconocida';
   }
-  
 
+  getPuntuaciones(idJugador: number){
+    this.puntuacionesService.getPuntuacionesJugador(idJugador)
+      .subscribe(puntuaciones => {
+        this.puntuaciones = puntuaciones;
+      });
+  }
 }

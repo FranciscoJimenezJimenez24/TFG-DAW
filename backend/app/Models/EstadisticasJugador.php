@@ -10,4 +10,9 @@ class EstadisticasJugador extends Model
     use HasFactory;
 
     protected $table = 'estadisticas_jugador';
+
+    public function jugador()
+    {
+        return $this->belongsTo(Jugador::class);
+    }
 }

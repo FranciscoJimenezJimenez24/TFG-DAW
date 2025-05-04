@@ -9,7 +9,7 @@ class Jugador extends Model
 {
     use HasFactory;
 
-    protected $table = 'jugadores';  
+    protected $table = 'jugadores';
 
     protected $fillable = [
         'nombre',
@@ -18,4 +18,10 @@ class Jugador extends Model
         'pais_id',
         'fecha_nacimiento',
     ];
+
+    public function equipo()
+    {
+        return $this->belongsTo(Equipo::class);
+    }
+
 }

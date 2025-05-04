@@ -19,6 +19,14 @@ return new class extends Migration {
             $table->integer('minutos_jugados')->default(0);
             $table->integer('tarjetas_amarillas')->default(0);
             $table->integer('tarjetas_rojas')->default(0);
+            $table->integer('paradas')->default(0);
+            $table->integer('intercepciones')->default(0);
+            $table->integer('pases_completos')->default(0);
+            $table->integer('pases_totales')->default(0);
+            $table->integer('entradas')->default(0);
+            $table->integer('faltas')->default(0);
+            $table->integer('despejes')->default(0);
+            $table->integer('duelos_ganados')->default(0);
             $table->timestamps();
         });
     }

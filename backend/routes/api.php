@@ -6,6 +6,7 @@ use App\Http\Controllers\LigaController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\PaisController;
 use App\Http\Controllers\PartidoController;
+use App\Http\Controllers\PuntuacionController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\TemporadaController;
 use App\Http\Controllers\AuthController;
@@ -54,6 +55,8 @@ Route::get('solicitudes',[SolicitudController::class,'getSolicitudes']);
 Route::post('solicitudes',[SolicitudController::class,'addSolicitud']);
 Route::delete('solicitudes/{id}',[SolicitudController::class,'deleteSolicitud']);
 Route::get('paises/{id}', [PaisController::class, 'getPais']);
+Route::get('puntuaciones', [PuntuacionController::class, 'getPuntuaciones']);
+Route::get('puntuaciones/jugador/{id}', [PuntuacionController::class, 'getPuntuacionJugador']);
 
 // Rutas protegidas por autenticación
 Route::middleware(['auth:api'])->group(function () {

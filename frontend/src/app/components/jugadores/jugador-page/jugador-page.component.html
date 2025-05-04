@@ -6,17 +6,18 @@
             <p class="card-text text-muted">Posición: {{ jugador?.posicion }}</p>
             <p class="card-text text-muted">Fecha nacimiento: {{ jugador?.fecha_nacimiento }}</p>
             <p *ngIf="equipoJugador" class="card-text">
-                <strong>Equipo:</strong> <img style="width: 25px; height: 25px;" src="{{equipoJugador!.escudo }}" alt=""> {{ equipoJugador!.nombre }}
+                <strong>Equipo:</strong> <img style="width: 25px; height: 25px;" src="{{equipoJugador!.escudo }}"
+                    alt=""> {{ equipoJugador!.nombre }}
             </p>
         </div>
     </div>
 
     <!-- Tabla de estadísticas -->
-    <div class="card shadow-sm">
+    <div class="card shadow-sm mt-4" style="max-width: 95%; margin: auto;">
         <div class="card-header bg-primary text-white text-center">
             <h5 class="m-0">Estadísticas de {{ jugador?.nombre }}</h5>
         </div>
-        <div class="card-body p-0">
+        <div class="card-body p-0" style="overflow-x: auto;">
             <table class="table table-striped table-hover text-center m-0">
                 <thead class="table-dark">
                     <tr>
@@ -27,6 +28,15 @@
                         <th>Minutos Jugados</th>
                         <th>Tarjetas Amarillas</th>
                         <th>Tarjetas Rojas</th>
+                        <th>Paradas</th>
+                        <th>Intercepciones</th>
+                        <th>Pases Completos</th>
+                        <th>Pases Totales</th>
+                        <th>Entradas</th>
+                        <th>Faltas</th>
+                        <th>Despejes</th>
+                        <th>Duelos Ganados</th>
+                        <th>Puntuaciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,6 +48,15 @@
                         <td>{{ estadistica.minutos_jugados }}</td>
                         <td>{{ estadistica.tarjetas_amarillas }}</td>
                         <td>{{ estadistica.tarjetas_rojas }}</td>
+                        <td>{{ estadistica.paradas }}</td>
+                        <td>{{ estadistica.intercepciones }}</td>
+                        <td>{{ estadistica.pases_completos }}</td>
+                        <td>{{ estadistica.pases_totales }}</td>
+                        <td>{{ estadistica.entradas }}</td>
+                        <td>{{ estadistica.faltas }}</td>
+                        <td>{{ estadistica.despejes }}</td>
+                        <td>{{ estadistica.duelos_ganados }}</td>
+                        <td>{{ puntuaciones[i].puntuacion }}</td>
                     </tr>
                 </tbody>
             </table>
