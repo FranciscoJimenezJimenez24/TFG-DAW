@@ -12,4 +12,8 @@ export class PuntuacionesService {
   getPuntuacionesJugador(jugadorId: number) {
     return this.http.get<Puntuacion[]>(`http://127.0.0.1:8000/api/puntuaciones/jugador/${jugadorId}`);
   }
+
+  getMejoresPuntuacionesTemporada(idTemporada: number) {
+    return this.http.get<Puntuacion[]>(`http://127.0.0.1:8000/api/puntuaciones/mejores/temporada/${idTemporada}`);
+  }
 }

@@ -42,6 +42,18 @@ Route::get('jugadores/tarjetas-rojas', [JugadorController::class, 'getMaximosTar
 Route::get('jugadores/equipos/{id}', [JugadorController::class, 'getJugadoresEquipo']);
 Route::get('jugadores/{id}', [JugadorController::class, 'getJugador']);
 Route::get('/jugadores/{id}/estadisticas', [JugadorController::class, 'getEstadisticasJugador']);
+Route::get('jugadores/goleadores/temporada/{id}', [JugadorController::class, 'getMaximosGoleadoresTemporada']);
+Route::get('jugadores/asistidores/temporada/{id}', [JugadorController::class, 'getMaximosAsistidoresTemporada']);
+Route::get('jugadores/tarjetas-amarillas/temporada/{id}', [JugadorController::class, 'getMaximosTarjetasAmarillasTemporada']);
+Route::get('jugadores/tarjetas-rojas/temporada/{id}', [JugadorController::class, 'getMaximosTarjetasRojasTemporada']);
+Route::get('jugadores/paradas/temporada/{id}', [JugadorController::class, 'getMaximasParadasTemporada']);
+Route::get('jugadores/intercepciones/temporada/{id}', [JugadorController::class, 'getMaximasIntercepcionesTemporada']);
+Route::get('jugadores/pases-completos/temporada/{id}', [JugadorController::class, 'getMaximosPasesCompletosTemporada']);
+Route::get('jugadores/pases-totales/temporada/{id}', [JugadorController::class, 'getMaximosPasesTotalesTemporada']);
+Route::get('jugadores/entradas/temporada/{id}', [JugadorController::class, 'getMaximosEntradasTemporada']);
+Route::get('jugadores/faltas/temporada/{id}', [JugadorController::class, 'getMaximasFaltasTemporada']);
+Route::get('jugadores/despejes/temporada/{id}', [JugadorController::class, 'getMaximosDespejesTemporada']);
+Route::get('jugadores/duelos-ganados/temporada/{id}', [JugadorController::class, 'getMaximosDuelosGanadosTemporada']);
 Route::get('noticias', [NoticiaController::class, 'getNoticias']);
 Route::post('noticias', [NoticiaController::class, 'addNoticia']);
 Route::put('/noticias', [NoticiaController::class, 'updateNoticia']);
@@ -57,6 +69,7 @@ Route::delete('solicitudes/{id}',[SolicitudController::class,'deleteSolicitud'])
 Route::get('paises/{id}', [PaisController::class, 'getPais']);
 Route::get('puntuaciones', [PuntuacionController::class, 'getPuntuaciones']);
 Route::get('puntuaciones/jugador/{id}', [PuntuacionController::class, 'getPuntuacionJugador']);
+Route::get('puntuaciones/mejores/temporada/{id}', [PuntuacionController::class, 'getMejoresPuntuacionesTemporada']);
 
 // Rutas protegidas por autenticación
 Route::middleware(['auth:api'])->group(function () {

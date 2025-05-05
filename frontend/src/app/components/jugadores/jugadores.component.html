@@ -1,1 +1,35 @@
-<p>jugadores works!</p>
+<div class="container mt-4">
+    <!-- Selector de temporadas -->
+    <div class="text-center mb-4">
+        <select class="form-select w-auto mx-auto" (change)="onTemporadaChange($event)" *ngIf="temporadas?.length">
+            <option *ngFor="let temporada of temporadas" [value]="temporada?.id">
+                {{ temporada?.nombre }}
+            </option>
+        </select>
+    </div>
+
+    <table class="table table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th class="text-center">#</th>
+            <th>Jugador</th>
+            <th class="text-end">Despejes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let despeje of maximosDespejes; let i = index">
+            <td class="text-center fw-bold">{{ i + 1 }}</td>
+            <td>
+              <div class="d-flex align-items-center">
+                <img [src]="despeje.equipo" alt="Escudo" class="me-2" style="width: 30px; height: 30px;">
+                <div>
+                  <div class="fw-semibold">{{ despeje.jugador }}</div>
+                  <small class="text-muted">{{ despeje.liga }}</small>
+                </div>
+              </div>
+            </td>
+            <td class="text-end fw-bold">{{ despeje.despejes }}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
