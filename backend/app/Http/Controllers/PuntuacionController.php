@@ -29,7 +29,7 @@ class PuntuacionController extends Controller
     {
         $puntuaciones = Puntuacion::where('temporada_id', $idTemporada)
             ->orderBy('puntuacion', 'desc')
-            ->take(10)
+            ->take(100)
             ->get();
         return response()->json($puntuaciones, 200);
     }

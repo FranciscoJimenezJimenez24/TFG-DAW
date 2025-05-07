@@ -1,35 +1,315 @@
 <div class="container mt-4">
-    <!-- Selector de temporadas -->
-    <div class="text-center mb-4">
-        <select class="form-select w-auto mx-auto" (change)="onTemporadaChange($event)" *ngIf="temporadas?.length">
-            <option *ngFor="let temporada of temporadas" [value]="temporada?.id">
-                {{ temporada?.nombre }}
-            </option>
-        </select>
-    </div>
+  <!-- Selector de temporadas -->
+  <div class="text-center mb-4">
+    <select class="form-select w-auto mx-auto" (change)="onTemporadaChange($event)" *ngIf="temporadas?.length">
+      <option *ngFor="let temporada of temporadas" [value]="temporada?.id">
+        {{ temporada?.nombre }}
+      </option>
+    </select>
+  </div>
 
-    <table class="table table-hover align-middle">
-        <thead class="table-dark">
-          <tr>
-            <th class="text-center">#</th>
-            <th>Jugador</th>
-            <th class="text-end">Despejes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let despeje of maximosDespejes; let i = index">
-            <td class="text-center fw-bold">{{ i + 1 }}</td>
-            <td>
-              <div class="d-flex align-items-center">
-                <img [src]="despeje.equipo" alt="Escudo" class="me-2" style="width: 30px; height: 30px;">
-                <div>
-                  <div class="fw-semibold">{{ despeje.jugador }}</div>
-                  <small class="text-muted">{{ despeje.liga }}</small>
-                </div>
-              </div>
-            </td>
-            <td class="text-end fw-bold">{{ despeje.despejes }}</td>
-          </tr>
-        </tbody>
-      </table>
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th>Jugador</th>
+        <th class="text-end">Puntuación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let jugador of jugadores; let i = index">
+        <td class="text-center fw-bold">{{ i + 1 }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="fw-semibold">{{ jugador.nombre }}</div>
+              <small class="text-muted">{{ jugador.posicion }}</small>
+            </div>
+          </div>
+        </td>
+        <td class="text-end fw-bold">{{ puntuaciones[i].puntuacion }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th>Jugador</th>
+        <th class="text-end">Despejes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let despeje of maximosDespejes; let i = index">
+        <td class="text-center fw-bold">{{ i + 1 }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="fw-semibold">{{ despeje.jugador }}</div>
+              <small class="text-muted">{{ despeje.liga }}</small>
+            </div>
+          </div>
+        </td>
+        <td class="text-end fw-bold">{{ despeje.despejes }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th>Jugador</th>
+        <th class="text-end">Goles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let gol of maximosGoleadores; let i = index">
+        <td class="text-center fw-bold">{{ i + 1 }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="fw-semibold">{{ gol.jugador }}</div>
+              <small class="text-muted">{{ gol.liga }}</small>
+            </div>
+          </div>
+        </td>
+        <td class="text-end fw-bold">{{ gol.goles }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th>Jugador</th>
+        <th class="text-end">Asistencias</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let asistencia of maximosAsistidores; let i = index">
+        <td class="text-center fw-bold">{{ i + 1 }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="fw-semibold">{{ asistencia.jugador }}</div>
+              <small class="text-muted">{{ asistencia.liga }}</small>
+            </div>
+          </div>
+        </td>
+        <td class="text-end fw-bold">{{ asistencia.asistencias }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th>Jugador</th>
+        <th class="text-end">Tarjetas Amarillas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tarjeta of tarjetasAmarillas; let i = index">
+        <td class="text-center fw-bold">{{ i + 1 }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="fw-semibold">{{ tarjeta.jugador }}</div>
+              <small class="text-muted">{{ tarjeta.liga }}</small>
+            </div>
+          </div>
+        </td>
+        <td class="text-end fw-bold">{{ tarjeta.tarjetas_amarillas }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th>Jugador</th>
+        <th class="text-end">Tarjetas Rojas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tarjeta of tarjetasRojas; let i = index">
+        <td class="text-center fw-bold">{{ i + 1 }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="fw-semibold">{{ tarjeta.jugador }}</div>
+              <small class="text-muted">{{ tarjeta.liga }}</small>
+            </div>
+          </div>
+        </td>
+        <td class="text-end fw-bold">{{ tarjeta.tarjetas_rojas }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th>Jugador</th>
+        <th class="text-end">Pases Completados</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pase of maximosPasesCompletados; let i = index">
+        <td class="text-center fw-bold">{{ i + 1 }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="fw-semibold">{{ pase.jugador }}</div>
+              <small class="text-muted">{{ pase.liga }}</small>
+            </div>
+          </div>
+        </td>
+        <td class="text-end fw-bold">{{ pase.pases_completos }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th>Jugador</th>
+        <th class="text-end">Intercepciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let intercepcion of maximasIntercepciones; let i = index">
+        <td class="text-center fw-bold">{{ i + 1 }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="fw-semibold">{{ intercepcion.jugador }}</div>
+              <small class="text-muted">{{ intercepcion.liga }}</small>
+            </div>
+          </div>
+        </td>
+        <td class="text-end fw-bold">{{ intercepcion.intercepciones }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th>Jugador</th>
+        <th class="text-end">Faltas Cometidas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let falta of maximasFaltas; let i = index">
+        <td class="text-center fw-bold">{{ i + 1 }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="fw-semibold">{{ falta.jugador }}</div>
+              <small class="text-muted">{{ falta.liga }}</small>
+            </div>
+          </div>
+        </td>
+        <td class="text-end fw-bold">{{ falta.faltas }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th>Jugador</th>
+        <th class="text-end">Pases Totales</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pases of maximosPasesTotales; let i = index">
+        <td class="text-center fw-bold">{{ i + 1 }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="fw-semibold">{{ pases.jugador }}</div>
+              <small class="text-muted">{{ pases.liga }}</small>
+            </div>
+          </div>
+        </td>
+        <td class="text-end fw-bold">{{ pases.pases_totales }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th>Jugador</th>
+        <th class="text-end">Duelos Ganados</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let duelos of maximosDuelosGanados; let i = index">
+        <td class="text-center fw-bold">{{ i + 1 }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="fw-semibold">{{ duelos.jugador }}</div>
+              <small class="text-muted">{{ duelos.liga }}</small>
+            </div>
+          </div>
+        </td>
+        <td class="text-end fw-bold">{{ duelos.duelos_ganados }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th>Jugador</th>
+        <th class="text-end">Paradas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let parada of maximasParadas; let i = index">
+        <td class="text-center fw-bold">{{ i + 1 }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="fw-semibold">{{ parada.jugador }}</div>
+              <small class="text-muted">{{ parada.liga }}</small>
+            </div>
+          </div>
+        </td>
+        <td class="text-end fw-bold">{{ parada.paradas }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-center">#</th>
+        <th>Jugador</th>
+        <th class="text-end">Entradas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entrada of maximasEntradas; let i = index">
+        <td class="text-center fw-bold">{{ i + 1 }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <div>
+              <div class="fw-semibold">{{ entrada.jugador }}</div>
+              <small class="text-muted">{{ entrada.liga }}</small>
+            </div>
+          </div>
+        </td>
+        <td class="text-end fw-bold">{{ entrada.entradas }}</td>
+      </tr>
+    </tbody>
+  </table>
+  
 </div>

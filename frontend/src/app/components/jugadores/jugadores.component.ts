@@ -50,7 +50,7 @@ export class JugadoresComponent implements OnInit {
     private temporadasService: TemporadasService) { }
 
   ngOnInit(): void {
-    this.getMejoresPuntuaciones();
+    this.getTemporadas();
   }
 
   getTemporadas() {
@@ -81,23 +81,23 @@ export class JugadoresComponent implements OnInit {
       const selectedTemporada = this.temporadas.find(temporada => temporada.id === idTemporada);
       if (selectedTemporada) {
         this.getMejoresPuntuaciones(idTemporada);
+        this.getMaximosDespejesTemporada(idTemporada);
         this.getMaximosGoleadoresTemporada(idTemporada);
         this.getMaximosAsistidoresTemporada(idTemporada);
         this.getMaximasTarjetasAmarillasTemporada(idTemporada);
         this.getMaximasTarjetasRojasTemporada(idTemporada);
-        this.getMaximasParadasTemporada(idTemporada);
-        this.getMaximasIntercepcionesTemporada(idTemporada);
         this.getMaximosPasesCompletadosTemporada(idTemporada);
-        this.getMaximosPasesTotalesTemporada(idTemporada);
-        this.getMaximasEntradasTemporada(idTemporada);
+        this.getMaximasIntercepcionesTemporada(idTemporada);
         this.getMaximasFaltasTemporada(idTemporada);
-        this.getMaximosDespejesTemporada(idTemporada);
+        this.getMaximosPasesTotalesTemporada(idTemporada);
         this.getMaximosDuelosGanadosTemporada(idTemporada);
+        this.getMaximasParadasTemporada(idTemporada);
+        this.getMaximasEntradasTemporada(idTemporada);
       }
     }
   }
 
-  getMejoresPuntuaciones(idTemporada: number = 0) {
+  getMejoresPuntuaciones(idTemporada: number) {
     this.puntuacionesService.getMejoresPuntuacionesTemporada(idTemporada)
       .subscribe((puntuaciones: Puntuacion[]) => {
         this.puntuaciones = puntuaciones;
@@ -106,6 +106,7 @@ export class JugadoresComponent implements OnInit {
   }
 
   getJugadores() {
+    this.jugadores = [];
     this.puntuaciones.forEach(puntuacion => {
       this.jugadoresService.getJugador(puntuacion.jugador_id)
         .subscribe((jugador: Jugador) => {
@@ -167,6 +168,8 @@ export class JugadoresComponent implements OnInit {
     this.jugadoresService.getMaximosPasesTotalesTemporada(idTemporada)
       .subscribe((pasesTotales) => {
         this.maximosPasesTotales = Array.isArray(pasesTotales) ? pasesTotales : [];
+        console.log(this.maximosPasesTotales);
+        
       });
   }
   
@@ -181,6 +184,8 @@ export class JugadoresComponent implements OnInit {
     this.jugadoresService.getMaximasFaltasTemporada(idTemporada)
       .subscribe((faltas) => {
         this.maximasFaltas = Array.isArray(faltas) ? faltas : [];
+        console.log(this.maximasFaltas);
+        
       });
   }
   
@@ -195,6 +200,8 @@ export class JugadoresComponent implements OnInit {
     this.jugadoresService.getMaximosDuelosGanadosTemporada(idTemporada)
       .subscribe((duelosGanados) => {
         this.maximosDuelosGanados = Array.isArray(duelosGanados) ? duelosGanados : [];
+        console.log(this.maximosDuelosGanados);
+        
       });
   }
   

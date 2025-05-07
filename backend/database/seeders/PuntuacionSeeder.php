@@ -45,21 +45,35 @@ class PuntuacionSeeder extends Seeder
                     })->count();
 
                 // Calcular puntuación
+                $mult_p = [
+                    'Portero' => 1,
+                    'Defensa' => 0.95,
+                    'Centrocampista' => 0.90,
+                    'Delantero' => 0.95
+                ];
+                
+                $pos = $jugador->posicion;
+                $mult = $mult_p[$pos] ?? 1;
+                
                 $puntuacion = 0;
                 $puntuacion += $estadistica->goles * 5;
-                $puntuacion += $estadistica->asistencias * 3;
+                $puntuacion += $estadistica->asistencias * 2;
                 $puntuacion += $estadistica->minutos_jugados * 0.03;
                 $puntuacion -= $estadistica->tarjetas_amarillas * 1;
                 $puntuacion -= $estadistica->tarjetas_rojas * 3;
-                $puntuacion += $estadistica->paradas * 0.5;
-                $puntuacion += $estadistica->intercepciones * 0.3;
+                $puntuacion += $estadistica->paradas * 1.5;
+                $puntuacion += $estadistica->intercepciones * 0.75;
                 $puntuacion += $estadistica->pases_completos * 0.02;
+                $puntuacion -= ($estadistica->pases_totales - $estadistica->pases_completos) * 0.05; 
                 $puntuacion += $estadistica->entradas * 0.4;
                 $puntuacion -= $estadistica->faltas * 0.2;
                 $puntuacion += $estadistica->despejes * 0.3;
                 $puntuacion += $estadistica->duelos_ganados * 0.2;
                 $puntuacion += $victorias * 3;
-
+                
+                // Aplicar multiplicador por posición
+                $puntuacion *= $mult;
+                
                 // Guardar puntuación
                 Puntuacion::create([
                     'jugador_id' => $jugador->id,

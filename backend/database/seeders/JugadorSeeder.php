@@ -73,10 +73,10 @@ class JugadorSeeder extends Seeder
                                 $intercepciones = rand(0, round(5 * $factor_minutos));
                                 $pases_completos = rand(100, round(300 * $factor_minutos));
                                 $pases_totales = $pases_completos + rand(0, 20);
-                                $entradas = rand(0, 1);
-                                $faltas = rand(0, 2);
+                                $entradas = rand(0, round(15 * $factor_minutos));
+                                $faltas = rand(0, round(15 * $factor_minutos));
                                 $despejes = rand(10, round(50 * $factor_minutos));
-                                $duelos_ganados = rand(5, round(30 * $factor_minutos));
+                                $duelos_ganados = rand(0, round(10 * $factor_minutos));
                                 break;
 
                             case 'Defensa':
@@ -85,43 +85,43 @@ class JugadorSeeder extends Seeder
                                 $tarjetas_amarillas = rand(0, round(15 * $factor_minutos));
                                 $tarjetas_rojas = rand(0, round(3 * $factor_minutos));
                                 $paradas = 0;
-                                $intercepciones = rand(10, round(50 * $factor_minutos));
+                                $intercepciones = rand(50, round(150 * $factor_minutos));
                                 $pases_completos = rand(300, round(800 * $factor_minutos));
                                 $pases_totales = $pases_completos + rand(10, 50);
-                                $entradas = rand(10, round(50 * $factor_minutos));
-                                $faltas = rand(5, round(20 * $factor_minutos));
-                                $despejes = rand(20, round(80 * $factor_minutos));
-                                $duelos_ganados = rand(20, round(70 * $factor_minutos));
+                                $entradas = rand(20, round(160 * $factor_minutos));
+                                $faltas = rand(10, round(90 * $factor_minutos));
+                                $despejes = rand(50, round(150 * $factor_minutos));
+                                $duelos_ganados = rand(150, round(250 * $factor_minutos));
                                 break;
 
                             case 'Centrocampista':
-                                $goles = rand(0, round(10 * $factor_minutos));
-                                $asistencias = rand(0, round(15 * $factor_minutos));
+                                $goles = rand(0, round(15 * $factor_minutos));
+                                $asistencias = rand(0, round(20 * $factor_minutos));
                                 $tarjetas_amarillas = rand(0, round(10 * $factor_minutos));
                                 $tarjetas_rojas = rand(0, round(2 * $factor_minutos));
                                 $paradas = 0;
-                                $intercepciones = rand(10, round(40 * $factor_minutos));
+                                $intercepciones = rand(30, round(100 * $factor_minutos));
                                 $pases_completos = rand(400, round(1000 * $factor_minutos));
                                 $pases_totales = $pases_completos + rand(20, 60);
-                                $entradas = rand(5, round(30 * $factor_minutos));
-                                $faltas = rand(5, round(20 * $factor_minutos));
-                                $despejes = rand(5, round(20 * $factor_minutos));
-                                $duelos_ganados = rand(20, round(80 * $factor_minutos));
+                                $entradas = rand(30, round(180 * $factor_minutos));
+                                $faltas = rand(15, round(100 * $factor_minutos));
+                                $despejes = rand(10, round(50 * $factor_minutos));
+                                $duelos_ganados = rand(200, round(350 * $factor_minutos));
                                 break;
 
                             case 'Delantero':
-                                $goles = rand(0, round(30 * $factor_minutos));
-                                $asistencias = rand(0, round(10 * $factor_minutos));
+                                $goles = rand(0, round(40 * $factor_minutos));
+                                $asistencias = rand(0, round(15 * $factor_minutos));
                                 $tarjetas_amarillas = rand(0, round(5 * $factor_minutos));
                                 $tarjetas_rojas = rand(0, round(1 * $factor_minutos));
                                 $paradas = 0;
                                 $intercepciones = rand(2, round(10 * $factor_minutos));
                                 $pases_completos = rand(200, round(600 * $factor_minutos));
                                 $pases_totales = $pases_completos + rand(10, 40);
-                                $entradas = rand(2, round(15 * $factor_minutos));
-                                $faltas = rand(5, round(25 * $factor_minutos));
+                                $entradas = rand(0, round(80 * $factor_minutos));
+                                $faltas = rand(5, round(60 * $factor_minutos));
                                 $despejes = rand(2, round(10 * $factor_minutos));
-                                $duelos_ganados = rand(20, round(70 * $factor_minutos));
+                                $duelos_ganados = rand(50, round(150 * $factor_minutos));
                                 break;
                         }
 

@@ -2,5 +2,5 @@ export interface PasesTotales {
     jugador: string;
     equipo: number;
     liga: string;
-    pasesTotales: number;
+    pases_totales: number;
 }
