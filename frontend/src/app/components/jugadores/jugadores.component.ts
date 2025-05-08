@@ -18,6 +18,8 @@ import { Faltas } from '../../interfaces/faltas';
 import { Despejes } from '../../interfaces/despejes';
 import { DuelosGanados } from '../../interfaces/duelos-ganados';
 import { CommonModule } from '@angular/common';
+import { EquiposService } from '../../services/equipos.service';
+import { Equipo } from '../../interfaces/equipo';
 
 @Component({
   selector: 'app-jugadores',
@@ -47,7 +49,8 @@ export class JugadoresComponent implements OnInit {
   constructor(
     private jugadoresService: JugadoresService,
     private puntuacionesService: PuntuacionesService,
-    private temporadasService: TemporadasService) { }
+    private temporadasService: TemporadasService,
+    private equiposService: EquiposService) { }
 
   ngOnInit(): void {
     this.getTemporadas();
@@ -147,6 +150,8 @@ export class JugadoresComponent implements OnInit {
     this.jugadoresService.getMaximasParadasTemporada(idTemporada)
       .subscribe((paradas) => {
         this.maximasParadas = Array.isArray(paradas) ? paradas : [];
+        console.log(this.maximasParadas);
+        
       });
   }
   
@@ -168,7 +173,6 @@ export class JugadoresComponent implements OnInit {
     this.jugadoresService.getMaximosPasesTotalesTemporada(idTemporada)
       .subscribe((pasesTotales) => {
         this.maximosPasesTotales = Array.isArray(pasesTotales) ? pasesTotales : [];
-        console.log(this.maximosPasesTotales);
         
       });
   }
@@ -184,7 +188,6 @@ export class JugadoresComponent implements OnInit {
     this.jugadoresService.getMaximasFaltasTemporada(idTemporada)
       .subscribe((faltas) => {
         this.maximasFaltas = Array.isArray(faltas) ? faltas : [];
-        console.log(this.maximasFaltas);
         
       });
   }
@@ -200,9 +203,14 @@ export class JugadoresComponent implements OnInit {
     this.jugadoresService.getMaximosDuelosGanadosTemporada(idTemporada)
       .subscribe((duelosGanados) => {
         this.maximosDuelosGanados = Array.isArray(duelosGanados) ? duelosGanados : [];
-        console.log(this.maximosDuelosGanados);
         
       });
   }
-  
+
+  getEquipo(idEquipo:number){
+    this.equiposService.getEquipo(idEquipo)
+      .subscribe((equipo) => {
+        return equipo.escudo;
+      })
+  }
 }

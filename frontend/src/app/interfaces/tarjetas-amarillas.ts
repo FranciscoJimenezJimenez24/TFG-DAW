@@ -1,6 +1,6 @@
 export interface TarjetasAmarillas {
     jugador: string;
-    equipo: number;
+    equipoEscudo: string;
     liga: string;
     tarjetas_amarillas: number;
 }

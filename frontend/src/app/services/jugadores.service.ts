@@ -84,6 +84,4 @@ export class JugadoresService {
   getEstadisticasJugador(idJugador:number):Observable<EstadisticasJugador[]>{
     return this.http.get<EstadisticasJugador[]>(`http://127.0.0.1:8000/api/jugadores/${idJugador}/estadisticas`);
   }
-
-
 }

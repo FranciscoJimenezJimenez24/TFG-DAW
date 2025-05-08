@@ -1,6 +1,6 @@
 export interface Intercepciones {
     jugador: string;
-    equipo: number;
+    equipoEscudo: string;
     liga: string;
     intercepciones: number;
 }

@@ -1,6 +1,6 @@
 export interface Despejes {
     jugador: string;
-    equipo: number;
+    equipoEscudo: string;
     liga: string;
     despejes: number;
 }

@@ -1,6 +1,6 @@
 export interface Faltas {
     jugador: string;
-    equipo: number;
+    equipoEscudo: string;
     liga: string;
     faltas: number;
 }

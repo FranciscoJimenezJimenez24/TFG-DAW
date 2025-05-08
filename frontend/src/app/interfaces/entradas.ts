@@ -1,6 +1,6 @@
 export interface Entradas {
     jugador: string;
-    equipo: number;
+    equipoEscudo: string;
     liga: string;
     entradas: number;
 }

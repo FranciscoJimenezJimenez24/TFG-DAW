@@ -1,6 +1,6 @@
 export interface Goleador {
     jugador: string;
-    equipo: number;
+    equipoEscudo: string;
     liga: string;
     goles: number;
 }

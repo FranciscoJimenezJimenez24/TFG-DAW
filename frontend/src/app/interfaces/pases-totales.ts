@@ -1,6 +1,6 @@
 export interface PasesTotales {
     jugador: string;
-    equipo: number;
+    equipoEscudo: string;
     liga: string;
     pases_totales: number;
 }

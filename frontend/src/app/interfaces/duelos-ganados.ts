@@ -1,6 +1,6 @@
 export interface DuelosGanados {
     jugador: string;
-    equipo: number;
+    equipoEscudo: string;
     liga: string;
     duelos_ganados: number;
 }

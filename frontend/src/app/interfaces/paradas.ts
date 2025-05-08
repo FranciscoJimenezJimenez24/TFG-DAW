@@ -1,6 +1,6 @@
 export interface Paradas {
     jugador: string;
-    equipo: number;
+    equipoEscudo: string;
     liga: string;
     paradas: number;
 }

@@ -1,6 +1,6 @@
 export interface Asistidor {
     jugador: string;
-    equipo: number;
+    equipoEscudo: string;
     liga: string;
     asistencias: number;
 }
