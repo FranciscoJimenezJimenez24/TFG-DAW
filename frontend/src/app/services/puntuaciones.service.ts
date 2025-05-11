@@ -16,4 +16,8 @@ export class PuntuacionesService {
   getMejoresPuntuacionesTemporada(idTemporada: number) {
     return this.http.get<Puntuacion[]>(`http://127.0.0.1:8000/api/puntuaciones/mejores/temporada/${idTemporada}`);
   }
+  
+  getMejoresPuntuacionesUltimaTemporada(){
+    return this.http.get<Puntuacion[]>(`http://127.0.0.1:8000/api/puntuaciones/mejores/ultimaTemperada`);
+  }
 }

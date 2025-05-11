@@ -19,8 +19,7 @@ import { Despejes } from '../../interfaces/despejes';
 import { DuelosGanados } from '../../interfaces/duelos-ganados';
 import { CommonModule } from '@angular/common';
 import { EquiposService } from '../../services/equipos.service';
-import { Equipo } from '../../interfaces/equipo';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-jugadores',
   standalone: true,
@@ -50,7 +49,8 @@ export class JugadoresComponent implements OnInit {
     private jugadoresService: JugadoresService,
     private puntuacionesService: PuntuacionesService,
     private temporadasService: TemporadasService,
-    private equiposService: EquiposService) { }
+    private equiposService: EquiposService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getTemporadas();
@@ -212,5 +212,17 @@ export class JugadoresComponent implements OnInit {
       .subscribe((equipo) => {
         return equipo.escudo;
       })
+  }
+
+  goToEquipo(idEquipo:number){
+    this.router.navigate(['/equipos', idEquipo]);
+  }
+
+  goToJugador(idJugador:number){
+    this.router.navigate(['/jugadores', idJugador]);
+  }
+
+  goToLiga(idLiga:number){
+    this.router.navigate(['/ligas', idLiga]);
   }
 }

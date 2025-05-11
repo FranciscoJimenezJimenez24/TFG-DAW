@@ -35,6 +35,7 @@ Route::get('temporadas/{id}', [TemporadaController::class, 'getTemporada']);
 Route::get('partidos/{id}', [PartidoController::class, 'getPartido']);
 Route::get('partidos', [PartidoController::class, 'getPartidosLigasTemporadas']);
 Route::get('partidos/equipo/{id}', [PartidoController::class, 'getPartidosEquipo']);
+Route::get('partidos/ultimos', [PartidoController::class, 'getUltimosPartidosPorLiga']);
 Route::get('jugadores/goleadores', [JugadorController::class, 'getMaximosGoleadoresTemporadaLiga']);
 Route::get('jugadores/asistidores', [JugadorController::class, 'getMaximosAsistidoresTemporadaLiga']);
 Route::get('jugadores/tarjetas-amarillas', [JugadorController::class, 'getMaximosTarjetasAmarillasTemporadaLiga']);
@@ -58,18 +59,20 @@ Route::get('noticias', [NoticiaController::class, 'getNoticias']);
 Route::post('noticias', [NoticiaController::class, 'addNoticia']);
 Route::put('/noticias', [NoticiaController::class, 'updateNoticia']);
 Route::delete('/noticias/{id}', [NoticiaController::class, 'deleteNoticia']);
-Route::get('usuarios',[UsuarioController::class,'getUsuarios']);
-Route::get('usuarios/{email}',[UsuarioController::class,'getUsuarioByEmail']);
-Route::post('usuarios',[UsuarioController::class,'addUsuario']);
-Route::put('/usuarios',[UsuarioController::class,'updateUsuario']);
-Route::delete('/usuarios/{id}',[UsuarioController::class,'deleteUsuario']);
-Route::get('solicitudes',[SolicitudController::class,'getSolicitudes']);
-Route::post('solicitudes',[SolicitudController::class,'addSolicitud']);
-Route::delete('solicitudes/{id}',[SolicitudController::class,'deleteSolicitud']);
+Route::get('noticias/ultimas', [NoticiaController::class, 'getUltimasNoticias']);
+Route::get('usuarios', [UsuarioController::class, 'getUsuarios']);
+Route::get('usuarios/{email}', [UsuarioController::class, 'getUsuarioByEmail']);
+Route::post('usuarios', [UsuarioController::class, 'addUsuario']);
+Route::put('/usuarios', [UsuarioController::class, 'updateUsuario']);
+Route::delete('/usuarios/{id}', [UsuarioController::class, 'deleteUsuario']);
+Route::get('solicitudes', [SolicitudController::class, 'getSolicitudes']);
+Route::post('solicitudes', [SolicitudController::class, 'addSolicitud']);
+Route::delete('solicitudes/{id}', [SolicitudController::class, 'deleteSolicitud']);
 Route::get('paises/{id}', [PaisController::class, 'getPais']);
 Route::get('puntuaciones', [PuntuacionController::class, 'getPuntuaciones']);
 Route::get('puntuaciones/jugador/{id}', [PuntuacionController::class, 'getPuntuacionJugador']);
 Route::get('puntuaciones/mejores/temporada/{id}', [PuntuacionController::class, 'getMejoresPuntuacionesTemporada']);
+Route::get('puntuaciones/mejores/ultimaTemperada', [PuntuacionController::class, 'getMejoresPuntuacionesUltimaTemporada']);
 
 // Rutas protegidas por autenticación
 Route::middleware(['auth:api'])->group(function () {

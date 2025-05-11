@@ -33,5 +33,14 @@ class PuntuacionController extends Controller
             ->get();
         return response()->json($puntuaciones, 200);
     }
-    
+
+    public function getMejoresPuntuacionesUltimaTemporada()
+    {
+        $puntuaciones = Puntuacion::where('temporada_id', 10)
+            ->orderBy('puntuacion', 'desc')
+            ->take(10)
+            ->get();
+        return response()->json($puntuaciones, 200);
+    }
+
 }

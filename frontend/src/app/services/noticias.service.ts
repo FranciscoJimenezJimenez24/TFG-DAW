@@ -27,4 +27,8 @@ export class NoticiasService {
   deleteNoticia(idNoticia:number):Observable<void>{
     return this.http.delete<void>(`http://127.0.0.1:8000/api/noticias/${idNoticia}`)
   }
+
+  getUltimasNoticas():Observable<Noticia[]>{
+    return this.http.get<Noticia[]>(`http://127.0.0.1:8000/api/noticias/ultimas`);
+  }
 }
