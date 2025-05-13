@@ -19,6 +19,7 @@ import { PartidosComponent } from './components/partidos/partidos.component';
 import { PartidoPageComponent } from './components/partidos/partido-page/partido-page.component';
 
 export const routes: Routes = [
+    { path: '', component: HomeComponent  },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
     { path: 'ligas/:id', component: LigaPageComponent },
@@ -33,7 +34,6 @@ export const routes: Routes = [
     { path: 'contacto', component: ContactoComponent },
     { path: 'usuarios', component: UsuariosComponent },
     { path: 'solicitudes', component: SolicitudesComponent },
-    { path: '', component: HomeComponent  },
     // { path: '**', redirectTo: '' } // Redirigir rutas desconocidas
 ];
 

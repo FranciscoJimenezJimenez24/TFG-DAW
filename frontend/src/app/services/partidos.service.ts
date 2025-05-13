@@ -25,4 +25,8 @@ export class PartidosService {
   getUltimosPartidosPorLiga():Observable<Partido[]>{
     return this.http.get<Partido[]>(`http://127.0.0.1:8000/api/partidos/ultimos`);
   }
+
+  getNumeroPartidos():Observable<number>{
+    return this.http.get<number>(`http://127.0.0.1:8000/api/partidos/numTodos`);
+  }
 }

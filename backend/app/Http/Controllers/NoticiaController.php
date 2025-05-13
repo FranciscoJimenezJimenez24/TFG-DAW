@@ -57,11 +57,11 @@ class NoticiaController extends Controller
         return response()->json(null, 204);
     }
 
-    public function getUltimasNoticas()
+    public function getUltimasNoticias()
     {
-        $noticia = Noticia::all()
-            ->orderBy('fecha_publicacion', 'desc')
-            ->take(10);
-        return response()->json($noticia, 200);
+        $noticias = Noticia::orderBy('fecha_publicacion', 'desc')
+            ->take(5)
+            ->get();
+        return response()->json($noticias, 200);
     }
 }

@@ -1,1 +1,79 @@
-<p>home works!</p>
+<div class="container mt-4">
+  <h2>Bienvenido, {{ usuarioNombre }} 👋</h2>
+
+  <!-- Estadísticas generales -->
+  <div class="row mt-4 text-center">
+    <div class="col-md-3">
+      <div class="card p-3 shadow">
+        <h4>{{ numPartidos }}</h4>
+        <p>Partidos jugados</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card p-3 shadow">
+        <h4>{{ allGoles }}</h4>
+        <p>Goles totales</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card p-3 shadow">
+        <h4>{{ numJugadores }}</h4>
+        <p>Jugadores</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card p-3 shadow">
+        <h4>{{ numEquipos }}</h4>
+        <p>Equipos</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Próximos partidos -->
+  <div class="mt-5">
+    <h3>Últimos Partidos</h3>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <button class="btn btn-outline-primary" (click)="prevPartidos()">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button class="btn btn-outline-primary" (click)="nextPartidos()">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 mb-3" *ngFor="let partido of partidosPaginated">
+        <app-card-partido [partido]="partido"></app-card-partido>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mejores Jugadores -->
+  <div class="mt-5">
+    <h3>Top Jugadores</h3>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <button class="btn btn-outline-success" (click)="prevJugadores()">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button class="btn btn-outline-success" (click)="nextJugadores()">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 mb-3" *ngFor="let jugador of jugadoresPaginated">
+        <app-card-jugador [jugador]="jugador"></app-card-jugador>
+      </div>
+    </div>
+  </div>
+
+  <!-- Noticias -->
+  <div class="mt-5">
+    <h3>Últimas Noticias</h3>
+    <div class="row">
+      <div class="col-md-4 mb-3" *ngFor="let noticia of noticias">
+        <app-card-noticia [noticia]="noticia"></app-card-noticia>
+      </div>
+    </div>
+  </div>
+</div>

@@ -17,4 +17,8 @@ export class EquiposService {
   getEquipo(idEquipo:number):Observable<Equipo>{
     return this.http.get<Equipo>(`http://127.0.0.1:8000/api/equipos/${idEquipo}`);
   }
+
+  getNumeroEquipos():Observable<number>{
+    return this.http.get<number>(`http://127.0.0.1:8000/api/equipos/numTodos`);
+  }
 }

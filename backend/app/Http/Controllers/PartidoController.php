@@ -24,7 +24,7 @@ class PartidoController extends Controller
         $idTemporada = $request->query('temporada_id');
 
         $partidos = Partido::where('liga_id', $idLiga)
-            ->where("temporada_id",$idTemporada)
+            ->where("temporada_id", $idTemporada)
             ->get();
         return response()->json($partidos, 200);
     }
@@ -53,5 +53,11 @@ class PartidoController extends Controller
         }
 
         return response()->json($resultados, 200);
+    }
+
+    public function getNumeroPartidos()
+    {
+        $numPartidos = Partido::count();
+        return response()->json($numPartidos, 200);
     }
 }

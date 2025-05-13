@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EstadisticasJugador;
 use App\Models\Jugador;
+use App\Models\Temporada;
 use Illuminate\Http\Request;
 
 class JugadorController extends Controller
@@ -74,7 +75,8 @@ class JugadorController extends Controller
         return response()->json($tarjetasRojas, 200);
     }
 
-    public function getMaximosGoleadoresTemporada($idTemporada){
+    public function getMaximosGoleadoresTemporada($idTemporada)
+    {
         $goleadores = Jugador::select('jugadores.nombre AS jugador', 'equipos.escudo AS equipoEscudo', 'ligas.nombre AS liga', 'estadisticas_jugador.goles')
             ->join('equipos', 'jugadores.equipo_id', '=', 'equipos.id')
             ->join('ligas', 'equipos.liga_id', '=', 'ligas.id')
@@ -86,7 +88,8 @@ class JugadorController extends Controller
         return response()->json($goleadores, 200);
     }
 
-    public function getMaximosAsistidoresTemporada($idTemporada){
+    public function getMaximosAsistidoresTemporada($idTemporada)
+    {
         $asistidores = Jugador::select('jugadores.nombre AS jugador', 'equipos.escudo AS equipoEscudo', 'ligas.nombre AS liga', 'estadisticas_jugador.asistencias')
             ->join('equipos', 'jugadores.equipo_id', '=', 'equipos.id')
             ->join('ligas', 'equipos.liga_id', '=', 'ligas.id')
@@ -98,7 +101,8 @@ class JugadorController extends Controller
         return response()->json($asistidores, 200);
     }
 
-    public function getMaximosTarjetasAmarillasTemporada($idTemporada){
+    public function getMaximosTarjetasAmarillasTemporada($idTemporada)
+    {
         $tarjetasAmarillas = Jugador::select('jugadores.nombre AS jugador', 'equipos.escudo AS equipoEscudo', 'ligas.nombre AS liga', 'estadisticas_jugador.tarjetas_amarillas')
             ->join('equipos', 'jugadores.equipo_id', '=', 'equipos.id')
             ->join('ligas', 'equipos.liga_id', '=', 'ligas.id')
@@ -110,7 +114,8 @@ class JugadorController extends Controller
         return response()->json($tarjetasAmarillas, 200);
     }
 
-    public function getMaximosTarjetasRojasTemporada($idTemporada){
+    public function getMaximosTarjetasRojasTemporada($idTemporada)
+    {
         $tarjetasRojas = Jugador::select('jugadores.nombre AS jugador', 'equipos.escudo AS equipoEscudo', 'ligas.nombre AS liga', 'estadisticas_jugador.tarjetas_rojas')
             ->join('equipos', 'jugadores.equipo_id', '=', 'equipos.id')
             ->join('ligas', 'equipos.liga_id', '=', 'ligas.id')
@@ -121,8 +126,9 @@ class JugadorController extends Controller
             ->get();
         return response()->json($tarjetasRojas, 200);
     }
-    
-    public function getMaximasParadasTemporada($idTemporada){
+
+    public function getMaximasParadasTemporada($idTemporada)
+    {
         $paradas = Jugador::select('jugadores.nombre AS jugador', 'equipos.escudo AS equipoEscudo', 'ligas.nombre AS liga', 'estadisticas_jugador.paradas')
             ->join('equipos', 'jugadores.equipo_id', '=', 'equipos.id')
             ->join('ligas', 'equipos.liga_id', '=', 'ligas.id')
@@ -134,7 +140,8 @@ class JugadorController extends Controller
         return response()->json($paradas, 200);
     }
 
-    public function getMaximasIntercepcionesTemporada($idTemporada){
+    public function getMaximasIntercepcionesTemporada($idTemporada)
+    {
         $intercepciones = Jugador::select('jugadores.nombre AS jugador', 'equipos.escudo AS equipoEscudo', 'ligas.nombre AS liga', 'estadisticas_jugador.intercepciones')
             ->join('equipos', 'jugadores.equipo_id', '=', 'equipos.id')
             ->join('ligas', 'equipos.liga_id', '=', 'ligas.id')
@@ -146,7 +153,8 @@ class JugadorController extends Controller
         return response()->json($intercepciones, 200);
     }
 
-    public function getMaximosPasesCompletosTemporada($idTemporada){
+    public function getMaximosPasesCompletosTemporada($idTemporada)
+    {
         $pasesCompletos = Jugador::select('jugadores.nombre AS jugador', 'equipos.escudo AS equipoEscudo', 'ligas.nombre AS liga', 'estadisticas_jugador.pases_completos')
             ->join('equipos', 'jugadores.equipo_id', '=', 'equipos.id')
             ->join('ligas', 'equipos.liga_id', '=', 'ligas.id')
@@ -158,7 +166,8 @@ class JugadorController extends Controller
         return response()->json($pasesCompletos, 200);
     }
 
-    public function getMaximosPasesTotalesTemporada($idTemporada){
+    public function getMaximosPasesTotalesTemporada($idTemporada)
+    {
         $pasesTotales = Jugador::select('jugadores.nombre AS jugador', 'equipos.escudo AS equipoEscudo', 'ligas.nombre AS liga', 'estadisticas_jugador.pases_totales')
             ->join('equipos', 'jugadores.equipo_id', '=', 'equipos.id')
             ->join('ligas', 'equipos.liga_id', '=', 'ligas.id')
@@ -170,7 +179,8 @@ class JugadorController extends Controller
         return response()->json($pasesTotales, 200);
     }
 
-    public function getMaximosEntradasTemporada($idTemporada){
+    public function getMaximosEntradasTemporada($idTemporada)
+    {
         $entradas = Jugador::select('jugadores.nombre AS jugador', 'equipos.escudo AS equipoEscudo', 'ligas.nombre AS liga', 'estadisticas_jugador.entradas')
             ->join('equipos', 'jugadores.equipo_id', '=', 'equipos.id')
             ->join('ligas', 'equipos.liga_id', '=', 'ligas.id')
@@ -182,7 +192,8 @@ class JugadorController extends Controller
         return response()->json($entradas, 200);
     }
 
-    public function getMaximasFaltasTemporada($idTemporada){
+    public function getMaximasFaltasTemporada($idTemporada)
+    {
         $faltas = Jugador::select('jugadores.nombre AS jugador', 'equipos.escudo AS equipoEscudo', 'ligas.nombre AS liga', 'estadisticas_jugador.faltas')
             ->join('equipos', 'jugadores.equipo_id', '=', 'equipos.id')
             ->join('ligas', 'equipos.liga_id', '=', 'ligas.id')
@@ -194,7 +205,8 @@ class JugadorController extends Controller
         return response()->json($faltas, 200);
     }
 
-    public function getMaximosDespejesTemporada($idTemporada){
+    public function getMaximosDespejesTemporada($idTemporada)
+    {
         $despejes = Jugador::select('jugadores.nombre AS jugador', 'equipos.escudo AS equipoEscudo', 'ligas.nombre AS liga', 'estadisticas_jugador.despejes')
             ->join('equipos', 'jugadores.equipo_id', '=', 'equipos.id')
             ->join('ligas', 'equipos.liga_id', '=', 'ligas.id')
@@ -206,7 +218,8 @@ class JugadorController extends Controller
         return response()->json($despejes, 200);
     }
 
-    public function getMaximosDuelosGanadosTemporada($idTemporada){
+    public function getMaximosDuelosGanadosTemporada($idTemporada)
+    {
         $duelosGanados = Jugador::select('jugadores.nombre AS jugador', 'equipos.escudo AS equipoEscudo', 'ligas.nombre AS liga', 'estadisticas_jugador.duelos_ganados')
             ->join('equipos', 'jugadores.equipo_id', '=', 'equipos.id')
             ->join('ligas', 'equipos.liga_id', '=', 'ligas.id')
@@ -218,21 +231,39 @@ class JugadorController extends Controller
         return response()->json($duelosGanados, 200);
     }
 
-    public function getJugadoresEquipo($idEquipo){
-        $jugadores = Jugador::where('equipo_id',$idEquipo)
+    public function getJugadoresEquipo($idEquipo)
+    {
+        $jugadores = Jugador::where('equipo_id', $idEquipo)
             ->orderBy('posicion')
             ->get()
-            ;
+        ;
         return response()->json($jugadores, 200);
     }
 
-    public function getJugador($idJugador){
+    public function getJugador($idJugador)
+    {
         $jugador = Jugador::find($idJugador);
         return response()->json($jugador, 200);
     }
 
-    public function getEstadisticasJugador($idJugador){
-        $jugador = EstadisticasJugador::where('jugador_id',$idJugador)->get();
+    public function getEstadisticasJugador($idJugador)
+    {
+        $jugador = EstadisticasJugador::where('jugador_id', $idJugador)->get();
         return response()->json($jugador, 200);
+    }
+
+    public function getAllGolesUltimaTemporada()
+    {
+        $temporadaId = Temporada::max('id');
+        $goles = \DB::table('estadisticas_jugador')
+            ->where('temporada_id', $temporadaId)
+            ->sum('goles');
+        return response()->json($goles, 200);
+    }
+
+    public function getNumeroJugadores()
+    {
+        $numJugadores = Jugador::count();
+        return response()->json($numJugadores, 200);
     }
 }
