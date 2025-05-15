@@ -39,17 +39,20 @@ class PartidoController extends Controller
 
     public function getUltimosPartidosPorLiga()
     {
-        $partidos = Partido::select('liga_id', \DB::raw('MAX(fecha) as ultima_fecha'))
+        $partidosPorLiga = Partido::select('liga_id', \DB::raw('MAX(fecha) as ultima_fecha'))
             ->groupBy('liga_id')
-            ->whereNotNull('fecha_jugado')
-            ->with(['liga', 'temporada'])
             ->get();
 
         $resultados = [];
-        foreach ($partidos as $partido) {
-            $resultados[] = Partido::where('liga_id', $partido->liga_id)
+        foreach ($partidosPorLiga as $partido) {
+            $resultado = Partido::where('liga_id', $partido->liga_id)
                 ->where('fecha', $partido->ultima_fecha)
+                ->with(['liga', 'temporada', 'equipoLocal', 'equipoVisitante']) // 👈 incluyo equipos por si quieres
                 ->first();
+
+            if ($resultado) {
+                $resultados[] = $resultado;
+            }
         }
 
         return response()->json($resultados, 200);

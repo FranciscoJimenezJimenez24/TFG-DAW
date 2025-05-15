@@ -64,7 +64,9 @@ export class HomeComponent implements OnInit {
   getUltimosPartidosPorLiga() {
     this.partidosService.getUltimosPartidosPorLiga()
       .subscribe((partidos) => {
-        this.partidos = partidos;
+        this.partidos = partidos; 
+        console.log(this.partidos);
+               
         this.partidosPaginated = this.partidos.slice(0, 5);  // 👈 inicializamos
       });
   }
