@@ -33,8 +33,9 @@ Route::get('ligas/{id}', [LigaController::class, 'getLiga']);
 
 // Equipos
 Route::get('equipos/numTodos', [EquipoController::class, 'getNumeroEquipos']);
-Route::get('equipos', [EquipoController::class, 'getEquiposLiga']);
+Route::get('equipos/liga/{id}', [EquipoController::class, 'getEquiposLiga']);
 Route::get('equipos/{id}', [EquipoController::class, 'getEquipo']);
+Route::get('equipos', [EquipoController::class, 'getEquipos']);
 
 // Temporadas
 Route::get('temporadas', [TemporadaController::class, 'getTemporadas']);

@@ -20,16 +20,20 @@ export class SolicitudesComponent {
 
   ngOnInit(): void {
     if (this.rolUsuario === 'admin') {
-      this.solicitudesService.getSolicitudes().subscribe(s => this.solicitudes = s);
+      this.solicitudesService.getSolicitudes().subscribe(s => this.solicitudes = s);      
     }
   }
 
   aprobar(solicitud: Solicitud) {
     this.usuariosService.getUsuarioByEmail(solicitud.email)
       .subscribe(usuario => {
+        console.log(usuario);
+        
         const updateUser: Usuario = {
           id: usuario.id, name: solicitud.nombre + " " + solicitud.apellido, email: usuario.email, password: usuario.password, rol: "journalist",
         };
+        console.log(updateUser);
+        
         this.usuariosService.updateUsuario(updateUser)
           .subscribe(
             () => {

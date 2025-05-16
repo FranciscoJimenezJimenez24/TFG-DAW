@@ -7,9 +7,14 @@ use Illuminate\Http\Request;
 
 class EquipoController extends Controller
 {
-    public function getEquiposLiga(Request $request)
+
+    public function getEquipos()
     {
-        $idLiga = $request->query('liga_id');
+        $equipos = Equipo::all();
+        return response()->json($equipos, 200);
+    }
+    public function getEquiposLiga($idLiga)
+    {
         $equipos = Equipo::where('liga_id', $idLiga)->get();
         return response()->json($equipos, 200);
     }

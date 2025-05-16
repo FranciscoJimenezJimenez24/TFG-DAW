@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -54,7 +54,15 @@ class AuthController extends Controller
 
         $rol = $request->rol ?: 'user';
 
-        $userData = User::create(array_merge($request->except('password_confirmation'), ['rol' => $rol, 'password' => bcrypt($request->password)]));
+        $userData = User::create(array_merge(
+            $request->except('password_confirmation'),
+            [
+                'rol' => $rol,
+                'password' => bcrypt($request->password),
+                'email_verified_at' => now(),
+                'remember_token' => \Str::random(10),
+            ]
+        ));
 
         return response()->json(["message" => "User Add", "userData" => $userData], 200);
     }

@@ -43,7 +43,11 @@
 
     <div class="row">
       <div class="col-md-4 mb-3" *ngFor="let partido of partidosPaginated">
-        <app-card-partido [partido]="partido"></app-card-partido>
+        <app-card-partido 
+          [partido]="partido"
+          [equipoLocal]="getEquipo(partido.equipo_local_id) !!"
+          [equipoVisitante]="getEquipo(partido.equipo_visitante_id) !!"
+          ></app-card-partido>
       </div>
     </div>
   </div>

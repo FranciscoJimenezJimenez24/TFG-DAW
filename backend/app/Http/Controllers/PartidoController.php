@@ -47,7 +47,6 @@ class PartidoController extends Controller
         foreach ($partidosPorLiga as $partido) {
             $resultado = Partido::where('liga_id', $partido->liga_id)
                 ->where('fecha', $partido->ultima_fecha)
-                ->with(['liga', 'temporada', 'equipoLocal', 'equipoVisitante']) // 👈 incluyo equipos por si quieres
                 ->first();
 
             if ($resultado) {

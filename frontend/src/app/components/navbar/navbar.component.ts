@@ -17,10 +17,9 @@ export class NavbarComponent implements OnInit{
   constructor(private auth:AuthService,private router: Router, private token:TokenService) { } 
   ngOnInit(): void {
    this.auth.authStatus.subscribe(value => this.loggedIn = value);
+   this.rol = localStorage.getItem("rol");
   }
-  hola(){
-    this.rol = localStorage.getItem("rol") ? localStorage.getItem("rol") : null;
-  }
+  
   logout(event: MouseEvent){
     event.preventDefault();
     localStorage.clear();

@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { CardJugadorComponent } from '../cards/card-jugador/card-jugador.component';
 import { CardPartidoComponent } from '../cards/card-partido/card-partido.component';
 import { CardNoticiaComponent } from '../cards/card-noticia/card-noticia.component';
+import { Equipo } from '../../interfaces/equipo';
 
 @Component({
   selector: 'app-home',
@@ -31,6 +32,7 @@ export class HomeComponent implements OnInit {
   jugadoresPuntuaciones: Map<Jugador, Puntuacion> = new Map();
   ligas: Liga[] = [];
   noticias: Noticia[] = [];
+  equipos: Equipo[] = [];
 
   numPartidos: number = 0;
   allGoles: number = 0;
@@ -52,6 +54,8 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getAllGolesUltimaTemporada();
+    this.getEquipos();
     this.getUltimosPartidosPorLiga();
     this.getMejoresPuntuacionesUltimaTemporada();
     this.getLigas();
@@ -64,9 +68,7 @@ export class HomeComponent implements OnInit {
   getUltimosPartidosPorLiga() {
     this.partidosService.getUltimosPartidosPorLiga()
       .subscribe((partidos) => {
-        this.partidos = partidos; 
-        console.log(this.partidos);
-               
+        this.partidos = partidos;
         this.partidosPaginated = this.partidos.slice(0, 5);  // 👈 inicializamos
       });
   }
@@ -89,6 +91,16 @@ export class HomeComponent implements OnInit {
       });
   }
 
+  getEquipos() {
+    this.equiposService.getEquipos()
+      .subscribe((equipos) => {
+        this.equipos = equipos;
+      })
+  }
+
+  getEquipo(idEquipo: number): Equipo | undefined {
+    return this.equipos.find(e => e.id === idEquipo);
+  }
 
   getLigas() {
     this.ligasService.getLigas()

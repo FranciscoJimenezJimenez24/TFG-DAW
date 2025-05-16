@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UsuarioController extends Controller
 {
@@ -32,9 +33,12 @@ class UsuarioController extends Controller
         $usuario = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
-            'rol' => $request->rol
+            'password' => bcrypt($request->password),
+            'rol' => $request->rol,
+            'email_verified_at' => now(),
+            'remember_token' => \Str::random(10),
         ]);
+
         return response()->json($usuario, 201);
 
     }

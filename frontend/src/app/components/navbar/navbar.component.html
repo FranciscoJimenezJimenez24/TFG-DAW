@@ -9,7 +9,8 @@
         <a class="navbar-brand" href="jugadores" *ngIf="loggedIn">Jugadores</a>
         <a class="navbar-brand" href="partidos" *ngIf="loggedIn">Partidos</a>
         <a class="navbar-brand" href="noticias" *ngIf="loggedIn">Noticias</a>
-        <a class="navbar-brand" href="solicitudes" *ngIf="loggedIn">Solicitudes</a>
+        <a class="navbar-brand" href="usuarios" *ngIf="loggedIn && this.rol === 'admin'">Usuarios</a>
+        <a class="navbar-brand" href="solicitudes" *ngIf="loggedIn && this.rol === 'admin'">Solicitudes</a>
         <a class="navbar-brand" href="logout" (click)="logout($event)" *ngIf="loggedIn">Logout</a>
       </div>
     </div>
