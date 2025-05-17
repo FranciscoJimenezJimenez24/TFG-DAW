@@ -20,6 +20,7 @@ export class AddNoticiaComponent {
   guardarNoticia() {    
     this.noticiaAgregada.emit(this.noticia);
     this.cerrarModal();
+    this.noticia = { id: 0, titulo: '', descripcion: '', autor: this.nombreUsuario ?? '', fecha_publicacion: new Date().toISOString().split('T')[0] };
   }
   
   cerrarModal() {
@@ -30,4 +31,3 @@ export class AddNoticiaComponent {
     }
   }
 }
-

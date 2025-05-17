@@ -1,0 +1,16 @@
+.card {
+  border-radius: 1rem;
+}
+
+.card-title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.card-text {
+  line-height: 1.6;
+}
+
+.btn {
+  border-radius: 0.5rem;
+}

@@ -10,7 +10,8 @@
         <app-card-noticia 
             [noticia]="noticia" 
             (editar)="updateNoticia($event)" 
-            (eliminar)="deleteNoticia($event)">
+            (eliminar)="deleteNoticia($event)"
+            [routerLink]="['/noticias', noticia.id]">
         </app-card-noticia>
     </div>
 

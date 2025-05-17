@@ -12,6 +12,10 @@ export class NoticiasService {
     private http: HttpClient
   ) { }
 
+  getNoticia(idNoticia: number):Observable<Noticia>{
+    return this.http.get<Noticia>(`http://127.0.0.1:8000/api/noticias/${idNoticia}`);
+  }
+
   getNoticias():Observable<Noticia[]>{
     return this.http.get<Noticia[]>('http://127.0.0.1:8000/api/noticias');
   }

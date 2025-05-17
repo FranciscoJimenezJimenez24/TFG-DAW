@@ -4,7 +4,7 @@ import { Noticia } from '../../interfaces/noticia';
 import { CommonModule } from '@angular/common';
 import { CardNoticiaComponent } from '../cards/card-noticia/card-noticia.component';
 import { AddNoticiaComponent } from './add-noticia/add-noticia.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { DeleteNoticiaComponent } from './delete-noticia/delete-noticia.component';
 import { EditNoticiaComponent } from './edit-noticia/edit-noticia.component';
 
@@ -13,7 +13,7 @@ import { EditNoticiaComponent } from './edit-noticia/edit-noticia.component';
   standalone: true,
   templateUrl: './noticias.component.html',
   styleUrl: './noticias.component.css',
-  imports: [CommonModule, AddNoticiaComponent, CardNoticiaComponent, DeleteNoticiaComponent, EditNoticiaComponent],
+  imports: [CommonModule, AddNoticiaComponent, CardNoticiaComponent, DeleteNoticiaComponent, EditNoticiaComponent, RouterLink],
 })
 export class NoticiasComponent implements OnInit {
   noticias: Noticia[] = [];

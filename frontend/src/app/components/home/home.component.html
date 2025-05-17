@@ -47,6 +47,7 @@
           [partido]="partido"
           [equipoLocal]="getEquipo(partido.equipo_local_id) !!"
           [equipoVisitante]="getEquipo(partido.equipo_visitante_id) !!"
+          [routerLink]="['/partidos', partido.id]"
           ></app-card-partido>
       </div>
     </div>
@@ -66,7 +67,7 @@
 
     <div class="row">
       <div class="col-md-4 mb-3" *ngFor="let jugador of jugadoresPaginated">
-        <app-card-jugador [jugador]="jugador"></app-card-jugador>
+        <app-card-jugador [jugador]="jugador" [routerLink]="['/jugadores', jugador.id]"></app-card-jugador>
       </div>
     </div>
   </div>
@@ -76,7 +77,7 @@
     <h3>Últimas Noticias</h3>
     <div class="row">
       <div class="col-md-4 mb-3" *ngFor="let noticia of noticias">
-        <app-card-noticia [noticia]="noticia"></app-card-noticia>
+        <app-card-noticia [noticia]="noticia" [routerLink]="['/noticias', noticia.id]"></app-card-noticia>
       </div>
     </div>
   </div>

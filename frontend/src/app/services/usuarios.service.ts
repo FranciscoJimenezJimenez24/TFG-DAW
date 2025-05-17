@@ -25,9 +25,7 @@ export class UsuariosService {
 
   getUsuarioByEmail(email:string):Observable<Usuario>{
     const token = this.tokenService.get();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    console.log(email);
-    
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);    
     return this.http.get<Usuario>(`http://127.0.0.1:8000/api/usuarios/${email}`, { headers });
   }
 

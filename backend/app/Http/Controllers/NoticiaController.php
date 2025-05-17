@@ -13,6 +13,12 @@ class NoticiaController extends Controller
         return response()->json($noticias, 200);
     }
 
+    public function getNoticia($id)
+    {
+        $noticia = Noticia::findOrFail($id);
+        return response()->json($noticia, 200);
+    }
+
     public function addNoticia(Request $request)
     {
         $request->validate([

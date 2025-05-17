@@ -17,6 +17,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
 import { PartidosComponent } from './components/partidos/partidos.component';
 import { PartidoPageComponent } from './components/partidos/partido-page/partido-page.component';
+import { NoticiaPageComponent } from './components/noticias/noticia-page/noticia-page.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent  },
@@ -31,6 +32,7 @@ export const routes: Routes = [
     { path: 'partidos/:id', component: PartidoPageComponent },
     { path: 'partidos', component: PartidosComponent },
     { path: 'noticias', component: NoticiasComponent },
+    { path: 'noticias/:id', component: NoticiaPageComponent },
     { path: 'contacto', component: ContactoComponent },
     { path: 'usuarios', component: UsuariosComponent },
     { path: 'solicitudes', component: SolicitudesComponent },

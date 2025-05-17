@@ -15,11 +15,12 @@ import { CardJugadorComponent } from '../cards/card-jugador/card-jugador.compone
 import { CardPartidoComponent } from '../cards/card-partido/card-partido.component';
 import { CardNoticiaComponent } from '../cards/card-noticia/card-noticia.component';
 import { Equipo } from '../../interfaces/equipo';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, CardJugadorComponent, CardPartidoComponent, CardNoticiaComponent],
+  imports: [CommonModule, CardJugadorComponent, CardPartidoComponent, CardNoticiaComponent, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

@@ -1,0 +1,19 @@
+<div class="container mt-5" *ngIf="noticia">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title">{{ noticia.titulo }}</h2>
+      <p class="text-muted mb-2">Publicado por <strong>{{ noticia.autor }}</strong> el {{ noticia.fecha_publicacion }}</p>
+      <hr>
+      <p class="card-text fs-5">{{ noticia.descripcion }}</p>
+      <button class="btn btn-secondary mt-4" (click)="goToNoticias()">
+        <i class="bi bi-arrow-left"></i> Volver a noticias
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container text-center mt-5" *ngIf="!noticia">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Cargando...</span>
+  </div>
+</div>
