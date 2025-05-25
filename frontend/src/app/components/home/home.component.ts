@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { PartidosService } from '../../services/partidos.service';
 import { Partido } from '../../interfaces/partido';
 import { PuntuacionesService } from '../../services/puntuaciones.service';
@@ -40,10 +40,13 @@ export class HomeComponent implements OnInit {
   numJugadores: number = 0;
   numEquipos: number = 0;
 
+  itemsPerPage: number = 2; // Valor inicial, se ajustará automáticamente
+
   partidosPaginated: Partido[] = [];
   jugadoresPaginated: Jugador[] = [];
   partidoIndex = 0;
   jugadorIndex = 0;
+
 
   constructor(
     private partidosService: PartidosService,
@@ -64,13 +67,20 @@ export class HomeComponent implements OnInit {
     this.getNumeroPartidos();
     this.getNumeroJugadores();
     this.getNumeroEquipos();
+    this.calculateItemsPerPage();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.calculateItemsPerPage();
+    this.updatePaginatedData();
   }
 
   getUltimosPartidosPorLiga() {
     this.partidosService.getUltimosPartidosPorLiga()
       .subscribe((partidos) => {
         this.partidos = partidos;
-        this.partidosPaginated = this.partidos.slice(0, 5);  // 👈 inicializamos
+        this.partidosPaginated = this.partidos.slice(0, 2);  // 👈 inicializamos
       });
   }
 
@@ -85,7 +95,7 @@ export class HomeComponent implements OnInit {
               this.jugadoresPuntuaciones.set(jugador, puntuacion);
               count++;
               if (count === this.puntuaciones.length) {
-                this.jugadoresPaginated = Array.from(this.jugadoresPuntuaciones.keys()).slice(0, 5);  // 👈 inicializamos cuando ya los tenemos todos
+                this.jugadoresPaginated = Array.from(this.jugadoresPuntuaciones.keys()).slice(0, 2);  // 👈 inicializamos cuando ya los tenemos todos
               }
             });
         });
@@ -145,28 +155,59 @@ export class HomeComponent implements OnInit {
       })
   }
 
+  calculateItemsPerPage() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth >= 1400) { // Pantallas XL
+      this.itemsPerPage = 4;
+    } else if (screenWidth >= 992) { // Pantallas LG
+      this.itemsPerPage = 3;
+    } else if (screenWidth >= 768) { // Pantallas MD
+      this.itemsPerPage = 2;
+    } else { // Pantallas pequeñas
+      this.itemsPerPage = 1;
+    }
+  }
+
+  updatePaginatedData() {
+    this.partidosPaginated = this.partidos.slice(this.partidoIndex, this.partidoIndex + this.itemsPerPage);
+    this.jugadoresPaginated = Array.from(this.jugadoresPuntuaciones.keys()).slice(
+      this.jugadorIndex,
+      this.jugadorIndex + this.itemsPerPage
+    );
+  }
+
   nextPartidos() {
-    const total = this.partidos.length;
-    this.partidoIndex = (this.partidoIndex + 5) % total;
-    this.partidosPaginated = this.partidos.slice(this.partidoIndex, this.partidoIndex + 5);
+    if (this.partidoIndex + this.itemsPerPage < this.partidos.length) {
+      this.partidoIndex += this.itemsPerPage;
+      this.partidosPaginated = this.partidos.slice(this.partidoIndex, this.partidoIndex + this.itemsPerPage);
+    }
   }
 
   prevPartidos() {
-    const total = this.partidos.length;
-    this.partidoIndex = (this.partidoIndex - 5 + total) % total;
-    this.partidosPaginated = this.partidos.slice(this.partidoIndex, this.partidoIndex + 5);
+    if (this.partidoIndex > 0) {
+      this.partidoIndex = Math.max(0, this.partidoIndex - this.itemsPerPage);
+      this.partidosPaginated = this.partidos.slice(this.partidoIndex, this.partidoIndex + this.itemsPerPage);
+    }
   }
 
   nextJugadores() {
     const total = Array.from(this.jugadoresPuntuaciones.keys()).length;
-    this.jugadorIndex = (this.jugadorIndex + 5) % total;
-    this.jugadoresPaginated = Array.from(this.jugadoresPuntuaciones.keys()).slice(this.jugadorIndex, this.jugadorIndex + 5);
+    if (this.jugadorIndex + this.itemsPerPage < total) {
+      this.jugadorIndex += this.itemsPerPage;
+      this.jugadoresPaginated = Array.from(this.jugadoresPuntuaciones.keys()).slice(
+        this.jugadorIndex,
+        this.jugadorIndex + this.itemsPerPage
+      );
+    }
   }
 
   prevJugadores() {
-    const total = Array.from(this.jugadoresPuntuaciones.keys()).length;
-    this.jugadorIndex = (this.jugadorIndex - 5 + total) % total;
-    this.jugadoresPaginated = Array.from(this.jugadoresPuntuaciones.keys()).slice(this.jugadorIndex, this.jugadorIndex + 5);
+    if (this.jugadorIndex > 0) {
+      this.jugadorIndex = Math.max(0, this.jugadorIndex - this.itemsPerPage);
+      this.jugadoresPaginated = Array.from(this.jugadoresPuntuaciones.keys()).slice(
+        this.jugadorIndex,
+        this.jugadorIndex + this.itemsPerPage
+      );
+    }
   }
-
 }

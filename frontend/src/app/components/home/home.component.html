@@ -32,23 +32,21 @@
   <!-- Próximos partidos -->
   <div class="mt-5">
     <h3>Últimos Partidos</h3>
-    <div class="d-flex justify-content-between align-items-center mb-2">
-      <button class="btn btn-outline-primary" (click)="prevPartidos()">
-        <i class="bi bi-chevron-left"></i>
+    <div class="d-flex justify-content-end align-items-center gap-2 mb-3">
+      <button class="btn btn-link p-0" [disabled]="partidoIndex === 0" (click)="prevPartidos()">
+        <i class="bi bi-chevron-left fs-3"></i>
       </button>
-      <button class="btn btn-outline-primary" (click)="nextPartidos()">
-        <i class="bi bi-chevron-right"></i>
+      <button class="btn btn-link p-0" [disabled]="partidoIndex + itemsPerPage >= partidos.length"
+        (click)="nextPartidos()">
+        <i class="bi bi-chevron-right fs-3"></i>
       </button>
     </div>
 
     <div class="row">
-      <div class="col-md-4 mb-3" *ngFor="let partido of partidosPaginated">
-        <app-card-partido 
-          [partido]="partido"
-          [equipoLocal]="getEquipo(partido.equipo_local_id) !!"
-          [equipoVisitante]="getEquipo(partido.equipo_visitante_id) !!"
-          [routerLink]="['/partidos', partido.id]"
-          ></app-card-partido>
+      <div class="col-sm-6 col-md-4 col-lg-3 mb-3" *ngFor="let partido of partidosPaginated">
+        <app-card-partido [partido]="partido" [equipoLocal]="getEquipo(partido.equipo_local_id) !!"
+          [equipoVisitante]="getEquipo(partido.equipo_visitante_id) !!" [routerLink]="['/partidos', partido.id]">
+        </app-card-partido>
       </div>
     </div>
   </div>
@@ -56,17 +54,18 @@
   <!-- Mejores Jugadores -->
   <div class="mt-5">
     <h3>Top Jugadores</h3>
-    <div class="d-flex justify-content-between align-items-center mb-2">
-      <button class="btn btn-outline-success" (click)="prevJugadores()">
-        <i class="bi bi-chevron-left"></i>
+    <div class="d-flex justify-content-end align-items-center gap-2 mb-3">
+      <button class="btn btn-link p-0" [disabled]="jugadorIndex === 0" (click)="prevJugadores()">
+        <i class="bi bi-chevron-left fs-3"></i>
       </button>
-      <button class="btn btn-outline-success" (click)="nextJugadores()">
-        <i class="bi bi-chevron-right"></i>
+      <button class="btn btn-link p-0" [disabled]="jugadorIndex + itemsPerPage >= jugadoresPuntuaciones.size"
+        (click)="nextJugadores()">
+        <i class="bi bi-chevron-right fs-3"></i>
       </button>
     </div>
 
     <div class="row">
-      <div class="col-md-4 mb-3" *ngFor="let jugador of jugadoresPaginated">
+      <div class="col-sm-6 col-md-4 col-lg-3 mb-3" *ngFor="let jugador of jugadoresPaginated">
         <app-card-jugador [jugador]="jugador" [routerLink]="['/jugadores', jugador.id]"></app-card-jugador>
       </div>
     </div>

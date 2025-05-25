@@ -5,8 +5,8 @@
     <p class="text-muted">Por: {{ noticia.autor }} | {{ noticia.fecha_publicacion }}</p>
 
     <div *ngIf="mostrarOpciones && esAutor" class="opciones">
-      <button class="btn btn-warning btn-sm me-2" (click)="editar.emit(noticia)">Editar</button>
-      <button class="btn btn-danger btn-sm" (click)="eliminar.emit(noticia)">Eliminar</button>
+      <button class="btn btn-warning btn-sm me-2" (click)="editarNoticia($event)">Editar</button>
+      <button class="btn btn-danger btn-sm" (click)="eliminarNoticia($event)">Eliminar</button>
     </div>
   </div>
 </div>

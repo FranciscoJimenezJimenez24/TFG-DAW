@@ -43,24 +43,24 @@ export class JugadorPageComponent implements OnInit {
       .subscribe(jugador => {
         if (!jugador) return this.router.navigate(['/jugadores']);
         this.jugador = jugador;
-        
+
         this.temporadasService.getTemporadas()
-          .subscribe(temporadas=>{
+          .subscribe(temporadas => {
             this.temporadas = temporadas;
           })
         this.equiposService.getEquipo(jugador.equipo_id)
-          .subscribe(equipo=>{
+          .subscribe(equipo => {
             this.equipoJugador = equipo;
           })
+        this.getEstadisticasJugador();
+        this.getPuntuaciones(this.jugador!.id);
         return;
       });
-    this.getEstadisticasJugador();
-    this.getPuntuaciones(this.jugador!.id);
   }
 
-  getEstadisticasJugador(){
+  getEstadisticasJugador() {
     this.jugadoresService.getEstadisticasJugador(this.jugador!.id)
-      .subscribe(estadisticas=>{
+      .subscribe(estadisticas => {
         this.estadisticas = estadisticas;
       })
   }
@@ -70,7 +70,7 @@ export class JugadorPageComponent implements OnInit {
     return temporada ? temporada.nombre : 'Desconocida';
   }
 
-  getPuntuaciones(idJugador: number){
+  getPuntuaciones(idJugador: number) {
     this.puntuacionesService.getPuntuacionesJugador(idJugador)
       .subscribe(puntuaciones => {
         this.puntuaciones = puntuaciones;

@@ -66,7 +66,7 @@ class NoticiaController extends Controller
     public function getUltimasNoticias()
     {
         $noticias = Noticia::orderBy('fecha_publicacion', 'desc')
-            ->take(5)
+            ->take(6)
             ->get();
         return response()->json($noticias, 200);
     }

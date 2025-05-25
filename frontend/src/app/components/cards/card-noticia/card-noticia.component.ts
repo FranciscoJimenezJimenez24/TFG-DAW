@@ -15,9 +15,19 @@ export class CardNoticiaComponent {
   @Output() eliminar = new EventEmitter<Noticia>();
 
   mostrarOpciones = false;
-  usuarioActual = localStorage.getItem("nombre"); 
+  usuarioActual = localStorage.getItem("nombre");
 
   get esAutor(): boolean {
     return this.noticia.autor === this.usuarioActual;
+  }
+
+  editarNoticia(event: MouseEvent) {
+    event.stopPropagation(); // Detiene la propagación
+    this.editar.emit(this.noticia);
+  }
+
+  eliminarNoticia(event: MouseEvent) {
+    event.stopPropagation();
+    this.eliminar.emit(this.noticia);
   }
 }

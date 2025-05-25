@@ -1,0 +1,8 @@
+.btn-link {
+  color: #0d6efd;
+  text-decoration: none;
+}
+
+.btn-link:disabled {
+  color: #ccc;
+}

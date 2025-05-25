@@ -36,7 +36,7 @@ class PuntuacionController extends Controller
 
     public function getMejoresPuntuacionesUltimaTemporada()
     {
-        $puntuaciones = Puntuacion::where('temporada_id', 10)
+        $puntuaciones = Puntuacion::where('temporada_id', 5)
             ->orderBy('puntuacion', 'desc')
             ->take(10)
             ->get();
