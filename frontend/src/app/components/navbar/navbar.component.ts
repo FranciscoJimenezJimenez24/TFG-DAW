@@ -13,14 +13,22 @@ import { TokenService } from '../../services/token.service';
 })
 export class NavbarComponent implements OnInit{
   public loggedIn: boolean = false;
-  rol: string | null = "";
-  constructor(private auth:AuthService,private router: Router, private token:TokenService) { } 
+
+  constructor(
+    private auth: AuthService,
+    private router: Router, 
+    private token: TokenService
+  ) { } 
+
   ngOnInit(): void {
-   this.auth.authStatus.subscribe(value => this.loggedIn = value);
-   this.rol = localStorage.getItem("rol");
+    this.auth.authStatus.subscribe(value => this.loggedIn = value);
   }
   
-  logout(event: MouseEvent){
+  get rol(): string | null {
+    return localStorage.getItem("rol");
+  }
+  
+  logout(event: MouseEvent) {
     event.preventDefault();
     localStorage.clear();
     this.token.remove();

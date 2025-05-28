@@ -5,6 +5,7 @@ import { TokenService } from '../../services/token.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UsuariosService } from '../../services/usuarios.service';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit{
     private token:TokenService, 
     private router:Router, 
     private auth:AuthService,
-    private usuariosService:UsuariosService
+    private usuariosService:UsuariosService,
   ) { }
 
   ngOnInit(): void {
@@ -46,7 +47,7 @@ export class LoginComponent implements OnInit{
   handleResponse(data: any) {    
     this.token.handle(data.access_token);
     this.auth.changeAuthStatus(true);
-    this.router.navigateByUrl('/ligas');
+    this.router.navigateByUrl('/');
   }
   getUsuarios() {
    this.usuariosService.getUsuario()

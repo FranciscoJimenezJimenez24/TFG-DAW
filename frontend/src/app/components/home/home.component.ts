@@ -58,6 +58,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.calculateItemsPerPage();
     this.getAllGolesUltimaTemporada();
     this.getEquipos();
     this.getUltimosPartidosPorLiga();
@@ -67,7 +68,6 @@ export class HomeComponent implements OnInit {
     this.getNumeroPartidos();
     this.getNumeroJugadores();
     this.getNumeroEquipos();
-    this.calculateItemsPerPage();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -80,7 +80,7 @@ export class HomeComponent implements OnInit {
     this.partidosService.getUltimosPartidosPorLiga()
       .subscribe((partidos) => {
         this.partidos = partidos;
-        this.partidosPaginated = this.partidos.slice(0, 2);  // 👈 inicializamos
+        this.partidosPaginated = this.partidos.slice(0, this.itemsPerPage);
       });
   }
 
@@ -95,7 +95,8 @@ export class HomeComponent implements OnInit {
               this.jugadoresPuntuaciones.set(jugador, puntuacion);
               count++;
               if (count === this.puntuaciones.length) {
-                this.jugadoresPaginated = Array.from(this.jugadoresPuntuaciones.keys()).slice(0, 2);  // 👈 inicializamos cuando ya los tenemos todos
+                this.jugadoresPaginated = Array.from(this.jugadoresPuntuaciones.keys())
+                  .slice(0, this.itemsPerPage);
               }
             });
         });
