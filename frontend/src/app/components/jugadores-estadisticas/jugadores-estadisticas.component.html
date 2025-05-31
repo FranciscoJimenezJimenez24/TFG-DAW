@@ -1,0 +1,27 @@
+<div class="container mt-4">
+  <h2 class="mb-4">{{ titulo }}</h2>
+  
+  <table class="table table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Jugador</th>
+        <th>Equipo</th>
+        <th class="text-end">{{ titulo }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let jugador of jugadores; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ jugador.jugador || jugador.nombre }}</td>
+        <td>
+          <img [src]="jugador.equipoEscudo" width="24" height="32" class="me-2">
+          {{ jugador.equipo }}
+        </td>
+        <td class="text-end fw-bold">
+          {{ getValorMostrar(jugador) }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

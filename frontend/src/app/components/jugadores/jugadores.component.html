@@ -7,322 +7,57 @@
       </option>
     </select>
   </div>
-  <div class="tablas-grid">
-    <table class="table table-hover table-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center">#</th>
-          <th>Jugador</th>
-          <th class="text-end">Puntuación</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let jugador of jugadores; let i = index">
-          <td class="text-center fw-bold">{{ i + 1 }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <!-- <img [src]="getEquipo(jugador.equipo_id)" alt="Escudo" class="me-2" width="30" height="40"> -->
-              <div>
-                <div class="fw-semibold">{{ jugador.nombre }}</div>
-                <small class="text-muted">{{ jugador.posicion }}</small>
-              </div>
-            </div>
-          </td>
-          <td class="text-end fw-bold">{{ puntuaciones[i].puntuacion }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="table table-hover table-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center">#</th>
-          <th>Jugador</th>
-          <th class="text-end">Despejes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let despeje of maximosDespejes; let i = index">
-          <td class="text-center fw-bold">{{ i + 1 }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <img [src]="despeje.equipoEscudo" alt="Escudo" class="me-2" width="30" height="40">
-              <div>
-                <div class="fw-semibold">{{ despeje.jugador }}</div>
-                <small class="text-muted">{{ despeje.liga }}</small>
-              </div>
-            </div>
-          </td>
-          <td class="text-end fw-bold">{{ despeje.despejes }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="table table-hover table-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center">#</th>
-          <th>Jugador</th>
-          <th class="text-end">Goles</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let gol of maximosGoleadores; let i = index">
-          <td class="text-center fw-bold">{{ i + 1 }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <img [src]="gol.equipoEscudo" alt="Escudo" class="me-2" width="30" height="40">
-              <div>
-                <div class="fw-semibold">{{ gol.jugador }}</div>
-                <small class="text-muted">{{ gol.liga }}</small>
-              </div>
-            </div>
-          </td>
-          <td class="text-end fw-bold">{{ gol.goles }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="table table-hover table-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center">#</th>
-          <th>Jugador</th>
-          <th class="text-end">Asistencias</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let asistencia of maximosAsistidores; let i = index">
-          <td class="text-center fw-bold">{{ i + 1 }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <img [src]="asistencia.equipoEscudo" alt="Escudo" class="me-2" width="30" height="40">
-              <div>
-                <div class="fw-semibold">{{ asistencia.jugador }}</div>
-                <small class="text-muted">{{ asistencia.liga }}</small>
-              </div>
-            </div>
-          </td>
-          <td class="text-end fw-bold">{{ asistencia.asistencias }}</td>
-        </tr>
-      </tbody>
-    </table>
 
-    <table class="table table-hover table-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center">#</th>
-          <th>Jugador</th>
-          <th class="text-end">Tarjetas Amarillas</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let tarjeta of tarjetasAmarillas; let i = index">
-          <td class="text-center fw-bold">{{ i + 1 }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <img [src]="tarjeta.equipoEscudo" alt="Escudo" class="me-2" width="30" height="40">
-              <div>
-                <div class="fw-semibold">{{ tarjeta.jugador }}</div>
-                <small class="text-muted">{{ tarjeta.liga }}</small>
-              </div>
-            </div>
-          </td>
-          <td class="text-end fw-bold">{{ tarjeta.tarjetas_amarillas }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- Grid de estadísticas -->
+  <div class="stats-grid">
+    <div class="stat-card" *ngFor="let stat of getVisibleStats()">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">{{ stat.nombre }}</h5>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-sm mb-0">
+            <thead>
+              <tr>
+                <th class="text-center">#</th>
+                <th>Jugador</th>
+                <th class="text-end">{{ stat.nombre }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of stat.data | slice:0:5; let i = index">
+                <td class="text-center fw-bold">{{ i + 1 }}</td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <img [src]="item.equipoEscudo" alt="Escudo" class="me-2" width="24" height="32">
+                    <div>
+                      <div class="fw-semibold">{{ item.jugador || item.nombre }}</div>
+                      <small class="text-muted">{{ item.liga || item.posicion }}</small>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-end fw-bold">
+                  {{ item[stat.key] || item.puntuacion || item.goles || item.asistencias }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer bg-light text-center">
+          <button class="btn btn-sm btn-outline-primary" (click)="verMas(stat.key)">
+            Ver más {{ stat.nombre.toLowerCase() }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <table class="table table-hover table-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center">#</th>
-          <th>Jugador</th>
-          <th class="text-end">Tarjetas Rojas</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let tarjeta of tarjetasRojas; let i = index">
-          <td class="text-center fw-bold">{{ i + 1 }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <img [src]="tarjeta.equipoEscudo" alt="Escudo" class="me-2" width="30" height="40">
-              <div>
-                <div class="fw-semibold">{{ tarjeta.jugador }}</div>
-                <small class="text-muted">{{ tarjeta.liga }}</small>
-              </div>
-            </div>
-          </td>
-          <td class="text-end fw-bold">{{ tarjeta.tarjetas_rojas }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="table table-hover table-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center">#</th>
-          <th>Jugador</th>
-          <th class="text-end">Pases Completados</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let pase of maximosPasesCompletados; let i = index">
-          <td class="text-center fw-bold">{{ i + 1 }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <img [src]="pase.equipoEscudo" alt="Escudo" class="me-2" width="30" height="40">
-              <div>
-                <div class="fw-semibold">{{ pase.jugador }}</div>
-                <small class="text-muted">{{ pase.liga }}</small>
-              </div>
-            </div>
-          </td>
-          <td class="text-end fw-bold">{{ pase.pases_completos }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <table class="table table-hover table-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center">#</th>
-          <th>Jugador</th>
-          <th class="text-end">Intercepciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let intercepcion of maximasIntercepciones; let i = index">
-          <td class="text-center fw-bold">{{ i + 1 }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <img [src]="intercepcion.equipoEscudo" alt="Escudo" class="me-2" width="30" height="40">
-              <div>
-                <div class="fw-semibold">{{ intercepcion.jugador }}</div>
-                <small class="text-muted">{{ intercepcion.liga }}</small>
-              </div>
-            </div>
-          </td>
-          <td class="text-end fw-bold">{{ intercepcion.intercepciones }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="table table-hover table-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center">#</th>
-          <th>Jugador</th>
-          <th class="text-end">Faltas Cometidas</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let falta of maximasFaltas; let i = index">
-          <td class="text-center fw-bold">{{ i + 1 }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <img [src]="falta.equipoEscudo" alt="Escudo" class="me-2" width="30" height="40">
-              <div>
-                <div class="fw-semibold">{{ falta.jugador }}</div>
-                <small class="text-muted">{{ falta.liga }}</small>
-              </div>
-            </div>
-          </td>
-          <td class="text-end fw-bold">{{ falta.faltas }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="table table-hover table-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center">#</th>
-          <th>Jugador</th>
-          <th class="text-end">Pases Totales</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let pases of maximosPasesTotales; let i = index">
-          <td class="text-center fw-bold">{{ i + 1 }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <img [src]="pases.equipoEscudo" alt="Escudo" class="me-2" width="30" height="40">
-              <div>
-                <div class="fw-semibold">{{ pases.jugador }}</div>
-                <small class="text-muted">{{ pases.liga }}</small>
-              </div>
-            </div>
-          </td>
-          <td class="text-end fw-bold">{{ pases.pases_totales }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="table table-hover table-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center">#</th>
-          <th>Jugador</th>
-          <th class="text-end">Duelos Ganados</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let duelos of maximosDuelosGanados; let i = index">
-          <td class="text-center fw-bold">{{ i + 1 }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <img [src]="duelos.equipoEscudo" alt="Escudo" class="me-2" width="30" height="40">
-              <div>
-                <div class="fw-semibold">{{ duelos.jugador }}</div>
-                <small class="text-muted">{{ duelos.liga }}</small>
-              </div>
-            </div>
-          </td>
-          <td class="text-end fw-bold">{{ duelos.duelos_ganados }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="table table-hover table-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center">#</th>
-          <th>Jugador</th>
-          <th class="text-end">Paradas</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let parada of maximasParadas; let i = index">
-          <td class="text-center fw-bold">{{ i + 1 }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <img [src]="parada.equipoEscudo" alt="Escudo" class="me-2" width="30" height="40">
-              <div>
-                <div class="fw-semibold">{{ parada.jugador }}</div>
-                <small class="text-muted">{{ parada.liga }}</small>
-              </div>
-            </div>
-          </td>
-          <td class="text-end fw-bold">{{ parada.paradas }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <table class="table table-hover table-sm align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th class="text-center">#</th>
-          <th>Jugador</th>
-          <th class="text-end">Entradas</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let entrada of maximasEntradas; let i = index">
-          <td class="text-center fw-bold">{{ i + 1 }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <img [src]="entrada.equipoEscudo" alt="Escudo" class="me-2" width="30" height="40">
-              <div>
-                <div class="fw-semibold">{{ entrada.jugador }}</div>
-                <small class="text-muted">{{ entrada.liga }}</small>
-              </div>
-            </div>
-          </td>
-          <td class="text-end fw-bold">{{ entrada.entradas }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- Navegación entre grupos de estadísticas -->
+  <div class="d-flex justify-content-center mt-4" *ngIf="estadisticas.length > itemsPerRow">
+    <button class="btn btn-outline-secondary mx-2" 
+            *ngFor="let group of getStatGroups()"
+            (click)="currentGroup = group">
+      {{ group + 1 }}
+    </button>
   </div>
 </div>

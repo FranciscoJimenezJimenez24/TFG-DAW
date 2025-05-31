@@ -18,6 +18,7 @@ import { SolicitudesComponent } from './components/solicitudes/solicitudes.compo
 import { PartidosComponent } from './components/partidos/partidos.component';
 import { PartidoPageComponent } from './components/partidos/partido-page/partido-page.component';
 import { NoticiaPageComponent } from './components/noticias/noticia-page/noticia-page.component';
+import { JugadoresEstadisticasComponent } from './components/jugadores-estadisticas/jugadores-estadisticas.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent  },
@@ -28,6 +29,7 @@ export const routes: Routes = [
     { path: 'equipos/:id', component: EquipoPageComponent },
     { path: 'equipos', component: EquiposComponent },
     { path: 'jugadores/:id', component: JugadorPageComponent },
+    { path: 'jugadores/estadisticas', component: JugadoresEstadisticasComponent },
     { path: 'jugadores', component: JugadoresComponent },
     { path: 'partidos/:id', component: PartidoPageComponent },
     { path: 'partidos', component: PartidosComponent },
