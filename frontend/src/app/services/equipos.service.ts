@@ -8,25 +8,27 @@ import { Equipo } from '../interfaces/equipo';
 })
 export class EquiposService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getEquipos():Observable<Equipo[]>{
+  getEquipos(): Observable<Equipo[]> {
     return this.http.get<Equipo[]>(`http://127.0.0.1:8000/api/equipos`);
   }
 
-  getEquiposLigas(id:number):Observable<Equipo[]>{
+  getEquiposLigas(id: number): Observable<Equipo[]> {
     return this.http.get<Equipo[]>(`http://127.0.0.1:8000/api/equipos/liga/${id}`);
   }
 
-  getEquipo(idEquipo:number):Observable<Equipo>{
+  getEquipo(idEquipo: number): Observable<Equipo> {
     return this.http.get<Equipo>(`http://127.0.0.1:8000/api/equipos/${idEquipo}`);
   }
 
-  getNumeroEquipos():Observable<number>{
+  getNumeroEquipos(): Observable<number> {
     return this.http.get<number>(`http://127.0.0.1:8000/api/equipos/numTodos`);
   }
 
-  getEquipoByEscudo(escudo:string):Observable<Equipo> {
-    return this.http.get<Equipo>(`http://127.0.0.1:8000/api/equipos/escudo/${escudo}`);
+  getEquipoByEscudo(escudo: string): Observable<Equipo> {
+    // Primero, extraer solo el nombre del archivo si es una URL completa
+    const escudoNombre = escudo.split('/').pop() || escudo;
+    return this.http.get<Equipo>(`http://127.0.0.1:8000/api/equipos/escudo?escudo=${encodeURIComponent(escudoNombre)}`);
   }
 }

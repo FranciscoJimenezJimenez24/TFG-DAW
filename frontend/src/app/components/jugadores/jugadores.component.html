@@ -37,7 +37,7 @@
                   </div>
                 </td>
                 <td class="text-end fw-bold">
-                  {{ item[stat.key] || item.puntuacion || item.goles || item.asistencias }}
+                  {{ getStatValue(item, stat.key) }}
                 </td>
               </tr>
             </tbody>

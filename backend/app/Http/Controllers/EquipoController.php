@@ -31,9 +31,11 @@ class EquipoController extends Controller
         return response()->json($numEquipos, 200);
     }
 
-    public function getEquipoByEscudo($escudo)
+    public function getEquipoByEscudo(Request $request)
     {
-        $equipo = Equipo::where('escudo', $escudo)->first();
+        $escudo = $request->query('escudo');
+        $equipo = Equipo::where('escudo', 'like', '%' . $escudo . '%')->first();
+
         if ($equipo) {
             return response()->json($equipo, 200);
         } else {

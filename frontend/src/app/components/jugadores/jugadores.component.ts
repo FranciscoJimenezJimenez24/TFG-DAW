@@ -328,4 +328,9 @@ export class JugadoresComponent implements OnInit {
   goToLiga(idLiga: number) {
     this.router.navigate(['/ligas', idLiga]);
   }
+
+  getStatValue(item: any, statKey: string): any {
+    const key = statKey.replace(/([A-Z])/g, "_$1").toLowerCase();
+    return item[key] ?? item.puntuacion ?? item.goles ?? item.asistencias;
+  }
 }

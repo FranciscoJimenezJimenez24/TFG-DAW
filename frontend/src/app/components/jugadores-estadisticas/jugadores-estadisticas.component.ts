@@ -169,16 +169,12 @@ export class JugadoresEstadisticasComponent {
       .pipe(map(data => Array.isArray(data) ? data : []))
       .subscribe(data => {
         this.jugadores = data
-        this.jugadores.forEach((jugador: any) => {
-          // console.log(jugador);
-          
+        this.jugadores.forEach((jugador: any) => {          
           this.equiposService.getEquipoByEscudo(jugador.equipoEscudo)
             .subscribe((equipo: Equipo) => {
               this.equipos.push(equipo);
             });
-        });
-        // console.log(this.equipos);
-        
+        });        
       });
   }
 

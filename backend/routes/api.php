@@ -34,7 +34,7 @@ Route::get('ligas/{id}', [LigaController::class, 'getLiga']);
 // Equipos
 Route::get('equipos/numTodos', [EquipoController::class, 'getNumeroEquipos']);
 Route::get('equipos/liga/{id}', [EquipoController::class, 'getEquiposLiga']);
-Route::get('equipos/escudo/{escudo}', [EquipoController::class, 'getEquipoByEscudo']);
+Route::get('equipos/escudo', [EquipoController::class, 'getEquipoByEscudo']);
 Route::get('equipos/{id}', [EquipoController::class, 'getEquipo']);
 Route::get('equipos', [EquipoController::class, 'getEquipos']);
 
