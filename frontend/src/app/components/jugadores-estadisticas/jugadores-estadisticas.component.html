@@ -1,27 +1,42 @@
 <div class="container mt-4">
-  <h2 class="mb-4">{{ titulo }}</h2>
-  
-  <table class="table table-hover">
-    <thead class="table-dark">
-      <tr>
-        <th>#</th>
-        <th>Jugador</th>
-        <th>Equipo</th>
-        <th class="text-end">{{ titulo }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let jugador of jugadores; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ jugador.jugador || jugador.nombre }}</td>
-        <td>
-          <img [src]="jugador.equipoEscudo" width="24" height="32" class="me-2">
-          {{ jugador.equipo }}
-        </td>
-        <td class="text-end fw-bold">
-          {{ getValorMostrar(jugador) }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <h2 class="mb-4">{{ titulo }}</h2>
+
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Jugador</th>
+                <th>Equipo</th>
+                <th class="text-end">{{ titulo }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="titulo !== 'Puntuaciones'">
+                <tr *ngFor="let jugador of jugadores; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ jugador.jugador || jugador.nombre }}</td>
+                    <td>
+                        <img [src]="jugador.equipoEscudo" width="24" height="32" class="me-2">
+                        <!-- {{ equipos[i].nombre }} -->
+                    </td>
+                    <td class="text-end fw-bold">
+                        {{ getValorMostrar(jugador) }}
+                    </td>
+                </tr>
+            </ng-container>
+            <ng-container *ngIf="titulo === 'Puntuaciones'">
+                <tr *ngFor="let jugador of equiposPuntuacionesMap.entries(); let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ jugadoresPuntuaciones[i].nombre }}</td>
+                    <td>
+                        <img [src]="jugador[1].escudo" width="24" height="32" class="me-2">
+                        {{ jugador[1].nombre }}
+                    </td>
+                    <td class="text-end fw-bold">
+                        {{ getValorMostrar(jugador[0]) }}
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
 </div>

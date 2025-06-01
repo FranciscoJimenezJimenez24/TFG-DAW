@@ -30,4 +30,14 @@ class EquipoController extends Controller
         $numEquipos = Equipo::count();
         return response()->json($numEquipos, 200);
     }
+
+    public function getEquipoByEscudo($escudo)
+    {
+        $equipo = Equipo::where('escudo', $escudo)->first();
+        if ($equipo) {
+            return response()->json($equipo, 200);
+        } else {
+            return response()->json(['message' => 'Equipo no encontrado'], 404);
+        }
+    }
 }

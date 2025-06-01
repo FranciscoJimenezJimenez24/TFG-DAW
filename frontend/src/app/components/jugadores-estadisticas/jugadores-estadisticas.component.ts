@@ -16,11 +16,14 @@ import { Entradas } from '../../interfaces/entradas';
 import { Faltas } from '../../interfaces/faltas';
 import { Despejes } from '../../interfaces/despejes';
 import { DuelosGanados } from '../../interfaces/duelos-ganados';
-import { map } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
+import { Jugador } from '../../interfaces/jugador';
+import { Equipo } from '../../interfaces/equipo';
+import { EquiposService } from '../../services/equipos.service';
 
-type Estadistica = 
-  Puntuacion | 
-  Goleador | 
+type Estadistica =
+  Puntuacion |
+  Goleador |
   Asistidor |
   TarjetasAmarillas |
   TarjetasRojas |
@@ -46,11 +49,15 @@ export class JugadoresEstadisticasComponent {
   jugadores: any[] = [];
   titulo: string = '';
   propiedadMostrar: string = '';
+  equiposPuntuacionesMap: Map<Puntuacion, Equipo> = new Map();
+  jugadoresPuntuaciones: Jugador[] = [];
+  equipos: Equipo[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private jugadoresService: JugadoresService,
-    private puntuacionesService: PuntuacionesService
+    private puntuacionesService: PuntuacionesService,
+    private equiposService: EquiposService
   ) {
     this.route.queryParams.subscribe(params => {
       this.tipoEstadistica = params['tipo'];
@@ -60,97 +67,96 @@ export class JugadoresEstadisticasComponent {
   }
 
   loadData() {
-    switch(this.tipoEstadistica) {
+    switch (this.tipoEstadistica) {
       case 'puntuacion':
         this.titulo = 'Puntuaciones';
         this.propiedadMostrar = 'puntuacion';
         this.puntuacionesService.getMejoresPuntuacionesTemporada(this.temporadaId)
           .pipe(map(data => Array.isArray(data) ? data : []))
-          .subscribe(data => this.jugadores = data);
+          .subscribe(data => {
+            this.jugadores = data
+            this.jugadores.forEach((jugador: any) => {
+              this.equiposService.getEquipo(jugador.equipo_id)
+                .subscribe((equipo: Equipo) => {
+                  this.equiposPuntuacionesMap.set(jugador, equipo);
+                });
+              this.jugadoresService.getJugador(jugador.jugador_id)
+                .subscribe((jugadorData: Jugador) => {
+                  this.jugadoresPuntuaciones.push(jugadorData);
+                });
+            });
+          });
         break;
       case 'goles':
         this.titulo = 'Goleadores';
         this.propiedadMostrar = 'goles';
-        this.jugadoresService.getMaximosGoleadoresTemporada(this.temporadaId)
-          .pipe(map(data => Array.isArray(data) ? data : []))
-          .subscribe(data => this.jugadores = data);
+        this.cargarJugadores(this.jugadoresService.getMaximosGoleadoresTemporada(this.temporadaId));
         break;
-      case 'asistidores':
+
+      case 'asistencias':
         this.titulo = 'Asistidores';
         this.propiedadMostrar = 'asistencias';
-        this.jugadoresService.getMaximosAsistidoresTemporada(this.temporadaId)
-          .pipe(map(data => Array.isArray(data) ? data : []))
-          .subscribe(data => this.jugadores = data);
+        this.cargarJugadores(this.jugadoresService.getMaximosAsistidoresTemporada(this.temporadaId));
         break;
-      case 'tarjetas-amarillas':
+
+      case 'tarjetasAmarillas':
         this.titulo = 'Tarjetas Amarillas';
         this.propiedadMostrar = 'tarjetasAmarillas';
-        this.jugadoresService.getMaximosTarjetasAmarillasTemporada(this.temporadaId)
-          .pipe(map(data => Array.isArray(data) ? data : []))
-          .subscribe(data => this.jugadores = data);
+        this.cargarJugadores(this.jugadoresService.getMaximosTarjetasAmarillasTemporada(this.temporadaId));
         break;
-      case 'tarjetas-rojas':
+
+      case 'tarjetasRojas':
         this.titulo = 'Tarjetas Rojas';
         this.propiedadMostrar = 'tarjetasRojas';
-        this.jugadoresService.getMaximosTarjetasRojasTemporada(this.temporadaId)
-          .pipe(map(data => Array.isArray(data) ? data : []))
-          .subscribe(data => this.jugadores = data);
+        this.cargarJugadores(this.jugadoresService.getMaximosTarjetasRojasTemporada(this.temporadaId));
         break;
+
       case 'paradas':
         this.titulo = 'Paradas';
         this.propiedadMostrar = 'paradas';
-        this.jugadoresService.getMaximasParadasTemporada(this.temporadaId)
-          .pipe(map(data => Array.isArray(data) ? data : []))
-          .subscribe(data => this.jugadores = data);
+        this.cargarJugadores(this.jugadoresService.getMaximasParadasTemporada(this.temporadaId));
         break;
+
       case 'intercepciones':
         this.titulo = 'Intercepciones';
         this.propiedadMostrar = 'intercepciones';
-        this.jugadoresService.getMaximasIntercepcionesTemporada(this.temporadaId)
-          .pipe(map(data => Array.isArray(data) ? data : []))
-          .subscribe(data => this.jugadores = data);
+        this.cargarJugadores(this.jugadoresService.getMaximasIntercepcionesTemporada(this.temporadaId));
         break;
-      case 'pases-completos':
+
+      case 'pasesCompletos':
         this.titulo = 'Pases Completos';
         this.propiedadMostrar = 'pasesCompletos';
-        this.jugadoresService.getMaximosPasesCompletosTemporada(this.temporadaId)
-          .pipe(map(data => Array.isArray(data) ? data : []))
-          .subscribe(data => this.jugadores = data);
+        this.cargarJugadores(this.jugadoresService.getMaximosPasesCompletosTemporada(this.temporadaId));
         break;
-      case 'pases-totales':
+
+      case 'pasesTotales':
         this.titulo = 'Pases Totales';
         this.propiedadMostrar = 'pasesTotales';
-        this.jugadoresService.getMaximosPasesTotalesTemporada(this.temporadaId)
-          .pipe(map(data => Array.isArray(data) ? data : []))
-          .subscribe(data => this.jugadores = data);
+        this.cargarJugadores(this.jugadoresService.getMaximosPasesTotalesTemporada(this.temporadaId));
         break;
+
       case 'entradas':
         this.titulo = 'Entradas';
         this.propiedadMostrar = 'entradas';
-        this.jugadoresService.getMaximosEntradasTemporada(this.temporadaId)
-          .pipe(map(data => Array.isArray(data) ? data : []))
-          .subscribe(data => this.jugadores = data);
+        this.cargarJugadores(this.jugadoresService.getMaximosEntradasTemporada(this.temporadaId));
         break;
+
       case 'faltas':
         this.titulo = 'Faltas';
         this.propiedadMostrar = 'faltas';
-        this.jugadoresService.getMaximasFaltasTemporada(this.temporadaId)
-          .pipe(map(data => Array.isArray(data) ? data : []))
-          .subscribe(data => this.jugadores = data);
+        this.cargarJugadores(this.jugadoresService.getMaximasFaltasTemporada(this.temporadaId));
         break;
+
       case 'despejes':
         this.titulo = 'Despejes';
         this.propiedadMostrar = 'despejes';
-        this.jugadoresService.getMaximosDespejesTemporada(this.temporadaId)
-          .pipe(map(data => Array.isArray(data) ? data : []))
-          .subscribe(data => this.jugadores = data);
+        this.cargarJugadores(this.jugadoresService.getMaximosDespejesTemporada(this.temporadaId));
         break;
-      case 'duelos-ganados':
+
+      case 'duelosGanados':
         this.titulo = 'Duelos Ganados';
         this.propiedadMostrar = 'duelosGanados';
-        this.jugadoresService.getMaximosDuelosGanadosTemporada(this.temporadaId)
-          .pipe(map(data => Array.isArray(data) ? data : []))
-          .subscribe(data => this.jugadores = data);
+        this.cargarJugadores(this.jugadoresService.getMaximosDuelosGanadosTemporada(this.temporadaId));
         break;
       default:
         this.titulo = 'Estadísticas';
@@ -158,8 +164,26 @@ export class JugadoresEstadisticasComponent {
     }
   }
 
+  cargarJugadores(observable: Observable<any>) {
+    observable
+      .pipe(map(data => Array.isArray(data) ? data : []))
+      .subscribe(data => {
+        this.jugadores = data
+        this.jugadores.forEach((jugador: any) => {
+          // console.log(jugador);
+          
+          this.equiposService.getEquipoByEscudo(jugador.equipoEscudo)
+            .subscribe((equipo: Equipo) => {
+              this.equipos.push(equipo);
+            });
+        });
+        // console.log(this.equipos);
+        
+      });
+  }
+
   getValorMostrar(jugador: any): number {
-    return jugador[this.propiedadMostrar] || 0;
+    return jugador[(this.propiedadMostrar).replace(/([A-Z])/g, "_$1").toLowerCase()] || 0;
   }
 
 }
