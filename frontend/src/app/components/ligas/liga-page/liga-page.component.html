@@ -99,14 +99,29 @@
 
     <!-- Últimos partidos -->
     <div class="mt-4">
-        <h5 class="text-center">Últimos Partidos</h5>
-        <div *ngFor="let group of getPartidosAgrupados(); let jornadaIndex = index">
-            <h6 class="text-primary">Jornada {{ jornadaIndex + 1 }} - {{ group.fecha | date: 'dd/MM/yyyy' }}</h6>
-            <div class="d-flex flex-wrap justify-content-center gap-2">
-                <app-card-partido *ngFor="let partido of group.partidos" [partido]="partido"
-                    [equipoLocal]="getEquipoById(partido.equipo_local_id)"
-                    [equipoVisitante]="getEquipoById(partido.equipo_visitante_id)">
-                </app-card-partido>
+        <h5 class="text-center">Partidos por Jornada</h5>
+
+        <!-- Selector de jornadas -->
+        <div class="text-center mb-3">
+            <select class="form-select w-auto mx-auto" (change)="onJornadaChange($event)" *ngIf="jornadas?.length">
+                <option *ngFor="let jornada of jornadas" [value]="jornada.id">
+                    Jornada {{ jornada.id }} - {{ jornada.fecha | date: 'dd/MM/yyyy' }}
+                </option>
+            </select>
+        </div>
+
+        <!-- Partidos de la jornada seleccionada -->
+        <div *ngIf="jornadaSeleccionada && partidosAgrupados.length">
+            <div *ngFor="let group of partidosAgrupados">
+                <div *ngIf="group.id === jornadaSeleccionada">
+                    <h6 class="text-primary">Jornada {{ group.id }} - {{ group.fecha | date: 'dd/MM/yyyy' }}</h6>
+                    <div class="d-flex flex-wrap justify-content-center gap-2">
+                        <app-card-partido *ngFor="let partido of group.partidos" [partido]="partido"
+                            [equipoLocal]="getEquipoById(partido.equipo_local_id)"
+                            [equipoVisitante]="getEquipoById(partido.equipo_visitante_id)">
+                        </app-card-partido>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -37,6 +37,10 @@ export class LigaPageComponent implements OnInit {
   tarjetasAmarillas: TarjetasAmarillas[] = [];
   tarjetasRojas: TarjetasRojas[] = [];
 
+  jornadas: { id: number, fecha: string }[] = [];
+  jornadaSeleccionada: number | null = null;
+  partidosAgrupados: { id: number, fecha: string, partidos: Partido[] }[] = [];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private ligasService: LigasService,
@@ -59,7 +63,7 @@ export class LigaPageComponent implements OnInit {
         this.getEquiposLiga();
         this.getTemporadas();
         return;
-      });    
+      });
   }
 
   getEquiposLiga() {
@@ -107,40 +111,52 @@ export class LigaPageComponent implements OnInit {
     }
   }
 
-
   getPartidos(idTemporada: number): void {
     if (!this.liga) return;
+    this.jornadaSeleccionada = null;
     this.partidosService.getPartidosLigasTemporadas(this.liga.id, idTemporada)
       .subscribe(partidos => {
-        // Ordenamos por fecha
         this.partidos = partidos.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
-        this.getPuntos();        
+        this.agruparPartidos();
+        this.getPuntos();
       });
   }
 
-  getPartidosAgrupados() {
-    const grouped: { fecha: string, partidos: Partido[] }[] = [];
+  agruparPartidos(): void {
+    this.partidosAgrupados = [];
 
-    this.partidos.forEach(partido => {
-      const fecha = new Date(partido.fecha).toISOString().split('T')[0]; // Normalizamos la fecha (YYYY-MM-DD)
-      const jornada = grouped.find(g => g.fecha === fecha);
+    this.partidos.forEach((partido) => {
+      const fecha = new Date(partido.fecha).toISOString().split('T')[0];
+      const jornada = this.partidosAgrupados.find(g => g.fecha === fecha);
 
       if (jornada) {
         jornada.partidos.push(partido);
       } else {
-        grouped.push({ fecha, partidos: [partido] });
+        this.partidosAgrupados.push({
+          id: this.partidosAgrupados.length + 1,
+          fecha,
+          partidos: [partido]
+        });
       }
     });
 
-    return grouped;
+    console.log('Partidos agrupados:', this.partidosAgrupados);
+    this.jornadas = this.partidosAgrupados.map(j => ({ id: j.id, fecha: j.fecha }));
+
+    if (this.partidosAgrupados.length > 0 && !this.jornadaSeleccionada) {
+      this.jornadaSeleccionada = this.partidosAgrupados[0].id;
+    }
   }
 
-
+  onJornadaChange(event: Event): void {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.jornadaSeleccionada = Number(selectedValue);
+  }
   getPuntos() {
     if (!this.liga) return;
     this.equipos.forEach(equipo => {
       this.puntos.set(equipo, 0);
-    });    
+    });
     this.partidos.forEach(partido => {
       const equipoLocal = this.equipos.find(equipo => equipo.id === partido.equipo_local_id);
       const equipoVisitante = this.equipos.find(equipo => equipo.id === partido.equipo_visitante_id);
