@@ -92,4 +92,10 @@ export class JugadoresService {
   getNumeroJugadores():Observable<number>{
     return this.http.get<number>(`http://127.0.0.1:8000/api/jugadores/numTodos`);
   }
+
+  getJugadorByNombre(nombre: string): Observable<Jugador> {
+    // Primero, extraer solo el nombre del archivo si es una URL completa
+    const nombreJugador = nombre.split('/').pop() || nombre;
+    return this.http.get<Jugador>(`http://127.0.0.1:8000/api/jugadores/nombre?nombre=${encodeURIComponent(nombreJugador)}`);
+  }
 }

@@ -56,6 +56,7 @@ Route::get('jugadores/tarjetas-amarillas', [JugadorController::class, 'getMaximo
 Route::get('jugadores/tarjetas-rojas', [JugadorController::class, 'getMaximosTarjetasRojasTemporadaLiga']);
 Route::get('jugadores/allGoles', [JugadorController::class, 'getAllGolesUltimaTemporada']);
 Route::get('jugadores/numTodos', [JugadorController::class, 'getNumeroJugadores']);
+Route::get('jugadores/nombre/{nombre}', [JugadorController::class, 'getJugadorByNombre']);
 Route::get('jugadores/equipos/{id}', [JugadorController::class, 'getJugadoresEquipo']);
 Route::get('/jugadores/{id}/estadisticas', [JugadorController::class, 'getEstadisticasJugador']);
 Route::get('jugadores/goleadores/temporada/{id}', [JugadorController::class, 'getMaximosGoleadoresTemporada']);

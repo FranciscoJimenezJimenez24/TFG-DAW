@@ -20,6 +20,7 @@ import { map, Observable, switchMap } from 'rxjs';
 import { Jugador } from '../../interfaces/jugador';
 import { Equipo } from '../../interfaces/equipo';
 import { EquiposService } from '../../services/equipos.service';
+import { Router } from '@angular/router';
 
 type Estadistica =
   Puntuacion |
@@ -44,6 +45,7 @@ type Estadistica =
 })
 export class JugadoresEstadisticasComponent {
 
+  players: Jugador[] = [];
   tipoEstadistica: string = '';
   temporadaId: number = 0;
   jugadores: any[] = [];
@@ -55,6 +57,7 @@ export class JugadoresEstadisticasComponent {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private jugadoresService: JugadoresService,
     private puntuacionesService: PuntuacionesService,
     private equiposService: EquiposService
@@ -169,17 +172,25 @@ export class JugadoresEstadisticasComponent {
       .pipe(map(data => Array.isArray(data) ? data : []))
       .subscribe(data => {
         this.jugadores = data
-        this.jugadores.forEach((jugador: any) => {          
+        this.jugadores.forEach((jugador: any) => {
           this.equiposService.getEquipoByEscudo(jugador.equipoEscudo)
             .subscribe((equipo: Equipo) => {
               this.equipos.push(equipo);
             });
-        });        
+          this.jugadoresService.getJugadorByNombre(jugador.jugadorNombre)
+            .subscribe((jugadorData: Jugador) => {
+              this.players.push(jugadorData);
+            });
+        });
       });
   }
 
   getValorMostrar(jugador: any): number {
     return jugador[(this.propiedadMostrar).replace(/([A-Z])/g, "_$1").toLowerCase()] || 0;
+  }
+
+  goToJugador(id: number) {
+    this.router.navigate(['/jugadores', id]);
   }
 
 }

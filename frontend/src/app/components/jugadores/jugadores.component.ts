@@ -17,9 +17,10 @@ import { Entradas } from '../../interfaces/entradas';
 import { Faltas } from '../../interfaces/faltas';
 import { Despejes } from '../../interfaces/despejes';
 import { DuelosGanados } from '../../interfaces/duelos-ganados';
-import { CommonModule } from '@angular/common';
+import { CommonModule, PlatformLocation } from '@angular/common';
 import { EquiposService } from '../../services/equipos.service';
 import { Router } from '@angular/router';
+import { Equipo } from '../../interfaces/equipo';
 @Component({
   selector: 'app-jugadores',
   standalone: true,
@@ -32,6 +33,7 @@ export class JugadoresComponent implements OnInit {
   temporadas: Temporada[] = [];
   temporadaSeleccionada: Temporada | null = null;
 
+  equipos: Equipo[] = [];
   jugadores: Jugador[] = [];
   puntuaciones: Puntuacion[] = [];
   maximosGoleadores: Goleador[] = [];
@@ -71,10 +73,16 @@ export class JugadoresComponent implements OnInit {
     private puntuacionesService: PuntuacionesService,
     private temporadasService: TemporadasService,
     private equiposService: EquiposService,
-    private router: Router) { }
+    private router: Router,
+    private platformLocation: PlatformLocation) { }
+
 
   ngOnInit(): void {
+    this.platformLocation.onPopState(() => {
+      window.location.reload();
+    });
     this.getTemporadas();
+    this.calculateItemsPerRow();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -166,7 +174,7 @@ export class JugadoresComponent implements OnInit {
       this.estadisticas[12].data = Array.isArray(duelosGanados) ? duelosGanados : []
 
       // Cargar jugadores para la tabla de puntuación
-      this.loadJugadoresForPuntuacion();
+      this.loadJugadoresForPuntuacion();      
     } catch (error) {
       console.error('Error loading statistics:', error);
     }
@@ -177,6 +185,12 @@ export class JugadoresComponent implements OnInit {
     this.estadisticas[0].data.forEach((puntuacion: any) => {
       this.jugadoresService.getJugador(puntuacion.jugador_id)
         .subscribe(jugador => this.jugadores.push(jugador));
+    });
+    this.jugadores.forEach(jugador => {
+      this.equiposService.getEquipo(jugador.equipo_id)
+        .subscribe(equipo => {
+          this.equipos.push(equipo);
+        });
     });
   }
 

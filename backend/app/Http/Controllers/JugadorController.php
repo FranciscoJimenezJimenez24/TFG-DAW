@@ -266,4 +266,14 @@ class JugadorController extends Controller
         $numJugadores = Jugador::count();
         return response()->json($numJugadores, 200);
     }
+
+    public function getJugadorByNombre($nombreJugador)
+    {
+        $jugador = Jugador::where('nombre', 'like', '%' . $nombreJugador . '%')->first();
+        if ($jugador) {
+            return response()->json($jugador, 200);
+        } else {
+            return response()->json(['message' => 'Jugador no encontrado'], 404);
+        }
+    }
 }
