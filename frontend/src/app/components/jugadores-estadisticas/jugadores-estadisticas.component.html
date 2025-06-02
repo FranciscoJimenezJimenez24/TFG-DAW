@@ -14,10 +14,8 @@
             <ng-container *ngIf="titulo !== 'Puntuaciones'">
                 <tr *ngFor="let jugador of jugadores; let i = index">
                     <td>{{ i + 1 }}</td>
-                    <td>
-                            {{ jugador.jugador || jugador.nombre }}
-                    </td>
-                    <td>
+                    <td (click)="goToJugador(players[i].id)">{{ jugador.jugador || jugador.nombre }}</td>
+                    <td (click)="goToEquipo(equipos[i].id)">
                         <img [src]="jugador.equipoEscudo" width="24" height="32" class="me-2">
                         {{ equipos[i].nombre }}
                     </td>
@@ -29,8 +27,8 @@
             <ng-container *ngIf="titulo === 'Puntuaciones'">
                 <tr *ngFor="let jugador of equiposPuntuacionesMap.entries(); let i = index">
                     <td>{{ i + 1 }}</td>
-                    <td>{{ jugadoresPuntuaciones[i].nombre }}</td>
-                    <td>
+                    <td (click)="goToJugador(jugadoresPuntuaciones[i].id)">{{ jugadoresPuntuaciones[i].nombre }}</td>
+                    <td (click)="goToEquipo(jugador[1].id)">
                         <img [src]="jugador[1].escudo" width="24" height="32" class="me-2">
                         {{ jugador[1].nombre }}
                     </td>

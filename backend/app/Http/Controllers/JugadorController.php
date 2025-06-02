@@ -269,11 +269,21 @@ class JugadorController extends Controller
 
     public function getJugadorByNombre($nombreJugador)
     {
-        $jugador = Jugador::where('nombre', 'like', '%' . $nombreJugador . '%')->first();
+        $nombreJugador = urldecode($nombreJugador);
+
+        // Normalizar el nombre: quitar espacios extras, puntos, etc.
+        $nombreNormalizado = trim(str_replace(['Dr.', 'Mr.', 'Mrs.', ' '], '', $nombreJugador));
+
+        // Buscar coincidencia sin importar mayúsculas/minúsculas
+        $jugador = Jugador::whereRaw(
+            'LOWER(REPLACE(nombre, " ", "")) LIKE ?',
+            ['%' . strtolower(str_replace(' ', '', $nombreNormalizado)) . '%']
+        )
+            ->first();
+
         if ($jugador) {
             return response()->json($jugador, 200);
-        } else {
-            return response()->json(['message' => 'Jugador no encontrado'], 404);
         }
+        return response()->json(['message' => 'Jugador no encontrado'], 404);
     }
 }

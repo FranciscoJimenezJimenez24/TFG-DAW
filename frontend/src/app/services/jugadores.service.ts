@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { Goleador } from '../interfaces/goleador';
 import { Asistidor } from '../interfaces/asistidor';
 import { TarjetasAmarillas } from '../interfaces/tarjetas-amarillas';
@@ -77,25 +77,32 @@ export class JugadoresService {
     return this.http.get<Jugador[]>(`http://127.0.0.1:8000/api/jugadores/equipos/${idEquipo}`);
   }
 
-  getJugador(idJugador:number):Observable<Jugador>{
+  getJugador(idJugador: number): Observable<Jugador> {
     return this.http.get<Jugador>(`http://127.0.0.1:8000/api/jugadores/${idJugador}`);
   }
 
-  getEstadisticasJugador(idJugador:number):Observable<EstadisticasJugador[]>{
+  getEstadisticasJugador(idJugador: number): Observable<EstadisticasJugador[]> {
     return this.http.get<EstadisticasJugador[]>(`http://127.0.0.1:8000/api/jugadores/${idJugador}/estadisticas`);
   }
 
-  getAllGolesUltimaTemporada():Observable<number>{
+  getAllGolesUltimaTemporada(): Observable<number> {
     return this.http.get<number>(`http://127.0.0.1:8000/api/jugadores/allGoles`);
   }
 
-  getNumeroJugadores():Observable<number>{
+  getNumeroJugadores(): Observable<number> {
     return this.http.get<number>(`http://127.0.0.1:8000/api/jugadores/numTodos`);
   }
 
-  getJugadorByNombre(nombre: string): Observable<Jugador> {
-    // Primero, extraer solo el nombre del archivo si es una URL completa
-    const nombreJugador = nombre.split('/').pop() || nombre;
-    return this.http.get<Jugador>(`http://127.0.0.1:8000/api/jugadores/nombre?nombre=${encodeURIComponent(nombreJugador)}`);
+  getJugadorByNombre(nombre: string): Observable<Jugador | null> {
+    // Primero limpiar el nombre de posibles URLs
+    const nombreLimpio = nombre.split('/').pop() || nombre;
+    // Codificar solo los caracteres especiales, no los espacios
+    const nombreJugador = encodeURIComponent(nombreLimpio).replace(/%20/g, ' ');
+    return this.http.get<Jugador>(`http://127.0.0.1:8000/jugadores/nombre/${nombreJugador}`).pipe(
+      catchError(error => {
+        console.error('Error buscando jugador:', nombreJugador, error);
+        return of(null); // Devuelve null si hay error
+      })
+    );
   }
 }

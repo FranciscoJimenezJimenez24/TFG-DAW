@@ -172,14 +172,15 @@ export class JugadoresEstadisticasComponent {
       .pipe(map(data => Array.isArray(data) ? data : []))
       .subscribe(data => {
         this.jugadores = data
+        
         this.jugadores.forEach((jugador: any) => {
+          this.jugadoresService.getJugadorByNombre(jugador.jugador)
+            .subscribe((jugadorData: Jugador | null) => {
+              this.players.push(jugadorData!);
+            });
           this.equiposService.getEquipoByEscudo(jugador.equipoEscudo)
             .subscribe((equipo: Equipo) => {
               this.equipos.push(equipo);
-            });
-          this.jugadoresService.getJugadorByNombre(jugador.jugadorNombre)
-            .subscribe((jugadorData: Jugador) => {
-              this.players.push(jugadorData);
             });
         });
       });
@@ -190,7 +191,14 @@ export class JugadoresEstadisticasComponent {
   }
 
   goToJugador(id: number) {
+    console.log(this.players);
+    
     this.router.navigate(['/jugadores', id]);
+  }
+
+  goToEquipo(id: number) {
+    console.log(this.equipos);
+    this.router.navigate(['/equipos', id]);
   }
 
 }
