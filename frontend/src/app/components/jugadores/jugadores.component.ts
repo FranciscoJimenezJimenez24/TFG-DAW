@@ -174,24 +174,37 @@ export class JugadoresComponent implements OnInit {
       this.estadisticas[12].data = Array.isArray(duelosGanados) ? duelosGanados : []
 
       // Cargar jugadores para la tabla de puntuación
-      this.loadJugadoresForPuntuacion();      
+      this.loadJugadoresForPuntuacion();
     } catch (error) {
       console.error('Error loading statistics:', error);
     }
   }
 
-  loadJugadoresForPuntuacion() {
+  async loadJugadoresForPuntuacion() {
     this.jugadores = [];
-    this.estadisticas[0].data.forEach((puntuacion: any) => {
-      this.jugadoresService.getJugador(puntuacion.jugador_id)
-        .subscribe(jugador => this.jugadores.push(jugador));
+    this.equipos = [];
+
+    // Crear un array de promesas para obtener los jugadores
+    const jugadoresPromises = this.estadisticas[0].data.map((puntuacion: Puntuacion) => {
+      return this.jugadoresService.getJugador(puntuacion.jugador_id).toPromise();
     });
-    this.jugadores.forEach(jugador => {
-      this.equiposService.getEquipo(jugador.equipo_id)
-        .subscribe(equipo => {
-          this.equipos.push(equipo);
-        });
-    });
+
+    try {
+      // Esperar a que todas las promesas se resuelvan
+      this.jugadores = (await Promise.all(jugadoresPromises)).filter((jugador): jugador is Jugador => jugador !== undefined);
+      console.log('Jugadores cargados:', this.jugadores);
+
+      // Crear un array de promesas para obtener los equipos
+      const equiposPromises = this.jugadores.map(jugador => {
+        return this.equiposService.getEquipo(jugador.equipo_id).toPromise();
+      });
+
+      this.equipos = (await Promise.all(equiposPromises)).filter((equipo): equipo is Equipo => equipo !== undefined);
+      console.log('Equipos cargados:', this.equipos);
+
+    } catch (error) {
+      console.error('Error cargando jugadores o equipos:', error);
+    }
   }
 
   verMas(estadisticaKey: string) {
