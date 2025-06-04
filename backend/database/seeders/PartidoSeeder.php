@@ -36,7 +36,6 @@ class PartidoSeeder extends Seeder
                         'Goles_Totales' => $golesTotales
                     ];
                 }
-
                 $partidos = [];
                 for ($i = 0; $i < count($equiposData); $i++) {
                     for ($j = $i + 1; $j < count($equiposData); $j++) {
@@ -54,7 +53,9 @@ class PartidoSeeder extends Seeder
                         ];
                     }
                 }
-
+                foreach ($equiposData as $equipoData) {
+                    $this->ajustarGolesTotales($equipoData, $partidos);
+                }
                 shuffle($partidos);
 
                 foreach ($partidos as &$partido) {

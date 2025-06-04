@@ -61,71 +61,130 @@ class JugadorSeeder extends Seeder
 
                         // Asignación de estadísticas basada en la posición
                         $goles = $asistencias = $tarjetas_amarillas = $tarjetas_rojas = $paradas = $intercepciones = $pases_completos = $pases_totales = $entradas = $faltas = $despejes = $duelos_ganados = 0;
-                        $factor_minutos = $minutos_jugados / 3420;
 
                         switch ($jugador->posicion) {
                             case 'Portero':
+                                $factor = $minutos_jugados / 3420;
+                                $jugo = $minutos_jugados > 10 ? 1 : (rand(0, 100) < ($minutos_jugados * 10) ? 1 : 0);
+                                
                                 $goles = 0;
-                                $asistencias = rand(0, round(1 * $factor_minutos));
-                                $tarjetas_amarillas = rand(0, round(2 * $factor_minutos));
-                                $tarjetas_rojas = rand(0, round(1 * $factor_minutos));
-                                $paradas = rand(20, round(150 * $factor_minutos));
-                                $intercepciones = rand(0, round(5 * $factor_minutos));
-                                $pases_completos = rand(100, round(300 * $factor_minutos));
-                                $pases_totales = $pases_completos + rand(0, 20);
-                                $entradas = rand(0, round(15 * $factor_minutos));
-                                $faltas = rand(0, round(15 * $factor_minutos));
-                                $despejes = rand(10, round(50 * $factor_minutos));
-                                $duelos_ganados = rand(0, round(10 * $factor_minutos));
+                                $asistencias = $jugo ? rand(0, max(1, round(1 * $factor))) : 0;
+                                $tarjetas_amarillas = $jugo ? rand(0, max(1, round(2 * $factor))) : 0;
+                                $tarjetas_rojas = rand(0, 100) < (5 * $factor) ? 1 : 0;
+                                $paradas = $jugo ? rand(
+                                    max(0, round(20 * $factor - 10)), 
+                                    round(150 * $factor)
+                                ) : 0;
+                                $intercepciones = $jugo ? rand(0, round(5 * $factor)) : 0;
+                                $pases_completos = $jugo ? rand(
+                                    max(0, round(100 * $factor - 50)), 
+                                    round(300 * $factor)
+                                ) : 0;
+                                $pases_totales = $jugo ? $pases_completos + rand(0, max(1, round(20 * $factor))) : 0;
+                                $entradas = $jugo ? rand(0, round(15 * $factor)) : 0;
+                                $faltas = $jugo ? rand(0, round(15 * $factor)) : 0;
+                                $despejes = $jugo ? rand(
+                                    max(0, round(10 * $factor - 5)), 
+                                    round(50 * $factor)
+                                ) : 0;
+                                $duelos_ganados = $jugo ? rand(0, round(10 * $factor)) : 0;
                                 break;
 
                             case 'Defensa':
-                                $goles = rand(0, round(5 * $factor_minutos));
-                                $asistencias = rand(0, round(5 * $factor_minutos));
-                                $tarjetas_amarillas = rand(0, round(15 * $factor_minutos));
-                                $tarjetas_rojas = rand(0, round(3 * $factor_minutos));
+                                $factor = $minutos_jugados / 3420;
+                                $jugo = $minutos_jugados > 10 ? 1 : (rand(0, 100) < ($minutos_jugados * 10) ? 1 : 0);
+                                
+                                $goles = $jugo ? rand(0, round(5 * $factor)) : 0;
+                                $asistencias = $jugo ? rand(0, round(5 * $factor)) : 0;
+                                $tarjetas_amarillas = $jugo ? rand(0, round(15 * $factor)) : 0;
+                                $tarjetas_rojas = rand(0, 100) < (3 * $factor) ? 1 : 0;
                                 $paradas = 0;
-                                $intercepciones = rand(50, round(150 * $factor_minutos));
-                                $pases_completos = rand(300, round(800 * $factor_minutos));
-                                $pases_totales = $pases_completos + rand(10, 50);
-                                $entradas = rand(20, round(160 * $factor_minutos));
-                                $faltas = rand(10, round(90 * $factor_minutos));
-                                $despejes = rand(50, round(150 * $factor_minutos));
-                                $duelos_ganados = rand(150, round(250 * $factor_minutos));
+                                $intercepciones = $jugo ? rand(
+                                    max(0, round(50 * $factor - 25)), 
+                                    round(150 * $factor)
+                                ) : 0;
+                                $pases_completos = $jugo ? rand(
+                                    max(0, round(300 * $factor - 150)), 
+                                    round(800 * $factor)
+                                ) : 0;
+                                $pases_totales = $jugo ? $pases_completos + rand(10, round(50 * $factor)) : 0;
+                                $entradas = $jugo ? rand(
+                                    max(0, round(20 * $factor - 10)), 
+                                    round(160 * $factor)
+                                ) : 0;
+                                $faltas = $jugo ? rand(
+                                    max(0, round(10 * $factor - 5)), 
+                                    round(90 * $factor)
+                                ) : 0;
+                                $despejes = $jugo ? rand(
+                                    max(0, round(50 * $factor - 25)), 
+                                    round(150 * $factor)
+                                ) : 0;
+                                $duelos_ganados = $jugo ? rand(
+                                    max(0, round(150 * $factor - 75)), 
+                                    round(250 * $factor)
+                                ) : 0;
                                 break;
 
                             case 'Centrocampista':
-                                $goles = rand(0, round(15 * $factor_minutos));
-                                $asistencias = rand(0, round(20 * $factor_minutos));
-                                $tarjetas_amarillas = rand(0, round(10 * $factor_minutos));
-                                $tarjetas_rojas = rand(0, round(2 * $factor_minutos));
+                                $factor = $minutos_jugados / 3420;
+                                $jugo = $minutos_jugados > 10 ? 1 : (rand(0, 100) < ($minutos_jugados * 10) ? 1 : 0);
+                                
+                                $goles = $jugo ? rand(0, round(15 * $factor)) : 0;
+                                $asistencias = $jugo ? rand(0, round(20 * $factor)) : 0;
+                                $tarjetas_amarillas = $jugo ? rand(0, round(10 * $factor)) : 0;
+                                $tarjetas_rojas = rand(0, 100) < (2 * $factor) ? 1 : 0;
                                 $paradas = 0;
-                                $intercepciones = rand(30, round(100 * $factor_minutos));
-                                $pases_completos = rand(400, round(1000 * $factor_minutos));
-                                $pases_totales = $pases_completos + rand(20, 60);
-                                $entradas = rand(30, round(180 * $factor_minutos));
-                                $faltas = rand(15, round(100 * $factor_minutos));
-                                $despejes = rand(10, round(50 * $factor_minutos));
-                                $duelos_ganados = rand(200, round(350 * $factor_minutos));
+                                $intercepciones = $jugo ? rand(
+                                    max(0, round(30 * $factor - 15)), 
+                                    round(100 * $factor)
+                                ) : 0;
+                                $pases_completos = $jugo ? rand(
+                                    max(0, round(400 * $factor - 200)), 
+                                    round(1000 * $factor)
+                                ) : 0;
+                                $pases_totales = $jugo ? $pases_completos + rand(20, round(60 * $factor)) : 0;
+                                $entradas = $jugo ? rand(
+                                    max(0, round(30 * $factor - 15)), 
+                                    round(180 * $factor)
+                                ) : 0;
+                                $faltas = $jugo ? rand(
+                                    max(0, round(15 * $factor - 7)), 
+                                    round(100 * $factor)
+                                ) : 0;
+                                $despejes = $jugo ? rand(0, round(50 * $factor)) : 0;
+                                $duelos_ganados = $jugo ? rand(
+                                    max(0, round(200 * $factor - 100)), 
+                                    round(350 * $factor)
+                                ) : 0;
                                 break;
 
                             case 'Delantero':
-                                $goles = rand(0, round(40 * $factor_minutos));
-                                $asistencias = rand(0, round(15 * $factor_minutos));
-                                $tarjetas_amarillas = rand(0, round(5 * $factor_minutos));
-                                $tarjetas_rojas = rand(0, round(1 * $factor_minutos));
+                                $factor = $minutos_jugados / 3420;
+                                $jugo = $minutos_jugados > 10 ? 1 : (rand(0, 100) < ($minutos_jugados * 10) ? 1 : 0);
+                                
+                                $goles = $jugo ? rand(0, round(40 * $factor)) : 0;
+                                $asistencias = $jugo ? rand(0, round(15 * $factor)) : 0;
+                                $tarjetas_amarillas = $jugo ? rand(0, round(5 * $factor)) : 0;
+                                $tarjetas_rojas = rand(0, 100) < (1 * $factor) ? 1 : 0;
                                 $paradas = 0;
-                                $intercepciones = rand(2, round(10 * $factor_minutos));
-                                $pases_completos = rand(200, round(600 * $factor_minutos));
-                                $pases_totales = $pases_completos + rand(10, 40);
-                                $entradas = rand(0, round(80 * $factor_minutos));
-                                $faltas = rand(5, round(60 * $factor_minutos));
-                                $despejes = rand(2, round(10 * $factor_minutos));
-                                $duelos_ganados = rand(50, round(150 * $factor_minutos));
+                                $intercepciones = $jugo ? rand(0, round(10 * $factor)) : 0;
+                                $pases_completos = $jugo ? rand(
+                                    max(0, round(200 * $factor - 100)), 
+                                    round(600 * $factor)
+                                ) : 0;
+                                $pases_totales = $jugo ? $pases_completos + rand(10, round(40 * $factor)) : 0;
+                                $entradas = $jugo ? rand(0, round(80 * $factor)) : 0;
+                                $faltas = $jugo ? rand(0, round(60 * $factor)) : 0;
+                                $despejes = $jugo ? rand(0, round(10 * $factor)) : 0;
+                                $duelos_ganados = $jugo ? rand(
+                                    max(0, round(50 * $factor - 25)), 
+                                    round(150 * $factor)
+                                ) : 0;
                                 break;
                         }
 
-                        EstadisticasJugador::create([
+                        $estadistica = EstadisticasJugador::create([
                             'jugador_id' => $jugador->id,
                             'temporada_id' => $temporada->id,
                             'goles' => $goles,
@@ -142,6 +201,20 @@ class JugadorSeeder extends Seeder
                             'despejes' => $despejes,
                             'duelos_ganados' => $duelos_ganados,
                         ]);
+
+                        $estadisticasEquipo[] = $estadistica->toArray();
+                    }
+                    $golesEquipo = array_sum(array_column($estadisticasEquipo, 'goles'));
+                    $asistenciasTotales = array_sum(array_column($estadisticasEquipo, 'asistencias'));
+
+                    if ($asistenciasTotales > $golesEquipo) {
+                        $factorReduccion = $golesEquipo / max(1, $asistenciasTotales);
+                        foreach ($estadisticasEquipo as &$estadistica) {
+                            EstadisticasJugador::where('id', $estadistica['id'])
+                                ->update([
+                                    'asistencias' => round($estadistica['asistencias'] * $factorReduccion)
+                                ]);
+                        }
                     }
                 }
             }
@@ -154,29 +227,29 @@ class JugadorSeeder extends Seeder
         // Extraer los valores de la formación
         list($numDefensas, $numCentros, $numDelanteros) = str_split($formacion);
 
-        // Minutos totales por línea
-        $minutosPorLinea = [
-            'porteros' => 3420,
-            'defensas' => $numDefensas * 3420,
-            'centrocampistas' => $numCentros * 3420,
-            'delanteros' => $numDelanteros * 3420
-        ];
+        // Calcular número base de jugadores por posición según formación
+        $basePorteros = 2; // Mínimo 2 porteros
+        $baseDefensas = $numDefensas * 2;
+        $baseCentros = $numCentros * 2;
+        $baseDelanteros = $numDelanteros * 2;
 
-        // Repartir porteros (1 a 3 porteros)
-        $numPorteros = rand(1, 3);
-        $porteros = array_fill(0, $numPorteros, 0); // Inicializar array de porteros
+        // Añadir 3 jugadores extra (para llegar a 25)
+        $extra = 3;
 
-        // Repartir defensas
-        $numDefensasTotal = rand($numDefensas, $numDefensas + 3); // Ajustar según necesidades
-        $defensas = array_fill(0, $numDefensasTotal, 0); // Inicializar array de defensas
+        // Distribuir los extras aleatoriamente entre posiciones
+        $posicionesExtra = ['defensas', 'centrocampistas', 'delanteros'];
+        $distribucionExtra = array_fill_keys($posicionesExtra, 0);
 
-        // Repartir centrocampistas
-        $numCentrocampistasTotal = rand($numCentros, $numCentros + 3); // Ajustar según necesidades
-        $centrocampistas = array_fill(0, $numCentrocampistasTotal, 0); // Inicializar array de centrocampistas
+        for ($i = 0; $i < $extra; $i++) {
+            $pos = $posicionesExtra[array_rand($posicionesExtra)];
+            $distribucionExtra[$pos]++;
+        }
 
-        // Repartir delanteros
-        $numDelanterosTotal = rand($numDelanteros, $numDelanteros + 2); // Ajustar según necesidades
-        $delanteros = array_fill(0, $numDelanterosTotal, 0); // Inicializar array de delanteros
+        // Crear arrays de jugadores
+        $porteros = array_fill(0, $basePorteros, 0);
+        $defensas = array_fill(0, $baseDefensas + $distribucionExtra['defensas'], 0);
+        $centrocampistas = array_fill(0, $baseCentros + $distribucionExtra['centrocampistas'], 0);
+        $delanteros = array_fill(0, $baseDelanteros + $distribucionExtra['delanteros'], 0);
 
         return [
             'formacion' => $formacion,
@@ -231,19 +304,35 @@ class JugadorSeeder extends Seeder
     {
         $minutos = array_fill(0, $cantidad, 0);
 
-        // Distribuir minutos de forma aleatoria
+        // Primero asignar minutos base a todos
+        $minBase = min(500, floor($totalMinutos / $cantidad));
         for ($i = 0; $i < $cantidad; $i++) {
-            $minutos[$i] = rand(0, min(3420, $totalMinutos - ($cantidad - $i - 1)));
-            $totalMinutos -= $minutos[$i];
+            $minutos[$i] = $minBase;
+            $totalMinutos -= $minBase;
         }
 
-        // Ajustar si queda alguna diferencia por redondeos
+        // Distribuir el resto favoreciendo a algunos jugadores
         while ($totalMinutos > 0) {
-            $indice = array_rand($minutos);
-            if ($minutos[$indice] < 3420) {
-                $incremento = min(rand(1, 100), $totalMinutos, 3420 - $minutos[$indice]);
-                $minutos[$indice] += $incremento;
-                $totalMinutos -= $incremento;
+            $indice = rand(0, $cantidad - 1);
+            $asignar = rand(100, 500);
+            $asignar = min($asignar, $totalMinutos, 3420 - $minutos[$indice]);
+
+            $minutos[$indice] += $asignar;
+            $totalMinutos -= $asignar;
+        }
+
+        // Asegurar que al menos 2-3 jugadores tengan muchos minutos
+        for ($i = 0; $i < min(3, $cantidad); $i++) {
+            if ($minutos[$i] < 2500) {
+                $necesario = 2500 - $minutos[$i];
+                $donar = rand(0, $cantidad - 1);
+                $puedeDonar = $minutos[$donar] - 500;
+
+                if ($puedeDonar > 0) {
+                    $transferir = min($necesario, $puedeDonar);
+                    $minutos[$i] += $transferir;
+                    $minutos[$donar] -= $transferir;
+                }
             }
         }
 
