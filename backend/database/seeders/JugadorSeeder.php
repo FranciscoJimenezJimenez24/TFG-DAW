@@ -130,8 +130,8 @@ class JugadorSeeder extends Seeder
                                 $factor = $minutos_jugados / 3420;
                                 $jugo = $minutos_jugados > 10 ? 1 : (rand(0, 100) < ($minutos_jugados * 10) ? 1 : 0);
                                 
-                                $goles = $jugo ? rand(0, round(15 * $factor)) : 0;
-                                $asistencias = $jugo ? rand(0, round(20 * $factor)) : 0;
+                                $goles = $jugo ? rand(0, round(8 * $factor)) : 0;
+                                $asistencias = $jugo ? rand(0, round(12 * $factor)) : 0;
                                 $tarjetas_amarillas = $jugo ? rand(0, round(10 * $factor)) : 0;
                                 $tarjetas_rojas = rand(0, 100) < (2 * $factor) ? 1 : 0;
                                 $paradas = 0;
@@ -163,8 +163,8 @@ class JugadorSeeder extends Seeder
                                 $factor = $minutos_jugados / 3420;
                                 $jugo = $minutos_jugados > 10 ? 1 : (rand(0, 100) < ($minutos_jugados * 10) ? 1 : 0);
                                 
-                                $goles = $jugo ? rand(0, round(40 * $factor)) : 0;
-                                $asistencias = $jugo ? rand(0, round(15 * $factor)) : 0;
+                                $goles = $jugo ? rand(0, round(25 * $factor)) : 0;
+                                $asistencias = $jugo ? rand(0, round(10 * $factor)) : 0;
                                 $tarjetas_amarillas = $jugo ? rand(0, round(5 * $factor)) : 0;
                                 $tarjetas_rojas = rand(0, 100) < (1 * $factor) ? 1 : 0;
                                 $paradas = 0;

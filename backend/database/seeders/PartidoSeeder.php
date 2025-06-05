@@ -6,6 +6,7 @@ use App\Models\Equipo;
 use App\Models\Partido;
 use App\Models\Temporada;
 use DateTime;
+use Exception;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -21,9 +22,12 @@ class PartidoSeeder extends Seeder
 
         foreach ($ligas as $liga) {
             $equipos = Equipo::where('liga_id', $liga->id)->get();
+            $numEquipos = count($equipos);
 
             foreach ($temporadas as $temporada) {
                 $equiposData = [];
+
+                // 1. Obtener goles totales por equipo
                 foreach ($equipos as $equipo) {
                     $golesTotales = DB::table('estadisticas_jugador')
                         ->join('jugadores', 'estadisticas_jugador.jugador_id', '=', 'jugadores.id')
@@ -36,75 +40,62 @@ class PartidoSeeder extends Seeder
                         'Goles_Totales' => $golesTotales
                     ];
                 }
+
+                // 2. Generar todos los emparejamientos posibles (ida y vuelta)
                 $partidos = [];
-                for ($i = 0; $i < count($equiposData); $i++) {
-                    for ($j = $i + 1; $j < count($equiposData); $j++) {
-                        $partidos[] = [
-                            'local' => $equiposData[$i],
-                            'visitante' => $equiposData[$j],
-                            'goles_local' => 0,
-                            'goles_visitante' => 0
-                        ];
-                        $partidos[] = [
-                            'local' => $equiposData[$j],
-                            'visitante' => $equiposData[$i],
-                            'goles_local' => 0,
-                            'goles_visitante' => 0
-                        ];
+                for ($i = 0; $i < $numEquipos; $i++) {
+                    for ($j = 0; $j < $numEquipos; $j++) {
+                        if ($i != $j) { // Un equipo no juega contra sí mismo
+                            $partidos[] = [
+                                'local' => $equiposData[$i],
+                                'visitante' => $equiposData[$j],
+                                'goles_local' => 0,
+                                'goles_visitante' => 0
+                            ];
+                        }
                     }
                 }
-                foreach ($equiposData as $equipoData) {
-                    $this->ajustarGolesTotales($equipoData, $partidos);
-                }
-                shuffle($partidos);
 
+                // 3. Asignar goles iniciales manteniendo el total
                 foreach ($partidos as &$partido) {
-                    $equipoLocal = $partido['local'];
-                    $equipoVisitante = $partido['visitante'];
-                    $partido['goles_local'] = $this->generarGoles($equipoLocal['Goles_Totales']);
-                    $partido['goles_visitante'] = $this->generarGoles($equipoVisitante['Goles_Totales']);
+                    $partido['goles_local'] = $this->generarGolesProporcionales(
+                        $partido['local']['Goles_Totales'],
+                        $partido['local']['Equipo']->id,
+                        $partido['visitante']['Equipo']->id,
+                        $partidos
+                    );
+
+                    $partido['goles_visitante'] = $this->generarGolesProporcionales(
+                        $partido['visitante']['Goles_Totales'],
+                        $partido['visitante']['Equipo']->id,
+                        $partido['local']['Equipo']->id,
+                        $partidos
+                    );
                 }
                 unset($partido);
 
-                $fecha_inicio = new DateTime(substr($temporada->nombre, -9, 4) . "-08-08");
-                $fechas_disponibles = [];
-                for ($i = 0; $i < 38; $i++) {
-                    $fechas_disponibles[] = clone $fecha_inicio;
-                    $fecha_inicio->modify("+7 days");
+                // 4. Ajuste fino para igualar exactamente los goles
+                foreach ($equiposData as $equipoData) {
+                    $this->ajustePrecisoGoles($equipoData, $partidos);
                 }
 
-                $jornadas = [];
-                $equiposUsados = [];
-                foreach ($fechas_disponibles as $fecha) {
-                    $jornada = [];
-                    $equiposUsados = [];
-                    foreach ($partidos as $key => $partido) {
-                        if (!in_array($partido['local']['Equipo']->id, $equiposUsados) && !in_array($partido['visitante']['Equipo']->id, $equiposUsados)) {
-                            $jornada[] = $partido;
-                            $equiposUsados[] = $partido['local']['Equipo']->id;
-                            $equiposUsados[] = $partido['visitante']['Equipo']->id;
-                            unset($partidos[$key]);
-                        }
-                        if (count($jornada) == 10) {
-                            break;
-                        }
-                    }
-                    $jornadas[] = $jornada;
-                }
+                // 5. Organizar en jornadas
+                $fechas_disponibles = $this->generarFechasTemporada($temporada);
+                // En tu método run(), después de generar las jornadas:
+                $jornadas = $this->distribuirEnJornadas($partidos, $numEquipos);
 
+                // 6. Crear partidos en la base de datos
                 foreach ($jornadas as $i => $jornada) {
                     foreach ($jornada as $partido) {
-                        if (isset($partido['local']['Equipo']) && isset($partido['visitante']['Equipo'])) {
-                            Partido::create([
-                                'temporada_id' => $temporada->id,
-                                'liga_id' => $liga->id,
-                                'equipo_local_id' => $partido['local']['Equipo']->id,
-                                'equipo_visitante_id' => $partido['visitante']['Equipo']->id,
-                                'goles_local' => $partido['goles_local'],
-                                'goles_visitante' => $partido['goles_visitante'],
-                                'fecha' => $fechas_disponibles[$i]->format('Y-m-d'),
-                            ]);
-                        }
+                        Partido::create([
+                            'temporada_id' => $temporada->id,
+                            'liga_id' => $liga->id,
+                            'equipo_local_id' => $partido['local']['Equipo']->id,
+                            'equipo_visitante_id' => $partido['visitante']['Equipo']->id,
+                            'goles_local' => $partido['goles_local'],
+                            'goles_visitante' => $partido['goles_visitante'],
+                            'fecha' => $fechas_disponibles[$i]->format('Y-m-d'),
+                        ]);
                     }
                 }
             }
@@ -112,86 +103,207 @@ class PartidoSeeder extends Seeder
     }
 
     /**
-     * Genera goles de manera probabilística basado en el total.
+     * Genera goles proporcionales al potencial ofensivo del equipo
      */
-    private function generarGoles($golesTotales)
+    private function generarGolesProporcionales($golesTotalesEquipo, $equipoId, $rivalId, $partidos)
     {
-        $probabilidad = rand(0, 100);
+        // Calcular partidos restantes donde el equipo puede marcar
+        $partidosRestantes = array_filter($partidos, function ($p) use ($equipoId) {
+            return (!isset($p['goles_local_final']) &&
+                (isset($p['local']['Equipo']->id) &&
+                    ($p['local']['Equipo']->id == $equipoId)));
+        });
 
-        if ($golesTotales < 50) {
-            if ($probabilidad < 50)
-                return 0;
-            if ($probabilidad < 80)
-                return 1;
-            if ($probabilidad < 95)
-                return 2;
-            return rand(3, 5);
-        } else {
-            if ($probabilidad < 30)
-                return 0;
-            if ($probabilidad < 60)
-                return 1;
-            if ($probabilidad < 85)
-                return 2;
-            return rand(3, 5);
+        $partidosJugados = count($partidos) - count($partidosRestantes);
+        $golesRestantes = max(0, $golesTotalesEquipo - $this->sumarGolesEquipo($partidos, $equipoId));
+
+        if (count($partidosRestantes) == 0) {
+            return 0;
         }
+
+        // Distribución proporcional
+        $golesBase = floor($golesRestantes / count($partidosRestantes));
+        $extra = rand(0, $golesRestantes % count($partidosRestantes));
+
+        return min(5, $golesBase + ($extra > 0 ? 1 : 0));
     }
 
     /**
-     * Ajustar goles totales para un equipo.
+     * Ajuste preciso para igualar exactamente los goles
      */
-    private function ajustarGolesTotales($equipoData, &$partidos)
+    private function ajustePrecisoGoles($equipoData, &$partidos)
     {
         $equipo = $equipoData['Equipo'];
         $golesTotales = $equipoData['Goles_Totales'];
-        $golesAcumulados = $this->sumarGolesEquipo($partidos, $equipo->id);
-        $diferencia = $golesTotales - $golesAcumulados;
+        $golesActuales = $this->sumarGolesEquipo($partidos, $equipo->id);
+        $diferencia = $golesTotales - $golesActuales;
+
+        // Ordenar partidos por mayor discrepancia
+        usort($partidos, function ($a, $b) use ($equipo) {
+            $aDiff = $this->calcularDiscrepancia($a, $equipo->id);
+            $bDiff = $this->calcularDiscrepancia($b, $equipo->id);
+            return $bDiff - $aDiff;
+        });
 
         foreach ($partidos as &$partido) {
-            if ($diferencia === 0)
+            if ($diferencia == 0)
                 break;
 
-
-            // Ajustar goles como local
-            if (isset($partido['local']['Equipo']) && $partido['local']['Equipo'] != null) {
-                if ($partido['local']['Equipo']->id === $equipo->id && $diferencia > 0 && $partido['goles_local'] < 5) {
+            if (isset($partido['local']['Equipo']->id) && $partido['local']['Equipo']->id == $equipo->id) {
+                if ($diferencia > 0 && $partido['goles_local'] < 5) {
                     $partido['goles_local']++;
                     $diferencia--;
-                } elseif ($partido['local']['Equipo']->id === $equipo->id && $diferencia < 0 && $partido['goles_local'] > 0) {
+                } elseif ($diferencia < 0 && $partido['goles_local'] > 0) {
                     $partido['goles_local']--;
                     $diferencia++;
                 }
             }
 
-            // Ajustar goles como visitante
-            if (isset($partido['visitante']['Equipo']) && $partido['visitante']['Equipo'] != null) {
-                if ($partido['visitante']['Equipo']->id === $equipo->id && $diferencia > 0 && $partido['goles_visitante'] < 5) {
+            if (isset($partido['visitante']['Equipo']->id) && $partido['visitante']['Equipo']->id == $equipo->id) {
+                if ($diferencia > 0 && $partido['goles_visitante'] < 5) {
                     $partido['goles_visitante']++;
                     $diferencia--;
-                } elseif ($partido['visitante']['Equipo']->id === $equipo->id && $diferencia < 0 && $partido['goles_visitante'] > 0) {
+                } elseif ($diferencia < 0 && $partido['goles_visitante'] > 0) {
                     $partido['goles_visitante']--;
                     $diferencia++;
                 }
             }
         }
-        unset($partido);
     }
 
-    /**
-     * Suma los goles totales de un equipo en todos los partidos.
-     */
+    private function calcularDiscrepancia($partido, $equipoId)
+    {
+        $esLocal = isset($partido['local']['Equipo']->id) && $partido['local']['Equipo']->id == $equipoId;
+        $goles = $esLocal ? $partido['goles_local'] :
+            (isset($partido['visitante']['Equipo']->id) && $partido['visitante']['Equipo']->id == $equipoId ?
+                $partido['goles_visitante'] : 0);
+
+        return abs($goles - 2); // Queremos ajustar primero los partidos más anómalos
+    }
+
     private function sumarGolesEquipo($partidos, $equipoId)
     {
-        $totalGoles = 0;
-        foreach ($partidos as $partido) {
-            if (isset($partido['local']['Equipo']) && $partido['local']['Equipo']->id === $equipoId) {
-                $totalGoles += $partido['goles_local'];
+        $total = 0;
+        foreach ($partidos as $p) {
+            if (isset($p['local']['Equipo']->id) && $p['local']['Equipo']->id == $equipoId) {
+                $total += $p['goles_local'];
             }
-            if (isset($partido['visitante']['Equipo']) && $partido['visitante']['Equipo']->id === $equipoId) {
-                $totalGoles += $partido['goles_visitante'];
+            if (isset($p['visitante']['Equipo']->id) && $p['visitante']['Equipo']->id == $equipoId) {
+                $total += $p['goles_visitante'];
+            }
+        }
+        return $total;
+    }
+
+    private function generarFechasTemporada($temporada)
+    {
+        $fechas = [];
+        $fechaInicio = new DateTime(substr($temporada->nombre, -9, 4) . "-08-08");
+
+        for ($i = 0; $i < 38; $i++) {
+            $fechas[] = clone $fechaInicio;
+            $fechaInicio->modify("+7 days");
+        }
+
+        return $fechas;
+    }
+
+    private function distribuirEnJornadas($partidos, $numEquipos)
+    {
+        // 1. Separar partidos de ida y vuelta
+        $partidosIda = [];
+        $partidosVuelta = [];
+
+        foreach ($partidos as $partido) {
+            $localId = $partido['local']['Equipo']->id;
+            $visitanteId = $partido['visitante']['Equipo']->id;
+
+            if (!isset($partidosVuelta["$visitanteId-$localId"])) {
+                $partidosIda["$localId-$visitanteId"] = $partido;
+            } else {
+                $partidosVuelta["$localId-$visitanteId"] = $partido;
             }
         }
 
-        return $totalGoles;
+        // 2. Generar calendario round-robin para la ida
+        $jornadasIda = $this->generarCalendarioRoundRobin(array_values($partidosIda), $numEquipos);
+
+        // 3. Generar vuelta invirtiendo local/visitante
+        $jornadasVuelta = [];
+        foreach ($jornadasIda as $jornada) {
+            $nuevaJornada = [];
+            foreach ($jornada as $partido) {
+                $nuevaJornada[] = [
+                    'local' => $partido['visitante'],
+                    'visitante' => $partido['local'],
+                    'goles_local' => $partido['goles_visitante'],
+                    'goles_visitante' => $partido['goles_local']
+                ];
+            }
+            $jornadasVuelta[] = $nuevaJornada;
+        }
+
+        return array_merge($jornadasIda, $jornadasVuelta);
     }
+
+    private function generarCalendarioRoundRobin($partidos, $numEquipos)
+    {
+        $equipos = array_values(array_unique(array_map(function ($p) {
+            return $p['local']['Equipo']->id;
+        }, $partidos)));
+
+        $jornadas = array_fill(0, $numEquipos - 1, []);
+        $equipoFijo = $equipos[0];
+        $equiposRotatorios = array_slice($equipos, 1);
+
+        for ($jornada = 0; $jornada < $numEquipos - 1; $jornada++) {
+            // Partido del equipo fijo
+            $partido = $this->buscarPartido(
+                $partidos,
+                $equipoFijo,
+                end($equiposRotatorios),
+                true
+            );
+            $jornadas[$jornada][] = $partido;
+
+            // Partidos entre equipos rotatorios
+            for ($i = 1; $i < $numEquipos / 2; $i++) {
+                $local = $equiposRotatorios[$i - 1];
+                $visitante = $equiposRotatorios[count($equiposRotatorios) - $i - 1];
+
+                $partido = $this->buscarPartido($partidos, $local, $visitante, true);
+                $jornadas[$jornada][] = $partido;
+            }
+
+            // Rotar equipos
+            array_unshift($equiposRotatorios, array_pop($equiposRotatorios));
+        }
+
+        return $jornadas;
+    }
+
+    private function buscarPartido($partidos, $localId, $visitanteId, $crearSiNoExiste = false)
+    {
+        foreach ($partidos as $partido) {
+            if (
+                $partido['local']['Equipo']->id == $localId &&
+                $partido['visitante']['Equipo']->id == $visitanteId
+            ) {
+                return $partido;
+            }
+        }
+
+        if ($crearSiNoExiste) {
+            // Crear un partido básico si no existe (con goles 0-0)
+            return [
+                'local' => ['Equipo' => (object) ['id' => $localId]],
+                'visitante' => ['Equipo' => (object) ['id' => $visitanteId]],
+                'goles_local' => 0,
+                'goles_visitante' => 0
+            ];
+        }
+
+        throw new Exception("Partido no encontrado: $localId vs $visitanteId");
+    }
+
 }
