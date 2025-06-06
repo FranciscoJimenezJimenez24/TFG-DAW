@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { LigasService } from '../../../services/ligas.service';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ import { CardPartidoComponent } from '../../cards/card-partido/card-partido.comp
 @Component({
   selector: 'app-liga-page',
   standalone: true,
-  imports: [CommonModule, CardPartidoComponent],
+  imports: [CommonModule, CardPartidoComponent, RouterLink],
   templateUrl: './liga-page.component.html',
   styleUrl: './liga-page.component.css'
 })
