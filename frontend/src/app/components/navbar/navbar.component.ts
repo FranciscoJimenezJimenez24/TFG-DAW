@@ -36,4 +36,8 @@ export class NavbarComponent implements OnInit{
     this.router.navigateByUrl('/login');
   }
 
+  goHome(){
+    this.router.navigateByUrl('/');
+  }
+
 }

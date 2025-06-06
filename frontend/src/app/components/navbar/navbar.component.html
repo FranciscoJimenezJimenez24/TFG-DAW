@@ -1,6 +1,6 @@
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand">Navbar</a>
+    <a (click)="goHome()" class="navbar-brand"><img src="../../../assets/la-redonda-ico.ico" width="35" height="30"></a>
     <div>
       <a class="navbar-brand" href="login" *ngIf="!loggedIn">Login</a>
       <a class="navbar-brand" href="signup" *ngIf="!loggedIn">Signup</a>
