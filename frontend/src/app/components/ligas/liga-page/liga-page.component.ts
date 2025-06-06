@@ -140,7 +140,6 @@ export class LigaPageComponent implements OnInit {
       }
     });
 
-    console.log('Partidos agrupados:', this.partidosAgrupados);
     this.jornadas = this.partidosAgrupados.map(j => ({ id: j.id, fecha: j.fecha }));
 
     if (this.partidosAgrupados.length > 0 && !this.jornadaSeleccionada) {
