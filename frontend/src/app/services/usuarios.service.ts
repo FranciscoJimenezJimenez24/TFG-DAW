@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../interfaces/usuario';
 import { Observable } from 'rxjs';
 import { TokenService } from './token.service';
+import { environment } from '../../environments/environments.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -14,37 +15,37 @@ export class UsuariosService {
   getUsuarios():Observable<Usuario[]>{
     const token = this.tokenService.get();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<Usuario[]>("http://127.0.0.1:8000/api/usuarios", { headers });
+    return this.http.get<Usuario[]>(`${environment.apiUrl}/usuarios`, { headers });
   }
 
   getUsuario(): Observable<Usuario> {
     const token = this.tokenService.get();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<Usuario>("http://127.0.0.1:8000/api/me", { headers });
+    return this.http.get<Usuario>(`${environment.apiUrl}/me`, { headers });
   }
 
   getUsuarioByEmail(email:string):Observable<Usuario>{
     const token = this.tokenService.get();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);    
-    return this.http.get<Usuario>(`http://127.0.0.1:8000/api/usuarios/${email}`, { headers });
+    return this.http.get<Usuario>(`${environment.apiUrl}/usuarios/${email}`, { headers });
   }
 
   addUsuario(usuario:Usuario):Observable<Usuario>{
     const token = this.tokenService.get();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post<Usuario>("http://127.0.0.1:8000/api/usuarios", usuario, { headers });
+    return this.http.post<Usuario>(`${environment.apiUrl}/usuarios`, usuario, { headers });
   }
 
   updateUsuario(usuario:Usuario):Observable<Usuario>{
     const token = this.tokenService.get();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.put<Usuario>("http://127.0.0.1:8000/api/usuarios", usuario, { headers });
+    return this.http.put<Usuario>(`${environment.apiUrl}/usuarios`, usuario, { headers });
   }
 
   deleteUsuario(idUsuario:number):Observable<void>{
     const token = this.tokenService.get();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.delete<void>(`http://127.0.0.1:8000/api/usuarios/${idUsuario}`, { headers });
+    return this.http.delete<void>(`${environment.apiUrl}/usuarios/${idUsuario}`, { headers });
   }
 
 }

@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { ServerStorage } from '../classes/serverStorage';
+import { environment } from '../../environments/environments.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -46,7 +47,7 @@ export class TokenService {
     if (token) {
       const payload = this.payload(token);
       if (payload) {
-        return payload.iss === 'http://127.0.0.1:8000/api/login';
+        return payload.iss === `${environment.apiUrl}/login`;
       }
     }
     return false;
