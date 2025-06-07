@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Puntuacion } from '../interfaces/puntuacion';
-import { environment } from '../../environments/environments.prod';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
