@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Puntuacion } from '../interfaces/puntuacion';
 import { environment } from 'environments/environments.prod';
@@ -8,17 +8,26 @@ import { environment } from 'environments/environments.prod';
 })
 export class PuntuacionesService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private headers: HttpHeaders) {
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+  }
+
+  private createOptions(): { headers: HttpHeaders } {
+    return { headers: this.headers };
+  }
 
   getPuntuacionesJugador(jugadorId: number) {
-    return this.http.get<Puntuacion[]>(`${environment.apiUrl}/puntuaciones/jugador/${jugadorId}`);
+    return this.http.get<Puntuacion[]>(`${environment.apiUrl}/puntuaciones/jugador/${jugadorId}`, this.createOptions());
   }
 
   getMejoresPuntuacionesTemporada(idTemporada: number) {
-    return this.http.get<Puntuacion[]>(`${environment.apiUrl}/puntuaciones/mejores/temporada/${idTemporada}`);
+    return this.http.get<Puntuacion[]>(`${environment.apiUrl}/puntuaciones/mejores/temporada/${idTemporada}`, this.createOptions());
   }
-  
-  getMejoresPuntuacionesUltimaTemporada(){
-    return this.http.get<Puntuacion[]>(`${environment.apiUrl}/puntuaciones/mejores/ultimaTemperada`);
+
+  getMejoresPuntuacionesUltimaTemporada() {
+    return this.http.get<Puntuacion[]>(`${environment.apiUrl}/puntuaciones/mejores/ultimaTemperada`, this.createOptions());
   }
 }

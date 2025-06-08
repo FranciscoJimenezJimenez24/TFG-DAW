@@ -10,42 +10,41 @@ import { environment } from 'environments/environments.prod';
 })
 export class UsuariosService {
 
-  constructor(private http: HttpClient, private tokenService: TokenService) { }
+  constructor(private http: HttpClient, private tokenService: TokenService, private headers: HttpHeaders) {
+    const token = this.tokenService.get();
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+  }
+
+  private createOptions(): { headers: HttpHeaders } {
+    return { headers: this.headers };
+  }
 
   getUsuarios():Observable<Usuario[]>{
-    const token = this.tokenService.get();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<Usuario[]>(`${environment.apiUrl}/usuarios`, { headers });
+    return this.http.get<Usuario[]>(`${environment.apiUrl}/usuarios`, this.createOptions());
   }
 
   getUsuario(): Observable<Usuario> {
-    const token = this.tokenService.get();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<Usuario>(`${environment.apiUrl}/me`, { headers });
+    return this.http.get<Usuario>(`${environment.apiUrl}/me`, this.createOptions());
   }
 
-  getUsuarioByEmail(email:string):Observable<Usuario>{
-    const token = this.tokenService.get();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);    
-    return this.http.get<Usuario>(`${environment.apiUrl}/usuarios/${email}`, { headers });
+  getUsuarioByEmail(email:string):Observable<Usuario>{        
+    return this.http.get<Usuario>(`${environment.apiUrl}/usuarios/${email}`, this.createOptions());
   }
 
-  addUsuario(usuario:Usuario):Observable<Usuario>{
-    const token = this.tokenService.get();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post<Usuario>(`${environment.apiUrl}/usuarios`, usuario, { headers });
+  addUsuario(usuario:Usuario):Observable<Usuario>{    
+    return this.http.post<Usuario>(`${environment.apiUrl}/usuarios`, usuario, this.createOptions());
   }
 
-  updateUsuario(usuario:Usuario):Observable<Usuario>{
-    const token = this.tokenService.get();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.put<Usuario>(`${environment.apiUrl}/usuarios`, usuario, { headers });
+  updateUsuario(usuario:Usuario):Observable<Usuario>{    
+    return this.http.put<Usuario>(`${environment.apiUrl}/usuarios`, usuario, this.createOptions());
   }
 
-  deleteUsuario(idUsuario:number):Observable<void>{
-    const token = this.tokenService.get();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.delete<void>(`${environment.apiUrl}/usuarios/${idUsuario}`, { headers });
+  deleteUsuario(idUsuario:number):Observable<void>{    
+    return this.http.delete<void>(`${environment.apiUrl}/usuarios/${idUsuario}`, this.createOptions());
   }
 
 }

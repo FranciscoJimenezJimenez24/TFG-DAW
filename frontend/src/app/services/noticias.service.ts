@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Noticia } from '../interfaces/noticia';
@@ -9,31 +9,38 @@ import { environment } from 'environments/environments.prod';
 })
 export class NoticiasService {
 
-  constructor(
-    private http: HttpClient
-  ) { }
-
-  getNoticia(idNoticia: number):Observable<Noticia>{
-    return this.http.get<Noticia>(`${environment.apiUrl}/noticias/${idNoticia}`);
+  constructor(private http: HttpClient, private headers: HttpHeaders) {
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
   }
 
-  getNoticias():Observable<Noticia[]>{
-    return this.http.get<Noticia[]>(`${environment.apiUrl}/noticias`);
+  private createOptions(): { headers: HttpHeaders } {
+    return { headers: this.headers };
   }
 
-  addNoticia(noticia:Noticia):Observable<Noticia>{
-    return this.http.post<Noticia>(`${environment.apiUrl}/noticias`,noticia);
+  getNoticia(idNoticia: number): Observable<Noticia> {
+    return this.http.get<Noticia>(`${environment.apiUrl}/noticias/${idNoticia}`, this.createOptions());
   }
 
-  updateNoticia(noticia:Noticia):Observable<Noticia>{
-    return this.http.put<Noticia>(`${environment.apiUrl}/noticias`,noticia);
+  getNoticias(): Observable<Noticia[]> {
+    return this.http.get<Noticia[]>(`${environment.apiUrl}/noticias`, this.createOptions());
   }
 
-  deleteNoticia(idNoticia:number):Observable<void>{
-    return this.http.delete<void>(`${environment.apiUrl}/noticias/${idNoticia}`)
+  addNoticia(noticia: Noticia): Observable<Noticia> {
+    return this.http.post<Noticia>(`${environment.apiUrl}/noticias`, noticia, this.createOptions());
   }
 
-  getUltimasNoticas():Observable<Noticia[]>{
-    return this.http.get<Noticia[]>(`${environment.apiUrl}/noticias/ultimas`);
+  updateNoticia(noticia: Noticia): Observable<Noticia> {
+    return this.http.put<Noticia>(`${environment.apiUrl}/noticias`, noticia, this.createOptions());
+  }
+
+  deleteNoticia(idNoticia: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/noticias/${idNoticia}`, this.createOptions());
+  }
+
+  getUltimasNoticas(): Observable<Noticia[]> {
+    return this.http.get<Noticia[]>(`${environment.apiUrl}/noticias/ultimas`, this.createOptions());
   }
 }

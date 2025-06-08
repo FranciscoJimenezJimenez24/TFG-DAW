@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Solicitud } from '../interfaces/solicitud';
 import { Observable } from 'rxjs';
@@ -9,17 +9,26 @@ import { environment } from 'environments/environments.prod';
 })
 export class SolicitudesService {
 
-  constructor(private http:HttpClient) { }
-
-  getSolicitudes():Observable<Solicitud[]>{
-    return this.http.get<Solicitud[]>(`${environment.apiUrl}/solicitudes`);
+  constructor(private http: HttpClient, private headers: HttpHeaders) {
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
   }
 
-  agregarSolicitud(solicitud:Solicitud):Observable<Solicitud>{
-    return this.http.post<Solicitud>(`${environment.apiUrl}/solicitudes`,solicitud);
+  private createOptions(): { headers: HttpHeaders } {
+    return { headers: this.headers };
   }
 
-  deleteSolicitud(idSolicitud:number):Observable<void>{
-    return this.http.delete<void>(`${environment.apiUrl}/solicitudes/`+idSolicitud);
+  getSolicitudes(): Observable<Solicitud[]> {
+    return this.http.get<Solicitud[]>(`${environment.apiUrl}/solicitudes`, this.createOptions());
+  }
+
+  agregarSolicitud(solicitud: Solicitud): Observable<Solicitud> {
+    return this.http.post<Solicitud>(`${environment.apiUrl}/solicitudes`, solicitud, this.createOptions());
+  }
+
+  deleteSolicitud(idSolicitud: number): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/solicitudes/` + idSolicitud, this.createOptions());
   }
 }

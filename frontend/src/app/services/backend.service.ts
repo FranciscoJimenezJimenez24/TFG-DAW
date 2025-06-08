@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environments.prod';
 
@@ -7,12 +7,21 @@ import { environment } from 'environments/environments.prod';
 })
 export class BackendService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private headers: HttpHeaders) {
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+  }
+
+  private createOptions(): { headers: HttpHeaders } {
+    return { headers: this.headers };
+  }
 
   signup(data: any) {
-    return this.http.post(`${environment.apiUrl}/signup`, data);
+    return this.http.post(`${environment.apiUrl}/signup`, data, this.createOptions());
   }
   login(data: any) {
-    return this.http.post(`${environment.apiUrl}/login`, data);
+    return this.http.post(`${environment.apiUrl}/login`, data, this.createOptions());
   }
 }
