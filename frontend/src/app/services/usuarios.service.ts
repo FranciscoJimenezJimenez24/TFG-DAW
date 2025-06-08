@@ -10,20 +10,19 @@ import { environment } from 'environments/environments.prod';
 })
 export class UsuariosService {
 
-  constructor(private http: HttpClient, private tokenService: TokenService, private headers: HttpHeaders) {
+  constructor(private http: HttpClient, private tokenService: TokenService) { }
+
+  private createOptions(): { headers: HttpHeaders } {
     const token = this.tokenService.get();
-    this.headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': `Bearer ${token}`
     });
+    return { headers };
   }
 
-  private createOptions(): { headers: HttpHeaders } {
-    return { headers: this.headers };
-  }
-
-  getUsuarios():Observable<Usuario[]>{
+  getUsuarios(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(`${environment.apiUrl}/usuarios`, this.createOptions());
   }
 
@@ -31,19 +30,19 @@ export class UsuariosService {
     return this.http.get<Usuario>(`${environment.apiUrl}/me`, this.createOptions());
   }
 
-  getUsuarioByEmail(email:string):Observable<Usuario>{        
+  getUsuarioByEmail(email: string): Observable<Usuario> {
     return this.http.get<Usuario>(`${environment.apiUrl}/usuarios/${email}`, this.createOptions());
   }
 
-  addUsuario(usuario:Usuario):Observable<Usuario>{    
+  addUsuario(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${environment.apiUrl}/usuarios`, usuario, this.createOptions());
   }
 
-  updateUsuario(usuario:Usuario):Observable<Usuario>{    
+  updateUsuario(usuario: Usuario): Observable<Usuario> {
     return this.http.put<Usuario>(`${environment.apiUrl}/usuarios`, usuario, this.createOptions());
   }
 
-  deleteUsuario(idUsuario:number):Observable<void>{    
+  deleteUsuario(idUsuario: number): Observable<void> {
     return this.http.delete<void>(`${environment.apiUrl}/usuarios/${idUsuario}`, this.createOptions());
   }
 

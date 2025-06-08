@@ -9,12 +9,12 @@ import { environment } from 'environments/environments.prod';
 })
 export class PaisesService {
 
-  constructor(private http: HttpClient, private headers: HttpHeaders) {
-    this.headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    });
-  }
+  private headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  });
+
+  constructor(private http: HttpClient) {}
 
   private createOptions(): { headers: HttpHeaders } {
     return { headers: this.headers };

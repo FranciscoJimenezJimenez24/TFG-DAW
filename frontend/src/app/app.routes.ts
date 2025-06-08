@@ -23,7 +23,7 @@ import { BeforeLoginGuard } from './guards/before-login.guard';
 import { AfterLoginGuard } from './guards/after-login.guard';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },
+    { path: '', component: HomeComponent, canActivate: [AfterLoginGuard] },
     { path: 'login', component: LoginComponent, canActivate: [BeforeLoginGuard] },
     { path: 'signup', component: SignupComponent, canActivate: [BeforeLoginGuard] },
     { path: 'ligas/:id', component: LigaPageComponent, canActivate: [AfterLoginGuard] },
