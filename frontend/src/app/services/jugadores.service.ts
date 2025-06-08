@@ -15,7 +15,7 @@ import { Entradas } from '../interfaces/entradas';
 import { Faltas } from '../interfaces/faltas';
 import { Despejes } from '../interfaces/despejes';
 import { DuelosGanados } from '../interfaces/duelos-ganados';
-import { environment } from 'src/environments/environment';
+import { environment } from 'environments/environments.prod';
 
 @Injectable({
   providedIn: 'root'
