@@ -1,7 +1,10 @@
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
     <a (click)="goHome()" class="navbar-brand"><img src="../../../assets/la-redonda-ico.ico" width="35" height="30"></a>
-    <div>
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()" *ngIf="shouldShowToggle()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="desktop-links">
       <a class="navbar-brand" href="login" *ngIf="!loggedIn">Login</a>
       <a class="navbar-brand" href="signup" *ngIf="!loggedIn">Signup</a>
       <a class="navbar-brand" href="ligas" *ngIf="loggedIn">Ligas</a>
@@ -13,5 +16,20 @@
       <a class="navbar-brand" href="solicitudes" *ngIf="loggedIn && this.rol === 'admin'">Solicitudes</a>
       <a class="navbar-brand" href="logout" (click)="logout($event)" *ngIf="loggedIn">Logout</a>
     </div>
+    <div class="mobile-sidebar" [class.active]="!isCollapsed">
+      <div class="sidebar-content">
+        <a class="nav-link" href="login" *ngIf="!loggedIn">Login</a>
+        <a class="nav-link" href="signup" *ngIf="!loggedIn">Signup</a>
+        <a class="nav-link" href="ligas" *ngIf="loggedIn">Ligas</a>
+        <a class="nav-link" href="equipos" *ngIf="loggedIn">Equipos</a>
+        <a class="nav-link" href="jugadores" *ngIf="loggedIn">Jugadores</a>
+        <a class="nav-link" href="partidos" *ngIf="loggedIn">Partidos</a>
+        <a class="nav-link" href="noticias" *ngIf="loggedIn">Noticias</a>
+        <a class="nav-link" href="usuarios" *ngIf="loggedIn && rol === 'admin'">Usuarios</a>
+        <a class="nav-link" href="solicitudes" *ngIf="loggedIn && rol === 'admin'">Solicitudes</a>
+        <a class="nav-link" href="logout" (click)="logout($event)" *ngIf="loggedIn">Logout</a>
+      </div>
+    </div>
+    <div class="sidebar-overlay" [class.active]="!isCollapsed" (click)="toggleMenu()"></div>
   </div>
 </nav>

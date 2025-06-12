@@ -13,6 +13,7 @@ import { TokenService } from '../../services/token.service';
 })
 export class NavbarComponent implements OnInit{
   public loggedIn: boolean = false;
+  public isCollapsed: boolean = true;
 
   constructor(
     private auth: AuthService,
@@ -40,4 +41,11 @@ export class NavbarComponent implements OnInit{
     this.router.navigateByUrl('/');
   }
 
+  toggleMenu() {
+    this.isCollapsed = !this.isCollapsed;
+  }
+
+  shouldShowToggle() {
+    return window.innerWidth <= 992;
+  }
 }
