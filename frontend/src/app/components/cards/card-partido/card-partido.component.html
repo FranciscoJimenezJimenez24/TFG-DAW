@@ -1,22 +1,21 @@
 <div class="partido-card">
-    <div class="fecha">
-      {{ partido.fecha  }}
+  <div class="fecha">
+    {{ partido.fecha }}
+  </div>
+
+  <div class="equipos">
+    <div class="equipo equipo-local">
+      <img [src]="equipoLocal.escudo" [alt]="equipoLocal.nombre" class="logo" loading="lazy" />
+      <div class="nombre" [title]="equipoLocal.nombre">{{ equipoLocal.nombre }}</div>
     </div>
-  
-    <div class="equipos">
-      <div class="equipo equipo-local">
-        <img [src]="equipoLocal.escudo" [alt]="equipoLocal.nombre" class="logo" />
-        <div class="nombre">{{ equipoLocal.nombre }}</div>
-      </div>
-  
-      <div class="resultado">
-        {{ partido.goles_local }} - {{ partido.goles_visitante }}
-      </div>
-  
-      <div class="equipo equipo-visitante">
-        <img [src]="equipoVisitante.escudo" [alt]="equipoVisitante.nombre" class="logo" />
-        <div class="nombre">{{ equipoVisitante.nombre }}</div>
-      </div>
+
+    <div class="resultado">
+      {{ partido.goles_local }} - {{ partido.goles_visitante }}
+    </div>
+
+    <div class="equipo equipo-visitante">
+      <img [src]="equipoVisitante.escudo" [alt]="equipoVisitante.nombre" class="logo" loading="lazy" />
+      <div class="nombre" [title]="equipoVisitante.nombre">{{ equipoVisitante.nombre }}</div>
     </div>
   </div>
-  
+</div>

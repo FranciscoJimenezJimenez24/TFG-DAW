@@ -1,0 +1,29 @@
+.liga-container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.partidos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.partido-item {
+    width: 100%;
+}
+
+.partido-item app-card-partido {
+    display: block;
+    width: 100%;
+}
+
+.partido-item .partido-card {
+    margin: 0;
+}
+
+.text-center {
+    padding: 10px 0;
+}

@@ -5,6 +5,7 @@
     padding: 16px;
     margin: 12px 0;
     transition: transform 0.2s;
+    overflow: hidden;
 }
 
 .partido-card:hover {
@@ -16,6 +17,9 @@
     color: #888;
     text-align: center;
     margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .equipos {
@@ -23,28 +27,63 @@
     align-items: center;
     justify-content: space-between;
     text-align: center;
+    gap: 8px;
 }
 
 .equipo {
     flex: 1;
+    min-width: 0;
 }
 
 .logo {
-    height: 48px;
+    height: 40px;
+    max-width: 100%;
     object-fit: contain;
     margin-bottom: 5px;
 }
 
 .nombre {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: #333;
-    padding: 0 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .resultado {
-    flex: 0.8;
-    font-size: 1.6rem;
+    flex: 0 0 auto;
+    font-size: 1.4rem;
     font-weight: bold;
     color: #007bff;
+    padding: 0 8px;
+}
+
+@media (max-width: 768px) {
+    .logo {
+        height: 32px;
+    }
+
+    .nombre {
+        font-size: 0.75rem;
+    }
+
+    .resultado {
+        font-size: 1.2rem;
+        padding: 0 4px;
+    }
+}
+
+@media (max-width: 576px) {
+    .equipos {
+        flex-wrap: nowrap;
+    }
+
+    .partido-card {
+        padding: 12px;
+    }
+
+    .fecha {
+        font-size: 0.75rem;
+    }
 }
