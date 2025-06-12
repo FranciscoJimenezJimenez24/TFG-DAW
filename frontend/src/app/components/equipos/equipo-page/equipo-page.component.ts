@@ -17,7 +17,7 @@ import { ChunkPipe } from '../../../pipes/chunk.pipe';
   standalone: true,
   imports: [CommonModule, ChunkPipe],
   templateUrl: './equipo-page.component.html',
-  styleUrls: ['./equipo-page.component.css'] // Corrige el 'styleUrl' a 'styleUrls'
+  styleUrls: ['./equipo-page.component.css']
 })
 export class EquipoPageComponent implements OnInit {
 
@@ -194,5 +194,13 @@ export class EquipoPageComponent implements OnInit {
 
   getEquipoNombre(id: number) {
     return this.equipos.find(equipo => equipo.id === id)?.nombre;
+  }
+
+  goToPartido(partido: Partido) {
+    this.router.navigate(['/partidos', partido.id]);
+  }
+
+  goToLiga(idLiga: number){
+    this.router.navigate(['/ligas', idLiga]);
   }
 }

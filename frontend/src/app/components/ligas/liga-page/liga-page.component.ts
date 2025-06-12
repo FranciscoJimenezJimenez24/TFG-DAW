@@ -216,4 +216,11 @@ export class LigaPageComponent implements OnInit {
         this.tarjetasRojas = Array.isArray(tarjetasRojas) ? tarjetasRojas : [];
       });
   }
+
+  goToJugador(nombreJugador: string){
+    this.jugadoresService.getJugadorByNombre(nombreJugador)
+      .subscribe(jugador => {
+        if (jugador) this.router.navigate(['/jugadores', jugador.id]);
+      })
+  }
 }

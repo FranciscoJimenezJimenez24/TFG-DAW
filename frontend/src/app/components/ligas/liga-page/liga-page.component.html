@@ -27,7 +27,7 @@
                         <td>{{ i + 1 }}</td>
                         <td>
                             <img src="{{ entry[0].escudo }}" width="25px" height="25px" class="me-2">
-                            {{ entry[0].nombre }}
+                            <a href="equipos/{{ entry[0].id }}">{{ entry[0].nombre }}</a>
                         </td>
                         <td>{{ entry[1] }}</td>
                     </tr>
@@ -46,7 +46,7 @@
                 <div class="card-body p-2">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" *ngFor="let goleador of maximosGoleadores; let i = index">
-                            <span>{{ i + 1 }}. {{ goleador.jugador }} - {{ goleador.goles }} </span>
+                            <span>{{ i + 1 }}. <a (click)="goToJugador(goleador.jugador)">{{ goleador.jugador }}</a> - {{ goleador.goles }} </span>
                         </li>
                     </ul>
                 </div>
