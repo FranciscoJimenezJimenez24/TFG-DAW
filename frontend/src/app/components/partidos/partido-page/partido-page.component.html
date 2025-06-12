@@ -1,28 +1,39 @@
 <div class="container mt-4" *ngIf="partido">
     <div class="text-center mb-4">
-        <h2>Partido</h2>
-        <p class="text-muted">Fecha: {{ partido.fecha | date: 'mediumDate' }}</p>
+        <h2 class="fs-3 fs-md-2">Partido</h2>
+        <p class="text-muted">{{ partido.fecha | date: 'mediumDate' }}</p>
     </div>
 
-    <div class="row align-items-center text-center mb-4">
-        <div class="col-5">
-            <div *ngIf="equipoLocal">
-                <img [src]="equipoLocal.escudo" alt="Escudo Local" class="img-fluid mb-2" style="max-height: 120px;" (click)="goEquipo(equipoLocal.id)">
-                <h4>{{ equipoLocal.nombre }}</h4>
+    <div class="row align-items-center text-center mb-4 g-3">
+        <div class="col-5 col-sm-4">
+            <div *ngIf="equipoLocal" class="d-flex flex-column align-items-center">
+                <img [src]="equipoLocal.escudo" 
+                     alt="Escudo Local" 
+                     class="img-fluid escudo-equipo mb-2" 
+                     (click)="goEquipo(equipoLocal.id)">
+                <h4 class="nombre-equipo">{{ equipoLocal.nombre }}</h4>
             </div>
             <div *ngIf="!equipoLocal" class="text-muted">Cargando equipo local...</div>
         </div>
 
-        <div class="col-2">
-            <h1 class="display-4">{{ partido.goles_local }} - {{ partido.goles_visitante }}</h1>
-            <p class="text-muted">Resultado</p>
+        <div class="col-2 col-sm-4">
+            <div class="marcador-container">
+                <div class="display-4 marcador">
+                    <span class="goles">{{ partido.goles_local }}</span>
+                    <span class="separador">-</span>
+                    <span class="goles">{{ partido.goles_visitante }}</span>
+                </div>
+                <p class="text-muted small">Resultado</p>
+            </div>
         </div>
 
-        <div class="col-5">
-            <div *ngIf="equipoVisitante">
-                <img [src]="equipoVisitante.escudo" alt="Escudo Visitante" class="img-fluid mb-2"
-                    style="max-height: 120px;" (click)="goEquipo(equipoVisitante.id)">
-                <h4>{{ equipoVisitante.nombre }}</h4>
+        <div class="col-5 col-sm-4">
+            <div *ngIf="equipoVisitante" class="d-flex flex-column align-items-center">
+                <img [src]="equipoVisitante.escudo" 
+                     alt="Escudo Visitante" 
+                     class="img-fluid escudo-equipo mb-2"
+                     (click)="goEquipo(equipoVisitante.id)">
+                <h4 class="nombre-equipo">{{ equipoVisitante.nombre }}</h4>
             </div>
             <div *ngIf="!equipoVisitante" class="text-muted">Cargando equipo visitante...</div>
         </div>
@@ -36,8 +47,7 @@
                 <p class="card-text"><strong>Liga: </strong> 
                     <img [src]="liga?.bandera" 
                         alt="Escudo Liga" 
-                        class="img-fluid me-2" 
-                        style="width: 40px; height: 25px; vertical-align: middle;">{{ liga?.nombre }}</p>
+                        class="img-fluid me-2 bandera-liga">{{ liga?.nombre }}</p>
             </div>
         </div>
     </div>
