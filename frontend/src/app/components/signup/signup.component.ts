@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
-  standalone: true,  // Marca el componente como standalone
+  standalone: true,
   imports: [
     FormsModule,
     CommonModule,

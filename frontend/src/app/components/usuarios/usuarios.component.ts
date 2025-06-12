@@ -9,7 +9,7 @@ import { DeleteUsuariosComponent } from './delete-usuarios/delete-usuarios.compo
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [CommonModule, AddUsuariosComponent, EditUsuariosComponent, DeleteUsuariosComponent],
+  imports: [CommonModule, AddUsuariosComponent, EditUsuariosComponent, DeleteUsuariosComponent, AddUsuariosComponent],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css'
 })
@@ -18,6 +18,7 @@ export class UsuariosComponent implements OnInit {
   usuarios: Usuario[] = [];
   usuarioSeleccionado: Usuario = { id: 0, email: '', name: '', password: '', rol: '' };
 
+  @ViewChild(AddUsuariosComponent) addUsuarioComponent!: AddUsuariosComponent;
   @ViewChild(EditUsuariosComponent) editUsuarioComponent!: EditUsuariosComponent;
   @ViewChild(DeleteUsuariosComponent) deleteUsuarioComponent!: DeleteUsuariosComponent;
 
@@ -33,11 +34,25 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
+  abrirModalAgregar() {
+    this.addUsuarioComponent.abrirModal();
+  }
+
   addUsuario(usuario: Usuario) {
     this.usuariosService.addUsuario(usuario)
-      .subscribe((usuario) => {
-        this.usuarios.push(usuario);
-      })
+      .subscribe({
+        next: (usuario) => {
+          this.usuarios.push(usuario);
+          this.addUsuarioComponent.cerrarModal();
+        },
+        error: (err) => {
+          if (err.error && err.error.message && err.error.message.includes('Duplicate entry')) {
+            this.addUsuarioComponent.mostrarError('El email ya está en uso por otro usuario');
+          } else {
+            this.addUsuarioComponent.mostrarError('Ocurrió un error al agregar el usuario');
+          }
+        }
+      });
   }
 
   updateUsuario(usuario: Usuario) {
@@ -55,8 +70,18 @@ export class UsuariosComponent implements OnInit {
   }
 
   onUsuarioActualizado(usuario: Usuario) {
-    this.usuariosService.updateUsuario(usuario).subscribe(() => {
-      this.getUsuarios();
+    this.usuariosService.updateUsuario(usuario).subscribe({
+      next: () => {
+        this.getUsuarios();
+        this.editUsuarioComponent.cerrarModal();
+      },
+      error: (err) => {
+        if (err.error && err.error.message && err.error.message.includes('Duplicate entry')) {
+          this.editUsuarioComponent.mostrarError('El email ya está en uso por otro usuario');
+        } else {
+          this.editUsuarioComponent.mostrarError('Ocurrió un error al actualizar el usuario');
+        }
+      }
     });
   }
 

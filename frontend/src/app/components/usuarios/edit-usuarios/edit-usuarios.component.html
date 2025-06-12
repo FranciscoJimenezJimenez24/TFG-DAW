@@ -3,21 +3,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editUserModalLabel">Editar Usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="cerrarModal()"></button>
             </div>
             <div class="modal-body">
                 <form #userForm="ngForm">
+                    <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" [(ngModel)]="usuario.email" name="email" required>
+                        <input type="email" class="form-control" id="email" [(ngModel)]="usuario.email" name="email"
+                            required>
                     </div>
-                    <!-- <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="password" [(ngModel)]="usuario.password" name="password">
-                    </div> -->
                     <div class="mb-3">
                         <label for="name" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" [(ngModel)]="usuario.name" name="name" required>
+                        <input type="text" class="form-control" id="name" [(ngModel)]="usuario.name" name="name"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="rol" class="form-label">Rol</label>
@@ -30,8 +30,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="actualizarUsuario()">Guardar</button>
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="actualizarUsuario()">Guardar</button>
             </div>
         </div>
     </div>

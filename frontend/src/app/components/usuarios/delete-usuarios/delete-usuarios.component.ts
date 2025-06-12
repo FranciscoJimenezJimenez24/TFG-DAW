@@ -20,6 +20,7 @@ export class DeleteUsuariosComponent {
   confirmacionValida: boolean = false;
 
   abrirModal() {
+    this.confirmacionTexto = '';
     setTimeout(() => {
       const modalElement = document.getElementById('deleteUserModal');
       if (modalElement) {
