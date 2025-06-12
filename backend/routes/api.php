@@ -75,6 +75,7 @@ Route::get('jugadores/{id}', [JugadorController::class, 'getJugador']);
 
 // Noticias
 Route::get('noticias/ultimas', [NoticiaController::class, 'getUltimasNoticias']);
+Route::get('noticias/autor/{autor}', [NoticiaController::class, 'getNoticiaByAutor']);
 Route::get('noticias', [NoticiaController::class, 'getNoticias']);
 Route::get('noticias/{id}', [NoticiaController::class, 'getNoticia']);
 Route::post('noticias', [NoticiaController::class, 'addNoticia']);

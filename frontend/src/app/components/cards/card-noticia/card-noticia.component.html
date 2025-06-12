@@ -4,7 +4,7 @@
     <p class="card-text">{{ noticia.descripcion | slice:0:100 }}...</p>
     <p class="text-muted">Por: {{ noticia.autor }} | {{ noticia.fecha_publicacion }}</p>
 
-    <div *ngIf="mostrarOpciones && esAutor" class="opciones">
+    <div *ngIf="mostrarOpciones && mostrarBotonesEdicion" class="opciones">
       <button class="btn btn-warning btn-sm me-2" (click)="editarNoticia($event)">Editar</button>
       <button class="btn btn-danger btn-sm" (click)="eliminarNoticia($event)">Eliminar</button>
     </div>

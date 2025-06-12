@@ -18,6 +18,7 @@ export class DeleteNoticiaComponent {
   confirmacionValida: boolean = false;
 
   abrirModal() {
+    this.confirmacionTexto = '';
     setTimeout(() => {
       const modalElement = document.getElementById('deleteNoticiaModal');
       if (modalElement) {

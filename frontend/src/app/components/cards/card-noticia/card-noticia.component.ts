@@ -30,4 +30,20 @@ export class CardNoticiaComponent {
     event.stopPropagation();
     this.eliminar.emit(this.noticia);
   }
+
+  get mostrarBotonesEdicion(): boolean {
+    const rolUsuario = localStorage.getItem("rol");
+    const modoPeriodista = localStorage.getItem("modoPeriodista");
+    console.log('Validando botones:', {
+      rol: rolUsuario,
+      modo: modoPeriodista,
+      esAutor: this.esAutor
+    });
+
+    if (rolUsuario === 'admin') return true;
+
+    if (rolUsuario === 'journalist' && modoPeriodista === 'edicion' && this.esAutor) return true;
+
+    return false;
+  }
 }

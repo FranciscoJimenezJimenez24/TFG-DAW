@@ -1,8 +1,12 @@
 <div class="container">
-    <button *ngIf="rolUsuario === 'journalist'" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNoticiaModal">
-        Agregar Noticia
-    </button>
-
+    <div *ngIf="rolUsuario === 'journalist'" class="mb-3">
+        <button class="btn btn-outline-primary me-2" (click)="cambiarModoPeriodista()">
+            {{ modoPeriodista === 'lectura' ? 'Cambiar a modo edición' : 'Cambiar a modo lectura' }}
+        </button>
+        <button *ngIf="modoPeriodista === 'edicion'" (click)="abrirModalAgregar()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNoticiaModal">
+            Agregar Noticia
+        </button>
+    </div>
 
     <app-add-noticia (noticiaAgregada)="onNoticiaAdded($event)"></app-add-noticia>
 
@@ -27,6 +31,7 @@
         (noticiaEliminada)="onNoticiaEliminado($event)">
     </app-delete-noticia>
 
-    <button class="btn btn-secondary mt-4" (click)="gotoContacts()" *ngIf="rolUsuario === 'user'">Quieres trabajar con
-        nosotros</button>
+    <button class="btn btn-secondary mt-4" (click)="gotoContacts()" *ngIf="rolUsuario === 'user'">
+        ¿Quieres trabajar con nosotros?
+    </button>
 </div>

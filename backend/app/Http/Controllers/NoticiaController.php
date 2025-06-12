@@ -70,4 +70,10 @@ class NoticiaController extends Controller
             ->get();
         return response()->json($noticias, 200);
     }
+
+    public function getNoticiaByAutor($autor)
+    {
+        $noticias = Noticia::where('autor', $autor)->get();
+        return response()->json($noticias, 200);
+    }
 }

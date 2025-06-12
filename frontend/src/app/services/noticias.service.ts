@@ -43,4 +43,8 @@ export class NoticiasService {
   getUltimasNoticas(): Observable<Noticia[]> {
     return this.http.get<Noticia[]>(`${environment.apiUrl}/noticias/ultimas`, this.createOptions());
   }
+
+  getNoticiaByAutor(autor: string): Observable<Noticia[]> {
+    return this.http.get<Noticia[]>(`${environment.apiUrl}/noticias/autor/${autor}`, this.createOptions());
+  }
 }

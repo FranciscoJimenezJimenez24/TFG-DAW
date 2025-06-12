@@ -13,14 +13,16 @@ import { EditNoticiaComponent } from './edit-noticia/edit-noticia.component';
   standalone: true,
   templateUrl: './noticias.component.html',
   styleUrl: './noticias.component.css',
-  imports: [CommonModule, AddNoticiaComponent, CardNoticiaComponent, DeleteNoticiaComponent, EditNoticiaComponent, RouterLink],
+  imports: [CommonModule, AddNoticiaComponent, CardNoticiaComponent, DeleteNoticiaComponent, EditNoticiaComponent, AddNoticiaComponent, RouterLink],
 })
 export class NoticiasComponent implements OnInit {
   noticias: Noticia[] = [];
   noticiaAEliminar: Noticia | null = null;
   mostrarFormulario = false;
-  rolUsuario: string | null = localStorage.getItem("rol"); // Obtiene el rol desde localStorage
+  rolUsuario: string | null = localStorage.getItem("rol");
+  modoPeriodista: 'lectura' | 'edicion' = 'lectura';
 
+  @ViewChild(AddNoticiaComponent) addNoticiaComponent!: AddNoticiaComponent;
   @ViewChild(EditNoticiaComponent) editNoticiaComponent!: EditNoticiaComponent;
   @ViewChild(DeleteNoticiaComponent) deleteNoticiaComponent!: DeleteNoticiaComponent;
 
@@ -29,11 +31,36 @@ export class NoticiasComponent implements OnInit {
   constructor(private noticiasService: NoticiasService, private router: Router) { }
 
   ngOnInit(): void {
-    this.getNoticias();
+    this.modoPeriodista = localStorage.getItem("modoPeriodista") as 'lectura' | 'edicion' || 'lectura';
+    this.cargarNoticiasSegunModo();
+  }
+
+  cargarNoticiasSegunModo() {
+    const usuarioActual = localStorage.getItem("nombre");
+
+    if (this.rolUsuario === 'journalist' && this.modoPeriodista === 'edicion' && usuarioActual) {
+      // Modo edición: cargar solo las noticias del autor
+      this.noticiasService.getNoticiaByAutor(usuarioActual).subscribe(noticias => {
+        this.noticias = noticias;
+      });
+    } else {
+      // Modo lectura o cualquier otro usuario: cargar todas las noticias
+      this.getNoticias();
+    }
+  }
+
+  cambiarModoPeriodista() {
+    this.modoPeriodista = this.modoPeriodista === 'lectura' ? 'edicion' : 'lectura';
+    localStorage.setItem("modoPeriodista", this.modoPeriodista);
+    this.cargarNoticiasSegunModo(); // Recargar noticias al cambiar modo
   }
 
   getNoticias() {
     this.noticiasService.getNoticias().subscribe(noticias => this.noticias = noticias);
+  }
+
+  abrirModalAgregar() {
+    this.addNoticiaComponent.noticia = { id: 0, titulo: '', descripcion: '', autor: '', fecha_publicacion: '' };
   }
 
   onNoticiaAdded(nuevaNoticia: Noticia) {
@@ -73,4 +100,5 @@ export class NoticiasComponent implements OnInit {
   gotoContacts() {
     this.router.navigate(['/contacto']);
   }
+
 }
