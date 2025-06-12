@@ -11,6 +11,7 @@ export class AfterLoginGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     if (!this.token.loggedIn()) {
+      localStorage.clear();
       this.router.navigate(['/login']);
       return false;
     }

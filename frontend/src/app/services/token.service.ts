@@ -22,7 +22,7 @@ export class TokenService {
   }
 
   loggedIn(): boolean {
-    return this.isValid();
+    return this.isValid() && !this.isExpired();
   }
 
   handle(token: any): void {
@@ -61,4 +61,24 @@ export class TokenService {
   decode(payload: string): any {
     return JSON.parse(atob(payload));
   }
+
+  getTokenExpiration(): number | null {
+    const token = this.get();
+    if (token) {
+      const payload = this.payload(token);
+      if (payload && payload.exp) {
+        return payload.exp * 1000; // exp viene en segundos desde epoch
+      }
+    }
+    return null;
+  }
+
+  isExpired(): boolean {
+    const expiration = this.getTokenExpiration();
+    if (expiration) {
+      return Date.now() > expiration;
+    }
+    return true;
+  }
+
 }

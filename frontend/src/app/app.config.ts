@@ -4,6 +4,7 @@ import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http'; // ✅ Importar withFetch
 import { LoadingInterceptor } from './interceptor/loading.interceptor';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,6 +14,7 @@ export const appConfig: ApplicationConfig = {
       withFetch(), // ✅ Se añade withFetch() para usar la API fetch
       withInterceptorsFromDi() // ✅ Habilita interceptores tradicionales
     ),
-    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ]
 };
