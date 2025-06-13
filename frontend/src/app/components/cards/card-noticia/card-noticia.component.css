@@ -1,8 +1,39 @@
 .card {
     border-radius: 10px;
     transition: transform 0.2s;
+    margin-bottom: 1rem;
 }
 
 .card:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
+}
+
+.opciones {
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    margin-top: 10px;
+}
+
+/* Estilos específicos para móvil */
+@media (max-width: 768px) {
+    .opciones {
+        display: flex;
+        justify-content: flex-end;
+    }
+    
+    .opciones button {
+        margin-left: 8px;
+    }
+}
+
+/* Estilos específicos para desktop */
+@media (min-width: 769px) {
+    .opciones {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .card:hover .opciones {
+        opacity: 1;
+    }
 }

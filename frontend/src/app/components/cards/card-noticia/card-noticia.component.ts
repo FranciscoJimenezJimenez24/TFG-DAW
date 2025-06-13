@@ -46,4 +46,13 @@ export class CardNoticiaComponent {
 
     return false;
   }
+
+  get esDispositivoMovil(): boolean {
+    return window.innerWidth <= 768;
+  }
+
+  // Mostrar siempre los botones en móvil si está en modo edición y es autor
+  get mostrarBotonesSiempre(): boolean {
+    return this.esDispositivoMovil && this.mostrarBotonesEdicion;
+  }
 }
