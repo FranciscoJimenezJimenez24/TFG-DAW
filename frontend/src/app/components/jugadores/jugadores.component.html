@@ -1,7 +1,8 @@
-<div class="container mt-4">
+<div class="container mt-3 mt-md-4 px-2 px-md-3">
   <!-- Selector de temporadas -->
-  <div class="text-center mb-4">
-    <select class="form-select w-auto mx-auto" (change)="onTemporadaChange($event)" *ngIf="temporadas?.length">
+  <div class="text-center mb-3 mb-md-4">
+    <select class="form-select d-inline-block w-auto mx-auto" (change)="onTemporadaChange($event)"
+      *ngIf="temporadas?.length">
       <option *ngFor="let temporada of temporadas" [value]="temporada?.id">
         {{ temporada?.nombre }}
       </option>
@@ -12,39 +13,43 @@
   <div class="stats-grid">
     <div class="stat-card" *ngFor="let stat of getVisibleStats()">
       <div class="card shadow-sm h-100">
-        <div class="card-header bg-dark text-white">
-          <h5 class="mb-0">{{ stat.nombre }}</h5>
+        <div class="card-header bg-dark text-white py-2">
+          <h5 class="mb-0 text-truncate">{{ stat.nombre }}</h5>
         </div>
         <div class="card-body p-0">
-          <table class="table table-sm mb-0">
-            <thead>
-              <tr>
-                <th class="text-center">#</th>
-                <th>Jugador</th>
-                <th class="text-end">{{ stat.nombre }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of stat.data | slice:0:5; let i = index">
-                <td class="text-center fw-bold">{{ i + 1 }}</td>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <img [src]="item.equipoEscudo || equipos[i].escudo" alt="Escudo" class="me-2" width="24" height="32">
-                    <div>
-                      <div class="fw-semibold">{{ item.jugador || jugadores[i].nombre }}</div>
-                      <small class="text-muted">{{ item.liga || jugadores[i].posicion }}</small>
+          <div class="table-responsive">
+            <table class="table table-sm mb-0">
+              <thead>
+                <tr>
+                  <th class="text-center" style="width: 40px;">#</th>
+                  <th>Jugador</th>
+                  <th class="text-end pe-2" style="width: 70px;">{{ stat.nombre }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of stat.data | slice:0:5; let i = index">
+                  <td class="text-center fw-bold">{{ i + 1 }}</td>
+                  <td class="text-truncate">
+                    <div class="d-flex align-items-center">
+                      <img [src]="item.equipoEscudo || equipos[i].escudo" alt="Escudo" class="me-2 flex-shrink-0"
+                        style="width: 24px; height: 24px; object-fit: contain;">
+                      <div class="text-truncate">
+                        <div class="fw-semibold text-truncate">{{ item.jugador || jugadores[i].nombre }}</div>
+                        <small class="text-muted text-truncate d-block">{{ item.liga || jugadores[i].posicion
+                          }}</small>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td class="text-end fw-bold">
-                  {{ getStatValue(item, stat.key) }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                  <td class="text-end fw-bold pe-2">
+                    {{ getStatValue(item, stat.key) }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div class="card-footer bg-light text-center">
-          <button class="btn btn-sm btn-outline-primary" (click)="verMas(stat.key)">
+        <div class="card-footer bg-light text-center py-2">
+          <button class="btn btn-sm btn-outline-primary py-1" (click)="verMas(stat.key)">
             Ver más {{ stat.nombre.toLowerCase() }}
           </button>
         </div>
@@ -53,10 +58,9 @@
   </div>
 
   <!-- Navegación entre grupos de estadísticas -->
-  <div class="d-flex justify-content-center mt-4" *ngIf="estadisticas.length > itemsPerRow">
-    <button class="btn btn-outline-secondary mx-2" 
-            *ngFor="let group of getStatGroups()"
-            (click)="currentGroup = group">
+  <div class="d-flex justify-content-center flex-wrap gap-1 mt-3" *ngIf="estadisticas.length > itemsPerRow">
+    <button class="btn btn-outline-secondary btn-sm" *ngFor="let group of getStatGroups()"
+      [class.active]="currentGroup === group" (click)="currentGroup = group">
       {{ group + 1 }}
     </button>
   </div>

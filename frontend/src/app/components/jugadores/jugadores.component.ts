@@ -192,7 +192,6 @@ export class JugadoresComponent implements OnInit {
     try {
       // Esperar a que todas las promesas se resuelvan
       this.jugadores = (await Promise.all(jugadoresPromises)).filter((jugador): jugador is Jugador => jugador !== undefined);
-      console.log('Jugadores cargados:', this.jugadores);
 
       // Crear un array de promesas para obtener los equipos
       const equiposPromises = this.jugadores.map(jugador => {
@@ -200,7 +199,6 @@ export class JugadoresComponent implements OnInit {
       });
 
       this.equipos = (await Promise.all(equiposPromises)).filter((equipo): equipo is Equipo => equipo !== undefined);
-      console.log('Equipos cargados:', this.equipos);
 
     } catch (error) {
       console.error('Error cargando jugadores o equipos:', error);
