@@ -1,0 +1,108 @@
+/* Estilos generales */
+.usuarios-container {
+    padding: 1rem;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    background-color: #f8f9fa;
+}
+
+.table tbody+tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+.btn-group-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+/* Estilos para móviles */
+@media (max-width: 767.98px) {
+    .usuarios-container {
+        padding: 0.5rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    /* Ocultar columnas menos importantes en móviles */
+    .table thead th:nth-child(1),
+    .table tbody td:nth-child(1) {
+        display: none;
+    }
+
+    /* Estilo para filas en móviles */
+    .table tbody tr {
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    /* Botón de acciones apilado */
+    .btn-group-actions {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+}
+
+/* Estilos para tablets */
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+    .table th,
+    .table td {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Estilo para el botón de agregar */
+.add-user-btn {
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 767.98px) {
+    .add-user-btn {
+        width: 100%;
+        margin-bottom: 0.75rem;
+    }
+}
